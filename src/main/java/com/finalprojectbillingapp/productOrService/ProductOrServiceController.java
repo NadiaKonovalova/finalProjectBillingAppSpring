@@ -22,7 +22,7 @@ public class ProductOrServiceController {
     }
 
     @GetMapping("/product-service")
-    public String getAllProducts(Model model) {
+    public String displayAllProducts(Model model) {
         List<ProductOrServiceEntity> productsOrService = serviceForProducts.getAllProducts();
         model.addAttribute("productsOrService", productsOrService);
         return ""; // need to add name of the html page - list of all products and services
@@ -64,7 +64,7 @@ public class ProductOrServiceController {
             serviceForProducts.deleteProductService(id);
             return "redirect:/product-service";
         } catch (Exception exception) {
-            return "redirect:/product-service?status=PRODUCT_SERVICE_DELETION_FAILED&error=" + exception.getMessage();
+            return "redirect:/delete?status=PRODUCT_SERVICE_DELETION_FAILED&error=" + exception.getMessage();
         }
     }
 
