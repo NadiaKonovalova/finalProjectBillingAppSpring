@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.util.UUID;
 @Entity (name="Users")
 @Data
@@ -13,11 +12,10 @@ import java.util.UUID;
 @AllArgsConstructor
 
 public class UserEntity {
-    @Id @GeneratedValue (strategy = GenerationType.UUID)
+    @Id
     private UUID id = UUID.randomUUID();
-   private String name;
-    private String loginEmail;
-    private String email = loginEmail;
+    private String name;
+    private String email;
     private String password;
     private String taxpayerNo;
     private String legalAddress;
@@ -27,18 +25,6 @@ public class UserEntity {
     private Type taxpayerType;
     @Enumerated (EnumType.STRING)
     private Country country;
-    private Timestamp createdAt;
-    private Timestamp lastUpdated;
 
-    @PrePersist
-    public void beforeSaveUser(){
-        this.createdAt = new Timestamp(System.currentTimeMillis());
-        this.lastUpdated = new Timestamp(System.currentTimeMillis());
-    }
-
-    @PreUpdate
-    public void beforeUpdateUser(){
-        this.lastUpdated = new Timestamp(System.currentTimeMillis());
-    }
 }
 
