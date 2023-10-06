@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<main>
+    <h4>Register as a new user</h4>
+    <h5>To proceed, please create a new user account</h5>
+    <form action="/register" method="post">
+        <div class="input-group m-2">
+            <label class="input-group-text">E-mail</label>
+            <input name="email" class="form-control" type="email"/>
+        </div>
+        <div class="input-group m-2">
+            <label class="input-group-text">Password</label>
+            <input name="password" class="form-control" type="password"/>
+        </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Name</label>
+                <input name="name" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Tax Payer number</label>
+                <input name="taxpayerNo" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Legal address</label>
+                <input name="legalAddress" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Bank name</label>
+                <input name="bankName" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Bank account number</label>
+                <input name="accountNo" class="form-control" type="text"/>
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text">Tax Payer Type</label>
+                <select class="form-control" name="taxpayerType">
+                    <option value="INDIVIDUAL">Individual - natural person</option>
+                    <option value="SELF_EMPLOYED">Self-employed</option>
+                    <option value="MICRO_ENTERPRISE">Micro enterprise</option>
+                    <option value="VAT_PAYER">VAT payer</option>
+                    <option value="OTHER">Other</option>
+                </select>
+            </div>
+                <div class="input-group mt-2">
+                    <label class="input-group-text">Country</label>
+                    <select class="form-control" name="country">
+                        <option value="AUSTRIA">Austria</option>
+                        <option value="BELGIUM">Belgium</option>
+                        <option value="BULGARIA">Bulgaria</option>
+                        <option value="CROATIA">Croatia</option>
+                        <option value="CYPRUS">Cyprus</option>
+                        <option value="CZECHIA">Czech Republic</option>
+                        <option value="DENMARK">Denmark</option>
+                        <option value="ESTONIA">Estonia</option>
+                        <option value="FINLAND">Finland</option>
+                        <option value="FRANCE">France</option>
+                        <option value="GERMANY">Germany</option>
+                        <option value="GREECE">Greece</option>
+                        <option value="HUNGARY">Hungary</option>
+                        <option value="ICELAND">Iceland</option>
+                        <option value="IRELAND">Ireland</option>
+                        <option value="ITALY">Italy</option>
+                        <option value="LATVIA">Latvia</option>
+                        <option value="LIECHTENSTEIN">Liechtenstein</option>
+                        <option value="LITHUANIA">Lithuania</option>
+                        <option value="LUXEMBOURG">Luxembourg</option>
+                        <option value="MALTA">Malta</option>
+                        <option value="NETHERLANDS">Netherlands</option>
+                        <option value="NORWAY">Norway</option>
+                        <option value="POLAND">Poland</option>
+                        <option value="PORTUGAL">Portugal</option>
+                        <option value="ROMANIA">Romania</option>
+                        <option value="SLOVAKIA">Slovakia</option>
+                        <option value="SLOVENIA">Slovenia</option>
+                        <option value="SPAIN">Spain</option>
+                        <option value="SWEDEN">Sweden</option>
+                    </select>
+                </div>
+                    <div class="m-2">
+                        <button class="btn btn-dark text-white p-3">Sign Up</button>
+                    </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
