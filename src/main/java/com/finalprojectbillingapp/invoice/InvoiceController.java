@@ -19,6 +19,10 @@ public class InvoiceController {
         public String displayInvoicePage(){
                 return "create_invoice";
         }
+        @GetMapping("/archive-invoice")
+        public String displayInvoicesFromArchive(){
+                return "archiveInvoices";
+        }
 
 
 }

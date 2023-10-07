@@ -16,46 +16,23 @@ import java.util.UUID;
 public class UserController {
 
     private UserService userService;
+
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-   /* @GetMapping("/")
-    public String displayHomePage(){
-        return "index";
-    }*/
+    /* @GetMapping("/")
+     public String displayHomePage(){
+         return "index";
+     }*/
     @GetMapping("/login")
-    public String displayLogPage(){
+    public String displayLogPage() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String userLoginForm(LoginRequest loginRequest,
-                                HttpServletResponse response){
-        try {
-            // Checs if user exists
-            UserEntity user = this.userService.verifyLogin
-                    (loginRequest.getEmail(), loginRequest.getPassword());
-            if(user==null) return "redirect:/register";
-//            throw new Exception("E-mail or password is incorrect");
-            // Create cookie
-            Cookie cookie = new Cookie("loggedInUserId",
-                    user.getId().toString());
-            // create cookie expiry period in sec before deletion
-            cookie.setMaxAge(200000);
-            // save cookie to the HTTP request to enable
-            // storing it in user's browser
-            response.addCookie(cookie);
-
-            return "redirect:/index";
-        } catch (Exception exception) {
-            return "redirect:/login?status=LOGIN_FAILED&error="
-                    + exception.getMessage();
-        }
-    }
     @GetMapping("/register")
-    public String displayRegisterPage(){
+    public String displayRegisterPage() {
         return "register";
     }
 
@@ -71,6 +48,36 @@ public class UserController {
         }
     }
 
+    @PostMapping("/login")
+    public String userLoginForm(LoginRequest loginRequest,
+                                HttpServletResponse response) {
+        try {
+            // Check if user exists
+            UserEntity user = this.userService.verifyLogin
+                    (loginRequest.getEmail(), loginRequest.getPassword());
+            if (user == null) return "redirect:/register";
+            //throw new Exception("E-mail or password is incorrect")
+
+              // Create cookie
+                Cookie cookie = new Cookie("loggedInUserId",
+                        user.getId().toString());
+                // create cookie expiry period in sec before deletion
+                cookie.setMaxAge(200000);
+                // save cookie to the HTTP request to enable
+                // storing it in user's browser
+                response.addCookie(cookie);
+
+            return "redirect:/mainPageForUser";
+        } catch (Exception exception) {
+            return "redirect:/login?status=LOGIN_FAILED&error="
+                    + exception.getMessage();
+        }
+    }
+    @GetMapping("/mainPageForUser")
+    public String displayMainPage() {
+        return "mainPageForUser";
+    }
+
     @GetMapping("/userProfile/{id}")
     public String displayCurrentUser(@PathVariable UUID id,
                                      Model model){
@@ -83,11 +90,6 @@ public class UserController {
             return "redirect:/?message=USER_PROFILE_NOT_FOUND&error=" + exception.getMessage();
         }
     }
-
-   /* @GetMapping("/mainPage")
-    public String displayMainPage(){
-        return "mainPage";
-    }*/
     @GetMapping("/editUser/{id}")
     public String displayEditUserPage(@PathVariable UUID id, Model model) {
         try {

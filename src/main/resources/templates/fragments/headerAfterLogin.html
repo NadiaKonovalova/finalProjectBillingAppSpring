@@ -1,26 +1,36 @@
-header th:fragment="after-login-header">
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid fw-bolder">
-        <a class="navbar-brand mx-auto fs-1" href="#">BillingApp</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <!--  <span class="navbar-toggler-icon"></span>-->
-        </button>
-    </div>
+<header th:fragment="after-login-header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+        <div class="container-fluid fw-bolder">
+            <a class="navbar-brand mx-auto" href="/">
+                <i class="fas fa-home"></i>BillingApp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <!--  <span class="navbar-toggler-icon"></span>-->
+            </button>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Invoice
+            </button>
+            <ul class="dropdown-menu"aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/new-invoice">New Invoice</a></li>
+                <li><a class="dropdown-item" href="/archive-invoice">Archive Invoices</a></li>
+            </ul>
+        </div>
+
     <div class="collapse navbar-collapse nav justify-content-center container-fluid navbar-nav mb-2 mb-lg-0" id="navbarSupportedContent">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/new-invoice">New invoice</a>
-        </li>
-        <li class="nav-item">
+       <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/about">About</a>
+        </li> -->
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/contactUs">Contact</a>
         </li>
-        <li>
-            <a class="nav-link active" aria-current="page" href="/contact">Contact</a>
+        <li class="nav-item">
+            <a class="nav-link active fa-solid fa-user" href="userProfile"></a>
         </li>
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/log out">Log out</a>
         </li>
-        <li class="nav-item">
-            <i class="fa-solid fa-user" href="/user profile">User profile</i>
-        </li>
     </div>
 </nav>
+</header>

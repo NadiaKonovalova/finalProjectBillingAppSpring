@@ -14,16 +14,11 @@ public class WebPageController {
     public String displayAboutPage(){
         return "about";
     }
-   /* @GetMapping("/login")
-    public String displayLogInPage(){
-        return "login";
-    } */
-    //not here, but in user controller
-    /*@GetMapping("/contact")
+    @GetMapping("/contactUs")
     public String displayContactPage(){
-        return "contact";
+        return "contactUs";
     }
-    @PostMapping("/contact")
+    /*@PostMapping("/contact")
     public String createMessageToUs(){
 
     }*/
