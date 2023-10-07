@@ -78,8 +78,12 @@ public class UserController {
         return "mainPageForUser";
     }
 
-    @GetMapping("/userProfile/{id}")
-    public String displayCurrentUser(@PathVariable UUID id,
+
+    @GetMapping("/userProfile")
+    public String displayUserProfile(){
+        return "userProfile";
+    }
+   /* public String displayCurrentUser(@PathVariable UUID id,
                                      Model model){
         try {
             UserEntity currentUser = this.userService.findUserById(id);
@@ -89,7 +93,7 @@ public class UserController {
         } catch (Exception exception) {
             return "redirect:/?message=USER_PROFILE_NOT_FOUND&error=" + exception.getMessage();
         }
-    }
+    }*/
     @GetMapping("/editUser/{id}")
     public String displayEditUserPage(@PathVariable UUID id, Model model) {
         try {

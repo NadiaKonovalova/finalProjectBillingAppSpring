@@ -14,14 +14,29 @@
 
 
 </head>
-<header th:replace="~{fragments/headerAfterLogin.htmlLogIn.html::after-login-header}"></header>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 
 <body>
 <main>
     <section>
-        <h1>User profile</h1>
-        <form action="/user profile" method="post"></form>
-
+        <h3>User profile</h3> <!--šīs ir view profile-->
+        <form action="/userProfile" method="post"></form>
+        <div>
+            <ul class="nav flex-column nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/userProfile">View profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/editUser">Edit profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addProfile">Add profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/deleteProfile">Delete profile</a>
+                </li>
+            </ul>
+        </div>
     </section>
 </main>
 </body>
