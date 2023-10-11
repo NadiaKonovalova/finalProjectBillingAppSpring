@@ -25,12 +25,12 @@ public class CustomerController {
     public String displayAllCustomers(Model model) {
         List<CustomerEntity> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return ""; // need to add name of the html page - list of all customers
+        return "allCustomers";
     }
 
     @GetMapping("/add-customer")
     public String displayAddCustomer(CustomerEntity customerEntity) {
-        return ""; // need to add name of the html page - display page where user can add customers
+        return "addCustomer";
     }
 
     @PostMapping("/add-customer")
@@ -45,7 +45,7 @@ public class CustomerController {
 
     @GetMapping("/edit-customer/{id}")
     public String displayEditCustomer() {
-        return ""; // need to add name of the html page - display page where user can edit customer
+        return "editCustomer";
     }
 
     @PostMapping("/edit-customer/{id}")
