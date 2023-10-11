@@ -1,12 +1,11 @@
 package com.finalprojectbillingapp.productOrService;
 
-import com.finalprojectbillingapp.customer.CustomerEntity;
-import com.finalprojectbillingapp.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ServiceForProducts {
@@ -27,5 +26,26 @@ public class ServiceForProducts {
     }
 
     // Edit product / service
+    public void editProductService(UUID id, ProductOrServiceEntity updatedProductOrService) throws Exception {
+        ProductOrServiceEntity existingProductOrService = productServiceRepository.findById(id)
+                .orElseThrow(() -> new Exception("Product or service not found with ID: " + id));
+
+        existingProductOrService.setName(updatedProductOrService.getName());
+        existingProductOrService.setQuantity(updatedProductOrService.getQuantity());
+        existingProductOrService.setUnit(updatedProductOrService.getUnit());
+        existingProductOrService.setUnitPrice(updatedProductOrService.getUnitPrice());
+        existingProductOrService.setCurrency(updatedProductOrService.getCurrency());
+        existingProductOrService.setVATrate(updatedProductOrService.getVATrate());
+
+        productServiceRepository.save(existingProductOrService);
+    }
+
     // delete product / service
+    public void deleteProductService(UUID id) throws Exception {
+        ProductOrServiceEntity productOrServiceEntity = productServiceRepository.findById(id)
+                .orElseThrow(() -> new Exception("Product or service not found with ID: " + id));
+
+        productServiceRepository.delete(productOrServiceEntity);
+    }
+
 }
