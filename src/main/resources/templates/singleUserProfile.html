@@ -10,14 +10,14 @@
     <section>
 
         <div class="col">
-            <div th:text="'NAME:            '+ ${user.getName()}"> </div>
-            <div th:text="'TAXPAYER NUMBER:     ' + ${user.getTaxpayerNo()}"></div>
-            <div th:text="'TYPE:            ' + ${user.getTaxpayerType().getDisplayTypeName()}"></div>
-            <div th:text="'E-MAIL:          ' + ${user.getEmail()}"></div>
-            <div th:text="'LEGAL ADDRESS:   ' + ${user.getLegalAddress()}"></div>
-            <div th:text="'COUNTRY OF RESIDENCE:    ' + ${user.getCountry().getDisplayCountryName()}"></div>
-            <div th:text="'BANK:            ' + ${user.getBankName()}"></div>
-            <div th:text="'BANK ACCOUNT:    ' + ${user.getAccountNo()}"></div>
+            <div th:text="'NAME: '+ ${user.getName()}"> </div>
+            <div th:text="'TAXPAYER NUMBER: ' + ${user.getTaxpayerNo()}"></div>
+            <div th:text="'TYPE: ' + ${user.getTaxpayerType()}"></div>
+            <div th:text="'E-MAIL: ' + ${user.getEmail()}"></div>
+            <div th:text="'LEGAL ADDRESS: ' + ${user.getLegalAddress()}"></div>
+            <div th:text="'COUNTRY OF RESIDENCE: ' + ${user.getCountry().getDisplayName()}"></div>
+            <div th:text="'BANK: ' + ${user.getBankName()}"></div>
+            <div th:text="'BANK ACCOUNT: ' + ${user.getAccountNo()}"></div>
         </div>
 
     </section>

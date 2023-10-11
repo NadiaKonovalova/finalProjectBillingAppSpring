@@ -32,12 +32,12 @@ public enum Country {
     SPAIN ("Spain"),
     SWEDEN ("Sweden");
 
-    private final String displayCountryName;
-    Country(String displayCountryName){
-        this.displayCountryName = displayCountryName;
+    private final String displayName;
+    Country(String displayName){
+        this.displayName = displayName;
     }
 
-    public String getDisplayCountryName () {
-        return displayCountryName;
+    public String getDisplayName() {
+        return displayName;
     }
 }

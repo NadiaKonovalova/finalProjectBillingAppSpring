@@ -41,11 +41,10 @@
             </div>
             <div class="input-group mt-2">
                 <label class="input-group-text">Tax Payer Type</label>
-                <select class="form-control" name="taxpayerType"
-                        th:value="${user.getTaxpayerType().getDisplayTypeName()}">
-                    <option value="INDIVIDUAL">Individual or natural person</option>
+                <select class="form-control" name="taxpayerType">
+                    <option value="INDIVIDUAL">Individual - natural person</option>
                     <option value="SELF_EMPLOYED">Self-employed</option>
-                    <option value="MICRO_ENTERPRISE">Micro-enterprise</option>
+                    <option value="MICRO_ENTERPRISE">Micro enterprise</option>
                     <option value="VAT_PAYER">VAT payer</option>
                     <option value="OTHER">Other</option>
                 </select>
@@ -53,7 +52,7 @@
             <div class="input-group mt-2">
                 <label class="input-group-text">Country</label>
                 <select class="form-control" name="country"
-                        th:value="${user.getCountry().getDisplayCountryName()}">
+                        th:value="${user.getCountry().toString()}">
                     <option value="AUSTRIA">Austria</option>
                     <option value="BELGIUM">Belgium</option>
                     <option value="BULGARIA">Bulgaria</option>

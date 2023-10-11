@@ -1,9 +1,11 @@
 package com.finalprojectbillingapp.customer;
 
+import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,12 +25,12 @@ public class CustomerController {
     public String displayAllCustomers(Model model) {
         List<CustomerEntity> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "allCustomers"; // need to add name of the html page - list of all customers
+        return ""; // need to add name of the html page - list of all customers
     }
 
     @GetMapping("/add-customer")
     public String displayAddCustomer(CustomerEntity customerEntity) {
-        return "addCustomer"; // need to add name of the html page - display page where user can add customers
+        return ""; // need to add name of the html page - display page where user can add customers
     }
 
     @PostMapping("/add-customer")
@@ -42,22 +44,14 @@ public class CustomerController {
     }
 
     @GetMapping("/edit-customer/{id}")
-    public String displayEditCustomer(@PathVariable UUID id, Model model) {
-        try {
-            CustomerEntity customerEntity = this.customerService.findCustomerById(id);
-            model.addAttribute("customer", customerEntity);
-            return "editCustomer";
-        } catch (Exception exception) {
-            return "redirect:/edit-customer?status=CUSTOMER_EDIT_FAILED&error=" + exception.getMessage();
-        }
+    public String displayEditCustomer() {
+        return ""; // need to add name of the html page - display page where user can edit customer
     }
 
     @PostMapping("/edit-customer/{id}")
-    public String editCustomer(@PathVariable UUID id, CustomerEntity customerEntity) {
+    public String editCustomer(@PathVariable UUID id, @ModelAttribute CustomerEntity updatedCustomer) {
         try {
-            this.customerService.findCustomerById(id);
-            customerEntity.setId(id);
-            this.customerService.editCustomerDetails(id, customerEntity);
+            customerService.editCustomerDetails(id, updatedCustomer);
             return "redirect:/customer-list";
         } catch (Exception exception) {
             return "redirect:/edit-customer?status=CUSTOMER_EDIT_FAILED&error=" + exception.getMessage();
@@ -73,6 +67,4 @@ public class CustomerController {
             return "redirect:/delete?status=CUSTOMER_DELETION_FAILED&error=" + exception.getMessage();
         }
     }
-
-
 }
