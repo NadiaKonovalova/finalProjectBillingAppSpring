@@ -44,14 +44,22 @@ public class CustomerController {
     }
 
     @GetMapping("/edit-customer/{id}")
-    public String displayEditCustomer() {
-        return "editCustomer";
+    public String displayEditCustomer(@PathVariable UUID id, Model model) {
+        try {
+            CustomerEntity customerEntity = this.customerService.findCustomerById(id);
+            model.addAttribute("customer", customerEntity);
+            return "editCustomer";
+        } catch (Exception exception) {
+            return "redirect:/edit-customer?status=CUSTOMER_EDIT_FAILED&error=" + exception.getMessage();
+        }
     }
 
     @PostMapping("/edit-customer/{id}")
-    public String editCustomer(@PathVariable UUID id, @ModelAttribute CustomerEntity updatedCustomer) {
+    public String editCustomer(@PathVariable UUID id, CustomerEntity customerEntity) {
         try {
-            customerService.editCustomerDetails(id, updatedCustomer);
+            this.customerService.findCustomerById(id);
+            customerEntity.setId(id);
+            this.customerService.editCustomerDetails(id, customerEntity);
             return "redirect:/customer-list";
         } catch (Exception exception) {
             return "redirect:/edit-customer?status=CUSTOMER_EDIT_FAILED&error=" + exception.getMessage();

@@ -19,30 +19,30 @@
 <main class="container">
     <h3>Edit customer</h3>
     <section>
-<!--        <form th:action="${'/edit-customer/' + id}" method="post">-->
+        <form th:action="${'/edit-customer/' + customer.getId()}" method="post">
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
-<!--                <input name="name" class="form-control" type="text" th:value="${name}"/>-->
+                <input name="name" class="form-control" type="text" th:value="${customer.getName()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Tax Payer Number</label>
-                <input name="taxpayerNo" class="form-control" type="text"/>
+                <input name="taxpayerNo" class="form-control" type="text" th:value="${customer.getTaxpayerNo()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Legal Address</label>
-                <input name="legalAddress" class="form-control" type="text"/>
+                <input name="legalAddress" class="form-control" type="text" th:value="${customer.getLegalAddress()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Bank Name</label>
-                <input name="bankName" class="form-control" type="text"/>
+                <input name="bankName" class="form-control" type="text" th:value="${customer.getBankName()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Account Number</label>
-                <input name="accountNo" class="form-control" type="text"/>
+                <input name="accountNo" class="form-control" type="text" th:value="${customer.getAccountNo()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Tax Payer Type</label>
-                <select name="taxpayerType" class="form-control">
+                <select name="taxpayerType" class="form-control" th:value="${customer.getTaxpayerType().toString()}">
                     <option value="INDIVIDUAL">Individual</option>
                     <option value="SELF_EMPLOYED">Self employed</option>
                     <option value="MICRO_ENTERPRISE">Micro enterprise</option>
@@ -52,7 +52,7 @@
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Country</label>
-                <select name="country" class="form-control" type="text">
+                <select name="country" class="form-control" th:value="${customer.getCountry().toString()}">
                     <option value="AUSTRIA">Austria</option>
                     <option value="BELGIUM">Belgium</option>
                     <option value="BULGARIA">Bulgaria</option>

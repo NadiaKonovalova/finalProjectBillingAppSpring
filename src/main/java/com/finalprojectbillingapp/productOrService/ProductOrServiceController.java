@@ -44,14 +44,22 @@ public class ProductOrServiceController {
     }
 
     @GetMapping("/edit-product-service/{id}")
-    public String displayEditProductService() {
-        return ""; // need to add name of the html page - display page where user can edit product/service item
+    public String displayEditProductService(@PathVariable UUID id, Model model) {
+        try {
+            ProductOrServiceEntity productOrServiceEntity = this.serviceForProducts.findProductOrServiceById(id);
+            model.addAttribute("productOrService", productOrServiceEntity);
+            return ""; // need to add name of the html page - display page where user can edit product/service item
+        } catch (Exception exception) {
+            return "redirect:/edit-product-service?status=PRODUCT_SERVICE_EDIT_FAILED&error=" + exception.getMessage();
+        }
     }
 
     @PostMapping("/edit-product-service/{id}")
-    public String editProductService(@PathVariable UUID id, @ModelAttribute ProductOrServiceEntity updatedProductOrService) {
+    public String editProductService(@PathVariable UUID id, ProductOrServiceEntity productOrServiceEntity) {
         try {
-            serviceForProducts.editProductService(id, updatedProductOrService);
+            this.serviceForProducts.findProductOrServiceById(id);
+            productOrServiceEntity.setId(id);
+            this.serviceForProducts.editProductService(id, productOrServiceEntity);
             return "redirect:/product-service";
         } catch (Exception exception) {
             return "redirect:/edit-product-service?status=PRODUCT_SERVICE_EDIT_FAILED&error=" + exception.getMessage();
