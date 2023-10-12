@@ -1,6 +1,9 @@
 package com.finalprojectbillingapp;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,6 +25,10 @@ public class WebPageController {
     public String createMessageToUs(){
 
     }*/
+  //  @GetMapping("/logout")
+  //  public String logOutDisplayIndexPage(){
+  //      return "redirect:/index";}
+
 
 
 }

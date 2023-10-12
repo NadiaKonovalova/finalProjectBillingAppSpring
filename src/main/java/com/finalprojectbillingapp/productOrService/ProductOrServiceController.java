@@ -21,7 +21,7 @@ public class ProductOrServiceController {
         this.serviceForProducts = serviceForProducts;
     }
 
-    @GetMapping("/product-service")
+  /*  @GetMapping("/product-service")
     public String getAllProducts(Model model) {
         List<ProductOrServiceEntity> productsOrService = serviceForProducts.getAllProducts();
         model.addAttribute("productsOrService", productsOrService);
@@ -66,6 +66,6 @@ public class ProductOrServiceController {
         } catch (Exception exception) {
             return "redirect:/product-service?status=PRODUCT_SERVICE_DELETION_FAILED&error=" + exception.getMessage();
         }
-    }
+    }*/
 
 }
