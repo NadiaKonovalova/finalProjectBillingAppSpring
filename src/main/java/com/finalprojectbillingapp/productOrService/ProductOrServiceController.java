@@ -23,9 +23,9 @@ public class ProductOrServiceController {
 
     @GetMapping("/product-service")
     public String displayAllProducts(Model model) {
-        List<ProductOrServiceEntity> productsOrService = serviceForProducts.getAllProducts();
-        model.addAttribute("productsOrService", productsOrService);
-        return ""; // need to add name of the html page - list of all products and services
+        List<ProductOrServiceEntity> productsOrServices = serviceForProducts.getAllProducts();
+        model.addAttribute("productsOrServices", productsOrServices);
+        return "allProductsAndServices";
     }
 
     @GetMapping("/add-product-service")
