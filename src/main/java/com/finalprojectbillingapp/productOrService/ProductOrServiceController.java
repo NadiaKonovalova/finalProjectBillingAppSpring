@@ -30,7 +30,7 @@ public class ProductOrServiceController {
 
     @GetMapping("/add-product-service")
     public String displayAddProductService() {
-        return ""; // need to add name of the html page - display page where user can add product or service
+        return "addProductsOrServices";
     }
 
     @PostMapping("/add-product-service")
