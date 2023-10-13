@@ -22,8 +22,7 @@ public class ServiceForProducts {
                 this.productServiceRepository.findAll();
     }
     // To create a new product or service
-    public void createProductService (ProductOrServiceEntity productOrServiceEntity)
-            throws Exception {
+    public void createProductService (ProductOrServiceEntity productOrServiceEntity) {
         this.productServiceRepository.save(productOrServiceEntity);
     }
 
@@ -50,4 +49,10 @@ public class ServiceForProducts {
         productServiceRepository.delete(productOrServiceEntity);
     }
 
+    public ProductOrServiceEntity findProductOrServiceById(UUID id) throws Exception {
+        for (ProductOrServiceEntity productOrServiceEntity: this.productServiceRepository.findAll()) {
+            if (productOrServiceEntity.getId().equals(id))return productOrServiceEntity;
+        }
+        throw new Exception("Product or service not found");
+    }
 }
