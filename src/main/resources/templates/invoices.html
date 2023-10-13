@@ -1,26 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head  th:replace="~{fragments/headerAfterLogin.html::after-login-head}"></head>
+<head  th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
-    <h3>Profiles</h3>
-    <section>
-        <div th:if="${invoices.isEmpty()}">No invoice to display</div>
-        <div th:if="${!invoices.isEmpty()}">
-            <ul>
-                <li th:each="invoice:${invoices}" class="row p-3 m-3">
-                    <div class="col">
-                        <h4 th:text="${invoice.get()}"></h4>
-                        <div th:text="${member.getUserBio()}"></div>
-                        <div th:text="'lives in ' + ${member.getLocation()}"></div>
-                        <a th:href="${'/profiles/' + member.getId()}" class="btn btn-primary">See more Info</a>
-                    </div>
-                </li>
-            </ul>
+    <form method="get" action="/createNewInvoice/">
+    <div class="input-group mt-2">
+        <a th:href="${'/createNewInvoice/taxPayerType'}" class="btn btn btn-dark text-white p-3">Create a New Invoice</a>
+    </div>
+        <div class="input-group mt-2">
+            <a th:href="${'/archive-invoice'}" class="btn btn btn-dark text-white p-3">View Previous Invoices</a>
         </div>
-    </section>
-
+    </form>
 </main>
 </body>
 </html>

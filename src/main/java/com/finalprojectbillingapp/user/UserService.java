@@ -75,6 +75,7 @@ public class UserService {
                 currentUser.setEmail(user.getEmail());
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
+                currentUser.setTaxpayerType(user.getTaxpayerType());
                 currentUser.setBankName(user.getBankName());
                 currentUser.setAccountNo(user.getAccountNo());
                 currentUser.setCountry(user.getCountry());
@@ -120,5 +121,23 @@ public class UserService {
 
                 UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
                 return loggedInUser;
+    }
+
+    @Transactional
+    // Edit user profile
+    public UserEntity editTaxPayerType(UserEntity user, UUID id) throws Exception {
+        UserEntity currentUser = this.findUserById(id);
+        try {
+            if (currentUser.getId().equals(user.getId())) {
+                currentUser.setTaxpayerType(user.getTaxpayerType());
+                entityManager.flush();
+            }
+            return currentUser;
+        } catch (PersistenceException exception){
+            throw new Exception("Database update failed.");
+        }
+        catch (Exception exception) {
+            throw new Exception("Something went wrong");
+        }
     }
 }
