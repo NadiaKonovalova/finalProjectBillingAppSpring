@@ -48,7 +48,7 @@ public class ProductOrServiceController {
         try {
             ProductOrServiceEntity productOrServiceEntity = this.serviceForProducts.findProductOrServiceById(id);
             model.addAttribute("productOrService", productOrServiceEntity);
-            return ""; // need to add name of the html page - display page where user can edit product/service item
+            return "editProductsOrServices";
         } catch (Exception exception) {
             return "redirect:/edit-product-service?status=PRODUCT_SERVICE_EDIT_FAILED&error=" + exception.getMessage();
         }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head >
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <title>Add Product or Service</title>
+  <title>Edit Products or Services</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,28 +17,28 @@
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
-  <h3>Add a new Product or Service</h3>
+  <h3>Edit Products or Services</h3>
   <section>
-    <form action="/add-product-service" method="post">
+    <form th:action="${'/edit-product-service/' + productOrService.getId()}" method="post">
       <div class="input-group m-2">
         <label class="input-group-text">Name</label>
-        <input name="name" class="form-control" type="text"/>
+        <input name="name" class="form-control" type="text" th:value="${productOrService.getName()}"/>
       </div>
       <div class="input-group m-2">
         <label class="input-group-text">Quantity</label>
-        <input name="quantity" class="form-control" type="number"/>
+        <input name="quantity" class="form-control" type="number" th:value="${productOrService.getQuantity()}"/>
       </div>
       <div class="input-group m-2">
         <label class="input-group-text">Unit</label>
-        <input name="unit" class="form-control" type="text"/>
+        <input name="unit" class="form-control" type="text" th:value="${productOrService.getUnit()}"/>
       </div>
       <div class="input-group m-2">
         <label class="input-group-text">Unit price</label>
-        <input name="unitPrice" class="form-control" type="number"/>
+        <input name="unitPrice" class="form-control" type="number" th:value="${productOrService.getUnitPrice()}"/>
       </div>
       <div class="input-group m-2">
         <label class="input-group-text">Currency</label>
-        <select name="currency" class="form-control">
+        <select name="currency" class="form-control" th:value="${productOrService.getCurrency().toString()}">
           <option value="EUR">EUR</option>
           <option value="BGN">BGN</option>
           <option value="CZK">CZK</option>
@@ -54,7 +54,7 @@
       </div>
       <div class="input-group m-2">
         <label class="input-group-text">VAT Rate</label>
-        <select name="VATrate" class="form-control">
+        <select name="VATrate" class="form-control" th:value="${productOrService.getVATrate().toString()}">
           <option value="STANDARD21">Standard 21%</option>
           <option value="REDUCED12">Reduced 12%</option>
           <option value="REDUCED10">Reduced 10%</option>
