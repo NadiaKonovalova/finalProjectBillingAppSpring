@@ -1,18 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
-<body>
-<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
-
-<main class="container">
-    <div th:replace="~{fragments/headerAfterLogin.html::userProfile}"></div>
-    <h4>Edit User</h4>
-    <section class="container">
-        <form th:action="${'/editUser/' + user.getId()}" method="post">
+<section th:fragment="edit-user-data-fragment">
             <div class="input-group m-2">
                 <label class="input-group-text">E-mail</label>
                 <input name="email" class="form-control" type="email"
-                th:value="${user.getEmail()}"/>
+                       th:value="${user.getEmail()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
@@ -86,11 +76,4 @@
                     <option value="SWEDEN">Sweden</option>
                 </select>
             </div>
-            <div class="input-group mt-2">
-                <button class="btn btn-dark text-white p-3">Save changes</button>
-            </div>
-        </form>
-    </section>
-</main>
-</body>
-</html>
+</section>
