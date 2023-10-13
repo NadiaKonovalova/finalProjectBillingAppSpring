@@ -51,4 +51,10 @@ public class CustomerService {
         customerRepository.delete(customerEntity);
     }
 
+    public CustomerEntity findCustomerById(UUID id) throws Exception {
+        for (CustomerEntity customerEntity: this.customerRepository.findAll()) {
+            if (customerEntity.getId().equals(id))return customerEntity;
+        }
+        throw new Exception("Customer not found");
+    }
 }

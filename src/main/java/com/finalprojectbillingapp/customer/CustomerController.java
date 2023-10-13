@@ -25,12 +25,12 @@ public class CustomerController {
     public String displayAllCustomers(Model model) {
         List<CustomerEntity> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return ""; // need to add name of the html page - list of all customers
+        return "allCustomers"; // need to add name of the html page - list of all customers
     }
 
     @GetMapping("/add-customer")
     public String displayAddCustomer(CustomerEntity customerEntity) {
-        return ""; // need to add name of the html page - display page where user can add customers
+        return "addCustomer"; // need to add name of the html page - display page where user can add customers
     }
 
     @PostMapping("/add-customer")
@@ -44,14 +44,22 @@ public class CustomerController {
     }
 
     @GetMapping("/edit-customer/{id}")
-    public String displayEditCustomer() {
-        return ""; // need to add name of the html page - display page where user can edit customer
+    public String displayEditCustomer(@PathVariable UUID id, Model model) {
+        try {
+            CustomerEntity customerEntity = this.customerService.findCustomerById(id);
+            model.addAttribute("customer", customerEntity);
+            return "editCustomer";
+        } catch (Exception exception) {
+            return "redirect:/edit-customer?status=CUSTOMER_EDIT_FAILED&error=" + exception.getMessage();
+        }
     }
 
     @PostMapping("/edit-customer/{id}")
-    public String editCustomer(@PathVariable UUID id, @ModelAttribute CustomerEntity updatedCustomer) {
+    public String editCustomer(@PathVariable UUID id, CustomerEntity customerEntity) {
         try {
-            customerService.editCustomerDetails(id, updatedCustomer);
+            this.customerService.findCustomerById(id);
+            customerEntity.setId(id);
+            this.customerService.editCustomerDetails(id, customerEntity);
             return "redirect:/customer-list";
         } catch (Exception exception) {
             return "redirect:/edit-customer?status=CUSTOMER_EDIT_FAILED&error=" + exception.getMessage();
@@ -67,4 +75,6 @@ public class CustomerController {
             return "redirect:/delete?status=CUSTOMER_DELETION_FAILED&error=" + exception.getMessage();
         }
     }
+
+
 }

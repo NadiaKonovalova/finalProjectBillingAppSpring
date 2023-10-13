@@ -3,6 +3,7 @@ package com.finalprojectbillingapp.user;
 import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,13 @@ import java.util.UUID;
 public class UserService {
 
     private UserRepository userRepository;
+    private CookieHandling cookieHandling;
+
     @Autowired
     // Constructor
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+        this.cookieHandling = cookieHandling;
     }
 
     @PersistenceContext
@@ -110,4 +114,11 @@ public class UserService {
     // Log out
     // Add user profile
     // Delete user
+
+    public UserEntity getLoggedInUser(HttpServletRequest request) throws Exception {
+        String cookieId = CookieHandling.getUserIdFromCookies(request);
+
+                UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
+                return loggedInUser;
+    }
 }

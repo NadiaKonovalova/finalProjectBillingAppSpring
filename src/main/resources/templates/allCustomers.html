@@ -17,9 +17,9 @@
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
-    <h3 style="text-align: center; margin: 20px; color: #333333;">All Customers</h3>
+    <h3>All Customers</h3>
     <section>
-        <button th:href="${'/add-customer/'}" class="btn btn-primary" style="font-weight: bold;">Add Customer</button>
+        <a th:href="${'/add-customer/'}" class="btn btn-primary">Add Customer</a>
     </section>
     <section>
         <div th:if="${customers.isEmpty()}">There are no customers to display</div>
@@ -32,8 +32,8 @@
                         <div th:text="${customer.getLegalAddress()}"></div>
                         <div th:text="${customer.getBankName()}"></div>
                         <div th:text="${customer.getAccountNo()}"></div>
-                        <div th:text="${customer.getTaxpayerType().getDisplayTypeName()}"></div>
-                        <div th:text="${customer.getCountry().getDisplayCountryName()}"></div>
+                        <div th:text="${customer.getTaxpayerType()}"></div>
+                        <div th:text="${customer.getCountry()}"></div>
                         <a th:href="${'/edit-customer/' + customer.getId()}" class="btn btn-primary">Edit</a>
                         <a th:href="${'/delete/' + customer.getId()}" class="btn btn-primary">Delete</a>
                     </div>
