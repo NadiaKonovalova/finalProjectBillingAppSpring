@@ -33,4 +33,10 @@ public class InvoiceEntity {
     private CustomerEntity customer;
     @ManyToOne
     private ProductOrServiceEntity productOrService;
+
+    @PrePersist
+    public void beforeSaveInvoice(){
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 }

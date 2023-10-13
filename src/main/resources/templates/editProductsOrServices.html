@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Edit Products or Services</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" > -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<body>
+<main class="container">
+    <h3>Edit Products or Services</h3>
+    <section>
+        <form th:action="${'/edit-product-service/' + productOrService.getId()}" method="post">
+            <div class="input-group m-2">
+                <label class="input-group-text">Name</label>
+                <input name="name" class="form-control" type="text" th:value="${productOrService.getName()}"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Quantity</label>
+                <input name="quantity" class="form-control" type="number" th:value="${productOrService.getQuantity()}"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Unit</label>
+                <input name="unit" class="form-control" type="text" th:value="${productOrService.getUnit()}"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Unit price</label>
+                <input name="unitPrice" class="form-control" type="number" th:value="${productOrService.getUnitPrice()}"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Currency</label>
+                <select name="currency" class="form-control" th:value="${productOrService.getCurrency().toString()}">
+                    <option value="EUR">EUR</option>
+                    <option value="BGN">BGN</option>
+                    <option value="CZK">CZK</option>
+                    <option value="DKK">DKK</option>
+                    <option value="HUF">HUF</option>
+                    <option value="PLN">PLN</option>
+                    <option value="RON">RON</option>
+                    <option value="SEK">SEK</option>
+                    <option value="ISK">ISK</option>
+                    <option value="CHF">CHF</option>
+                    <option value="NOK">NOK</option>
+                </select>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">VAT Rate</label>
+                <select name="VATrate" class="form-control" th:value="${productOrService.getVATrate().toString()}">
+                    <option value="STANDARD21">Standard 21%</option>
+                    <option value="REDUCED12">Reduced 12%</option>
+                    <option value="REDUCED10">Reduced 10%</option>
+                    <option value="REDUCED5">Reduced 5%</option>
+                    <option value="EXEMPTED0">Exempted 0%</option>
+                    <option value="OTHER">Other</option>
+                </select>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

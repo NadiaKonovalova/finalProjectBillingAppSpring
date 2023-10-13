@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 @Entity (name="Users")
 @Data
@@ -25,6 +26,14 @@ public class UserEntity {
     private Type taxpayerType;
     @Enumerated (EnumType.STRING)
     private Country country;
+    private Timestamp createdAt;
+    private Timestamp lastUpdated;
+
+    @PrePersist
+    public void beforeSaveUser(){
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 
 }
 
