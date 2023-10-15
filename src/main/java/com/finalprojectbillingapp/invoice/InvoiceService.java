@@ -12,12 +12,17 @@ public class InvoiceService {
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    public InvoiceService (InvoiceRepository invoiceRepository){
+    public InvoiceService(InvoiceRepository invoiceRepository){
         this.invoiceRepository=invoiceRepository;
     }
 
     public void createNewInvoice(InvoiceEntity invoiceEntity) throws Exception{
 
+        this.invoiceRepository.save(invoiceEntity);
+    }
+
+    public void createInvoice (InvoiceEntity invoiceEntity)
+            throws Exception {
         this.invoiceRepository.save(invoiceEntity);
     }
     public List<InvoiceEntity>getAllInvoices(){

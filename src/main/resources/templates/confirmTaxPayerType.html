@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
+<main class="container">
+  <h4>Confirm Your Tax Payer Type</h4>
+  <section class="container">
+    <form th:action="${'/createNewInvoice/taxPayerType'}" method="post">
+      <div class="input-group mt-2">
+        <label class="input-group-text">Tax Payer Type</label>
+        <select class="form-control" name="taxpayerType"
+                th:value="${user.getTaxpayerType().getDisplayTypeName()}">
+          <option value="INDIVIDUAL">Individual or natural person</option>
+          <option value="SELF_EMPLOYED">Self-employed</option>
+          <option value="MICRO_ENTERPRISE">Micro-enterprise</option>
+          <option value="VAT_PAYER">VAT payer</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+      <div class="input-group mt-2">
+        <button class="btn btn-dark text-white p-3">Confirm and Proceed</button>
+      </div>
+    </form>
+  </section>
+</main>
+</body>
+</html>

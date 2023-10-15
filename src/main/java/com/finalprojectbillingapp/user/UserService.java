@@ -1,13 +1,14 @@
 package com.finalprojectbillingapp.user;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,10 +17,13 @@ import java.util.UUID;
 public class UserService {
 
     private UserRepository userRepository;
+    private CookieHandling cookieHandling;
+
     @Autowired
     // Constructor
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
+        this.cookieHandling = cookieHandling;
     }
 
     @PersistenceContext
@@ -110,4 +114,27 @@ public class UserService {
     // Log out
     // Add user profile
     // Delete user
+
+    public UserEntity getLoggedInUser(HttpServletRequest request) throws Exception {
+        String cookieId = CookieHandling.getUserIdFromCookies(request);
+
+        UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
+        return loggedInUser;
+    }
+    @Transactional
+    public UserEntity editTaxPayerType(UserEntity user, UUID id) throws Exception{
+        UserEntity currentUser = this.findUserById(id);
+        try{
+            if(currentUser.getId().equals(user.getId())){
+                currentUser.setTaxpayerType(user.getTaxpayerType());
+                entityManager.flush();
+            }
+            return currentUser;
+        }catch (PersistenceException exception){
+            throw new Exception("Database update failed.");
+        }
+        catch (Exception exception){
+            throw new Exception("Something went wrong");
+        }
+    }
 }

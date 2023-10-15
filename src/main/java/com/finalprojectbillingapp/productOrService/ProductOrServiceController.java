@@ -66,7 +66,7 @@ public class ProductOrServiceController {
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public String deleteProductService(@PathVariable UUID id) {
         try {
             serviceForProducts.deleteProductService(id);
