@@ -125,14 +125,14 @@ public class UserService {
 
     @Transactional
     // Edit user profile
-    public UserEntity editTaxPayerType(UserEntity user, UUID id) throws Exception {
+    public Type editTaxPayerType(UserEntity user, UUID id) throws Exception {
         UserEntity currentUser = this.findUserById(id);
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setTaxpayerType(user.getTaxpayerType());
                 entityManager.flush();
             }
-            return currentUser;
+            return currentUser.getTaxpayerType();
         } catch (PersistenceException exception){
             throw new Exception("Database update failed.");
         }
