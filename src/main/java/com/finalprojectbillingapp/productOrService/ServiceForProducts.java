@@ -1,7 +1,5 @@
 package com.finalprojectbillingapp.productOrService;
 
-import com.finalprojectbillingapp.customer.CustomerEntity;
-import com.finalprojectbillingapp.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +11,11 @@ import java.util.UUID;
 public class ServiceForProducts {
     private ProductServiceRepository productServiceRepository;
     @Autowired
-    public ServiceForProducts(ProductServiceRepository productServiceRepository){
+  //  public ServiceForProducts(ProductServiceRepository productServiceRepository){
+     //   this.productServiceRepository = productServiceRepository;
+    public ServiceForProducts(ProductServiceRepository productServiceRepository) {
         this.productServiceRepository = productServiceRepository;
+
     }
     // Returns all products saved to the DB
     public List<ProductOrServiceEntity> getAllProducts(){
@@ -22,7 +23,8 @@ public class ServiceForProducts {
                 this.productServiceRepository.findAll();
     }
     // To create a new product or service
-    public void createProductService (ProductOrServiceEntity productOrServiceEntity) {
+    public void createProductService (ProductOrServiceEntity productOrServiceEntity)
+            throws Exception {
         this.productServiceRepository.save(productOrServiceEntity);
     }
 
@@ -48,11 +50,18 @@ public class ServiceForProducts {
 
         productServiceRepository.delete(productOrServiceEntity);
     }
-
     public ProductOrServiceEntity findProductOrServiceById(UUID id) throws Exception {
         for (ProductOrServiceEntity productOrServiceEntity: this.productServiceRepository.findAll()) {
-            if (productOrServiceEntity.getId().equals(id))return productOrServiceEntity;
+            if (productOrServiceEntity.getId().equals(id)) return productOrServiceEntity;
         }
         throw new Exception("Product or service not found");
+    }
+    public List<UUID> getAllProductOrServiceIds() {
+        List<UUID> productIds = new ArrayList<>();
+
+        for (ProductOrServiceEntity productOrServiceEntity : this.productServiceRepository.findAll()) {
+            productIds.add(productOrServiceEntity.getId());
+        }
+        return productIds;
     }
 }

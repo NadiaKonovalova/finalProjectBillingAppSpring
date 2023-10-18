@@ -1,5 +1,7 @@
+/*
 package com.finalprojectbillingapp.invoice;
-
+ */
+/*
 import com.finalprojectbillingapp.customer.CustomerEntity;
 import com.finalprojectbillingapp.customer.CustomerRepository;
 import com.finalprojectbillingapp.user.UserRepository;
@@ -33,7 +35,6 @@ public InvoiceMenuController(UserService userService, UserRepository userReposit
             return "redirect:/customer_additing_FAILED&error" + e.getMessage();
         }
     }
-/*
 
     // Parāda addCustomer lapu un Confirm vai Next;
     // ja izdodas, var uztaisīt vēlāk dropdown ar visiem klientiem
@@ -83,5 +84,5 @@ public InvoiceMenuController(UserService userService, UserRepository userReposit
             return invoiceOverview;
 
         }
-    }*/
-}
+    }
+}*/

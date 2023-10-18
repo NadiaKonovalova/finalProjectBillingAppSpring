@@ -2,39 +2,37 @@
 <html lang="en">
 <head th:replace="~{fragments/headerAfterLogin.html::after-login-head}"> </head>
 <body>
-<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<header th:replace="~{fragments/headerCreateInvoice.html::create-invoice-header}"></header>
 
 <main class="container">
-  <h4>, Edit or Add New Customer</h4>
+  <h4>Customer For Invoice</h4>
   <section class="container">
-    <a class="btn btn-primary" data-bs-toggle="offcanvas" href="/ConfirmCustomer" role="button" aria-controls="offcanvasExample">
-      Confirm Customer
-    </a>
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="/editOrAdd" aria-controls="offcanvasExample">
-      Edit or Add Customer
-    </button>
-
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <div>
-          Please select what you prefer for action.
-        </div>
-        <div class="dropdown mt-3">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            Edit Or Add
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/edit-customer/">Edit Customer</a></li>
-            <li><a class="dropdown-item" href="/add-customer">Add Customer</a></li>
+    <div>
+      <ul class="nav nav-tabs">
+      <form method="post" action="/create_invoice/customerData">
+        <select name="selectedCustomerId" class="form-select" aria-label="Customers">
+            <option th:each="customer: ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
+            <option value="" selected>Select customer</option>
+            <option th:each="customer: ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
+        </select>
+          <div class="input-group mt-2">
+              <a th:href="${'/create_invoice/productOrService'}" class="btn btn-secondary">Confirm</a>
+          </div>
+      </form>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/customer-list">Edit customer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/add-customer">Add customer</a>
+            </li>
           </ul>
-        </div>
-      </div>
     </div>
-    <!--
+  </section>
+</main>
+</body>
+</html>
+<!--
     <form th:action="${'/createNewInvoice/CustomerData'}" method="post">
       <section th:replace="~{fragments/editUserFragment.html::edit-customer-data-fragment}">
       </section>
@@ -42,7 +40,3 @@
         <button class="btn btn-dark text-white p-3">Confirm and Proceed</button>
       </div>
     </form> -->
-  </section>
-</main>
-</body>
-</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::after-login-head}"></head>
+<header th:replace="~{fragments/headerCreateInvoice.html::create-invoice-header}"></header
+<body>
+<main class="container">
+  <h4>Enter invoice number/title</h4>
+  <section class="container">
+    <form th:action="${'/create_invoice/confirmInvoiceNumber'}" method="post">
+      <div class="input-group m-2">
+        <label class="input-group-text">Enter unique number/title for the invoice</label>
+        <input name="invoiceNumber" class="form-control" type="text"/>
+      </div>
+      <div class="input-group mt-2">
+        <button class="btn btn-dark text-white p-3">Confirm and Proceed</button>
+      </div>
+    </form>
+  </section>
+</main>
+</body>
+</html>

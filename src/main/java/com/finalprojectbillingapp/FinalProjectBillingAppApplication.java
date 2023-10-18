@@ -9,8 +9,8 @@ public class FinalProjectBillingAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FinalProjectBillingAppApplication.class, args);
-        CreatePdfFile createPdfFile = new CreatePdfFile();
-        createPdfFile.Example();
+      //  CreatePdfFile createPdfFile = new CreatePdfFile();
+       // createPdfFile.example();
     }
 
 

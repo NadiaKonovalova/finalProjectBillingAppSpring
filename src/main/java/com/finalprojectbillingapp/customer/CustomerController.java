@@ -1,11 +1,9 @@
 package com.finalprojectbillingapp.customer;
 
-import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -14,7 +12,7 @@ import java.util.UUID;
 
 @Controller
 public class CustomerController {
-    private final CustomerService customerService;
+    private final com.finalprojectbillingapp.customer.CustomerService customerService;
 
     @Autowired
     public CustomerController(CustomerService customerService) {
@@ -23,18 +21,18 @@ public class CustomerController {
 
     @GetMapping("/customer-list")
     public String displayAllCustomers(Model model) {
-        List<CustomerEntity> customers = customerService.getAllCustomers();
+        List<com.finalprojectbillingapp.customer.CustomerEntity> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
         return "allCustomers"; // need to add name of the html page - list of all customers
     }
 
     @GetMapping("/add-customer")
-    public String displayAddCustomer(CustomerEntity customerEntity) {
+    public String displayAddCustomer(com.finalprojectbillingapp.customer.CustomerEntity customerEntity) {
         return "addCustomer"; // need to add name of the html page - display page where user can add customers
     }
 
     @PostMapping("/add-customer")
-    public String createCustomer(CustomerEntity customerEntity) {
+    public String createCustomer(com.finalprojectbillingapp.customer.CustomerEntity customerEntity) {
         try {
             customerService.createCustomer(customerEntity);
             return "redirect:/customer-list";
@@ -46,7 +44,7 @@ public class CustomerController {
     @GetMapping("/edit-customer/{id}")
     public String displayEditCustomer(@PathVariable UUID id, Model model) {
         try {
-            CustomerEntity customerEntity = this.customerService.findCustomerById(id);
+            com.finalprojectbillingapp.customer.CustomerEntity customerEntity = this.customerService.findCustomerById(id);
             model.addAttribute("customer", customerEntity);
             return "editCustomer";
         } catch (Exception exception) {

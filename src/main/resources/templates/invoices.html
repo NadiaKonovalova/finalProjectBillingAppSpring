@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::after-login-head}"></head>
+<header th:replace="~{fragments/headerCreateInvoice.html::create-invoice-header}"></header>
+<body>
+<main class="container">
+    <form method="get" action="/new-invoice/">
+        <div class="input-group mt-2">
+            <a th:href="${'/createNewInvoice/invoiceNumber'}" class="btn btn btn-dark text-white p-3">Create a New Invoice</a>
+        </div>
+        <div class="input-group mt-2">
+            <a th:href="${'/archive-invoice'}" class="btn btn btn-dark text-white p-3">View Previous Invoices</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

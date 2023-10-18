@@ -1,10 +1,18 @@
 package com.finalprojectbillingapp.invoice;
 
+import lombok.Getter;
+
+@Getter
 public enum Signature {
 
-    PRINT_OUT,
-    ELECTRONIC_SIGNATURE,
-    DRAFTED_ELECTRONICALLY_NO_SIGNATURE,
-    NO_SIGNATURE
+    PRINT_OUT ("Signed by hand"),
+    ELECTRONIC_SIGNATURE ("Electronic signature"),
+    DRAFTED_ELECTRONICALLY_NO_SIGNATURE ("Drafted electronically, valid w/o signature"),
+    NO_SIGNATURE ("No signature");
+
+    private final String displaySignatureName;
+    Signature(String displaySignatureName){
+        this.displaySignatureName = displaySignatureName;
+    }
 
 }

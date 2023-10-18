@@ -1,15 +1,70 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/headerAfterLogin.html::after-login-head}"></head>
-<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<header th:replace="~{fragments/headerCreateInvoice.html::create-invoice-header}"></header>
 <title>Create Invoice</title>
 <body>
 <main>
+    <form method="post" action="/create_invoice/">
     <h1>Create invoice</h1>
     <section class="row">
-        <div class="input-group mt-2">
-            <a class="btn btn-primary justify-content-center" href="/confirmTaxPayerType" role="button">Start</a>
+        <div class="input-group m-3 col-sm-3">
+            <label class="input-group-text">Invoice No.</label>
+            <input name="invoice" class="form-control" type="text"/>
         </div>
+        <div class="input-group m-3">
+            <label for="date"> select date </label>
+            <input type="date" id="date" name="date"/>
+        </div>
+        <div class="input-group mt-2">
+        <a th:href="${'/create_invoice/userData'}" class="btn btn-secondary">Next</a>
+    </div>
+    </section>
+    </form>
+    <!--  <section class="container-fluid">
+
+
+
+              <dd class="col-sm-9" th:text="${user.getBankName()}">// makstja nosaukums</dd>
+              <dd class="col-sm-9"><p>Bank Name</p>
+              </dd>
+              <dt class="col-sm-3">Reg.no.</dt>
+              <dd class="col-sm-9">
+                  <input name="invoice" class="form-control" type="text"/>
+              </dd>
+          </dl>
+
+              <div class="input-group m-3">
+              <label class="input-group-text position-start-middle">  </label>
+
+          </div>
+          <div>
+              <label class="input-group-text position-start-middle"></label>
+              <input name="invoice" class="form-control" type="text"/>
+          </div>
+      </section>
+
+
+          <section>
+              <form>
+                  <div class="input-group m-3">
+                          <label class="input-group-text position-middle-end"> Customer information </label>
+                          <input name="Customer information" class="form-control" type="text"/>
+                  </div>
+          </form>
+             <div class="input-group m-2">
+                 <label class="input-group-text">Tax Payer number</label>
+                 <input name="taxpayerNo" class="form-control" type="text"/>
+               </div>
+               <div class="input-group m-2">
+                 <label class="input-group-text">Legal address</label>
+                 <input name="legalAddress" class="form-control" type="text"/>
+               </div>
+               <div class="input-group m-2">
+                 <label class="input-group-text">Bank name</label>
+                 <input name="bankName" class="form-control" type="text"/>
+               </div>
+          </section>-->
 </main>
 </body>
 </html>

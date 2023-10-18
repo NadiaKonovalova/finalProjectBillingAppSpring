@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::after-login-head}"> </head>
+<header th:replace="~{fragments/headerCreateInvoice.html::create-invoice-header}"></header>
+<body>
+<main>
+  <h3>Choose the method of signing the invoice</h3>
+  <form th:action="${'/create_invoice/signatureAndNote'}" method="post">
+    <div class="input-group mt-2">
+      <label class="input-group-text">Method of signing</label>
+      <select class="form-control" name="methodOfSigning">
+        <option value="PRINT_OUT">Signed by hand</option>
+        <option value="ELECTRONIC_SIGNATURE">Electronic signature</option>
+        <option value="DRAFTED_ELECTRONICALLY_NO_SIGNATURE">Drafted electronically, valid w/o signature</option>
+        <option value="NO_SIGNATURE">No signature</option>
+      </select>
+    </div>
+
+    <div class="input-group m-3">
+      <label for="issuedAt">Issued on </label>
+      <input type="date" id="issuedAt" name="issuedAt"/>
+    </div>
+
+    <div class="input-group m-3">
+      <label for="dueBy">Payment due by</label>
+      <input type="date" id="dueBy" name="dueBy"/>
+    </div>
+
+    <div class="input-group m-2">
+      <label class="input-group-text">Notes:</label>
+      <input name="notes" class="form-control" type="text"/>
+    </div>
+
+
+    <div class="input-group mt-2">
+      <button class="btn btn btn-dark text-white p-3" type="submit" id="proceedToReview">
+        Confirm</button>
+    </div>
+
+    <!--       <div class="input-group mt-2">
+               <a th:href="${'/createNewInvoice/review-invoice'}"
+               class="btn btn-dark text-white p-3">Proceed to invoice overview</a>
+           </div>
+       </form>-->
+</main>
+</body>
+</html>

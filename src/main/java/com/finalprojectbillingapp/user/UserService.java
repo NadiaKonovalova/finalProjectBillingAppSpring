@@ -1,14 +1,14 @@
 package com.finalprojectbillingapp.user;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.OptimisticLockException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceException;
+import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -75,6 +75,7 @@ public class UserService {
                 currentUser.setEmail(user.getEmail());
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
+                currentUser.setTaxpayerType(user.getTaxpayerType());
                 currentUser.setBankName(user.getBankName());
                 currentUser.setAccountNo(user.getAccountNo());
                 currentUser.setCountry(user.getCountry());
@@ -121,19 +122,21 @@ public class UserService {
         UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
         return loggedInUser;
     }
+
     @Transactional
-    public UserEntity editTaxPayerType(UserEntity user, UUID id) throws Exception{
+    // Edit user profile
+    public Type editTaxPayerType(UserEntity user, UUID id) throws Exception {
         UserEntity currentUser = this.findUserById(id);
-        try{
-            if(currentUser.getId().equals(user.getId())){
+        try {
+            if (currentUser.getId().equals(user.getId())) {
                 currentUser.setTaxpayerType(user.getTaxpayerType());
                 entityManager.flush();
             }
-            return currentUser;
-        }catch (PersistenceException exception){
+            return currentUser.getTaxpayerType();
+        } catch (PersistenceException exception){
             throw new Exception("Database update failed.");
         }
-        catch (Exception exception){
+        catch (Exception exception) {
             throw new Exception("Something went wrong");
         }
     }

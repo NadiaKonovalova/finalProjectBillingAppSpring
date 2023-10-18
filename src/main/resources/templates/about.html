@@ -1,16 +1,44 @@
 <!doctype html>
 <html lang="en">
-<head  th:replace="~{fragments/headerAfterLogin.html::after-login-head}">></head>
+<head th:replace="~{fragments/headerAfterLogin.html::after-login-head}"> </head>
 <body>
 <header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}"></header>
 <main>
     <div>
-       <h1>About Billing Application</h1>
-        <form action="/about" method="get"></form>
-        <p class="">
-            Our main goal...:)
-            some text needed...
-        </p>
+        <h1>About Billing Application</h1>
+        <h3>Our Vision</h3>
+        <p>Our vision is to simplify and streamline the process of invoice creation and management,
+            making it a hassle-free experience for businesses and professionals. We believe that
+            invoices should be effortless to generate, organized, and easy to access.</p>
+    </div>
+    <div class="about-main-goals">
+        <h3>Our Main Goals</h3>
+        <ol>
+            <li>Simplicity: We aim to provide a user-friendly platform that allows you to create and manage
+                invoices with ease. No more dealing with complex software or paperwork.</li>
+            <li>Efficiency: Save valuable time by automating the invoice creation process.
+                Focus on your core business activities while we handle the paperwork.</li>
+            <li>Organization: Keep all your invoices organized in one place. Access them whenever you need,
+                from anywhere, with ease.</li>
+            <li>Professionalism: Impress your clients with well-designed, professional invoices.
+                Our platform offers customization options to match your brand's image.</li>
+            <li>Accessibility: Access your invoices 24/7, from any device. Whether you're in the office or on the go,
+                your invoices are just a click away.</li>
+        </ol>
+    </div>
+    <div class="about-getting-started">
+        <h3>Getting Started</h3>
+        <ol>
+            <li>Create a New Invoice: Click on the "Create Invoice" button to begin.
+                Fill in the necessary details, including information about yourself, your client's information and products/services.</li>
+            <li>Review and Save: Double-check your invoice for accuracy. Once satisfied, save it, and it's ready to be sent to your client.</li>
+            <li>Manage Invoices: All your invoices are conveniently stored on your dashboard. View, edit, or send invoices with just a few clicks.</li>
+            <li>Export and Share: Download your invoices as PDFs or share them directly with your clients through email.</li>
+        </ol>
+    </div>
+    <div class="about-thank-you">
+        <p>Thank you for choosing our Billing Application for your invoice creation and management needs. We look forward to helping you simplify your invoicing
+            process and save you valuable time. Get started today and experience the difference!</p>
     </div>
 </main>
 </body>

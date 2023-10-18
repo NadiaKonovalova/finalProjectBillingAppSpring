@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,15 +21,15 @@ public class ProductOrServiceController {
     }
 
     @GetMapping("/product-service")
-    public String displayAllProducts(Model model) {
-        List<ProductOrServiceEntity> productsOrServices = serviceForProducts.getAllProducts();
-        model.addAttribute("productsOrServices", productsOrServices);
-        return "allProductsAndServices";
+    public String getAllProducts(Model model) {
+        List<ProductOrServiceEntity> productsOrService = serviceForProducts.getAllProducts();
+        model.addAttribute("productsOrService", productsOrService);
+        return "allProductsAndServices"; // need to add name of the html page - list of all products and services
     }
 
     @GetMapping("/add-product-service")
     public String displayAddProductService() {
-        return "addProductsOrServices";
+        return "addProductsOrServices"; // need to add name of the html page - display page where user can add product or service
     }
 
     @PostMapping("/add-product-service")
@@ -66,13 +65,13 @@ public class ProductOrServiceController {
         }
     }
 
-    @GetMapping("/product/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProductService(@PathVariable UUID id) {
         try {
             serviceForProducts.deleteProductService(id);
             return "redirect:/product-service";
         } catch (Exception exception) {
-            return "redirect:/delete?status=PRODUCT_SERVICE_DELETION_FAILED&error=" + exception.getMessage();
+            return "redirect:/product-service?status=PRODUCT_SERVICE_DELETION_FAILED&error=" + exception.getMessage();
         }
     }
 
