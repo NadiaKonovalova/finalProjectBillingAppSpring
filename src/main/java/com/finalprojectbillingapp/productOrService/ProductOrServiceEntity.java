@@ -1,5 +1,6 @@
 package com.finalprojectbillingapp.productOrService;
 
+import com.finalprojectbillingapp.invoice.InvoiceEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,8 @@ public class ProductOrServiceEntity {
     private Category VATrate;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
+    @ManyToOne
+    InvoiceEntity invoice;
 
     @PrePersist
     public void beforeSaveProductService(){

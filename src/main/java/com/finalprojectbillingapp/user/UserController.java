@@ -11,8 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
 
-import static java.util.UUID.*;
-
 @Controller
 public class UserController {
 

@@ -1,11 +1,13 @@
 package com.finalprojectbillingapp.user;
 
+import com.finalprojectbillingapp.invoice.InvoiceEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 @Entity (name="Users")
 @Data
@@ -28,6 +30,8 @@ public class UserEntity {
     private Country country;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
+    @OneToMany(mappedBy = "user")
+    private List<InvoiceEntity> invoices;
 
     @PrePersist
     public void beforeSaveUser(){

@@ -10,17 +10,20 @@ import java.util.UUID;
 @Service
 public class ServiceForProducts {
     private ProductServiceRepository productServiceRepository;
+
     @Autowired
-    public ServiceForProducts(ProductServiceRepository productServiceRepository){
+    public ServiceForProducts(ProductServiceRepository productServiceRepository) {
         this.productServiceRepository = productServiceRepository;
     }
+
     // Returns all products saved to the DB
-    public List<ProductOrServiceEntity> getAllProducts(){
+    public List<ProductOrServiceEntity> getAllProducts() {
         return (ArrayList<ProductOrServiceEntity>)
                 this.productServiceRepository.findAll();
     }
+
     // To create a new product or service
-    public void createProductService (ProductOrServiceEntity productOrServiceEntity)
+    public void createProductService(ProductOrServiceEntity productOrServiceEntity)
             throws Exception {
         this.productServiceRepository.save(productOrServiceEntity);
     }
@@ -47,10 +50,22 @@ public class ServiceForProducts {
 
         productServiceRepository.delete(productOrServiceEntity);
     }
+
     public ProductOrServiceEntity findProductOrServiceById(UUID id) throws Exception {
-        for (ProductOrServiceEntity productOrServiceEntity: this.productServiceRepository.findAll()) {
-            if (productOrServiceEntity.getId().equals(id))return productOrServiceEntity;
+        for (ProductOrServiceEntity productOrServiceEntity : this.productServiceRepository.findAll()) {
+            if (productOrServiceEntity.getId().equals(id)) return productOrServiceEntity;
         }
         throw new Exception("Product or service not found");
+    }
+
+    // NEW 18-10
+    public List<UUID> getAllProductOrServiceIds() {
+        List<UUID> productIds = new ArrayList<>();
+
+        for (ProductOrServiceEntity productOrServiceEntity : this.productServiceRepository.findAll()) {
+            productIds.add(productOrServiceEntity.getId());
+        }
+
+        return productIds;
     }
 }

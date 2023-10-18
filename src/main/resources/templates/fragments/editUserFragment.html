@@ -1,35 +1,35 @@
 <section th:fragment="edit-user-data-fragment">
             <div class="input-group m-2">
                 <label class="input-group-text">E-mail</label>
-                <input name="email" class="form-control" type="email"
+                <input name="user.email" class="form-control" type="email"
                        th:value="${user.getEmail()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
-                <input name="name" class="form-control" type="text"
+                <input name="user.name" class="form-control" type="text"
                        th:value="${user.getName()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Tax Payer number</label>
-                <input name="taxpayerNo" class="form-control" type="text"
+                <input name="user.taxpayerNo" class="form-control" type="text"
                        th:value="${user.getTaxpayerNo()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Legal address</label>
-                <input name="legalAddress" class="form-control" type="text"
+                <input name="user.legalAddress" class="form-control" type="text"
                        th:value="${user.getLegalAddress()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Bank name</label>
-                <input name="bankName" class="form-control" type="text"
+                <input name="user.bankName" class="form-control" type="text"
                        th:value="${user.getBankName()}"/>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Bank account number</label>
-                <input name="accountNo" class="form-control" type="text"
+                <input name="user.accountNo" class="form-control" type="text"
                        th:value="${user.getAccountNo()}"/>
             </div>
-       <!--     <div class="input-group mt-2">
+            <div class="input-group mt-2">
                 <label class="input-group-text">Tax Payer Type</label>
                 <select class="form-control" name="taxpayerType"
                         th:value="${user.getTaxpayerType().getDisplayTypeName()}">
@@ -39,10 +39,10 @@
                     <option value="VAT_PAYER">VAT payer</option>
                     <option value="OTHER">Other</option>
                 </select>
-            </div>-->
+            </div>
             <div class="input-group mt-2">
                 <label class="input-group-text">Country</label>
-                <select class="form-control" name="country"
+                <select class="form-control" name="user.country"
                         th:value="${user.getCountry().getDisplayCountryName()}">
                     <option value="AUSTRIA">Austria</option>
                     <option value="BELGIUM">Belgium</option>

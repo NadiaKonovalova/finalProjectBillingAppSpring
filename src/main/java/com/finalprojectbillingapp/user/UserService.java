@@ -3,12 +3,9 @@ package com.finalprojectbillingapp.user;
 import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -80,6 +77,7 @@ public class UserService {
                 currentUser.setAccountNo(user.getAccountNo());
                 currentUser.setCountry(user.getCountry());
                 entityManager.flush();
+
             }
 
             return currentUser;

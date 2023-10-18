@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity (name="Invoices")
@@ -31,8 +32,13 @@ public class InvoiceEntity {
     private UserEntity user;
     @ManyToOne
     private CustomerEntity customer;
-    @ManyToOne
-    private ProductOrServiceEntity productOrService;
+    @ManyToMany
+    @JoinTable(
+            name = "invoice_products",
+            joinColumns = @JoinColumn(name = "invoice_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<ProductOrServiceEntity> products;
 
     @PrePersist
     public void beforeSaveInvoice(){

@@ -1,5 +1,6 @@
 package com.finalprojectbillingapp.customer;
 
+import com.finalprojectbillingapp.invoice.InvoiceEntity;
 import com.finalprojectbillingapp.user.Country;
 import com.finalprojectbillingapp.user.Type;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity (name = "Customers")
@@ -30,7 +32,8 @@ public class CustomerEntity {
     private Country country;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
-
+    @OneToMany(mappedBy = "customer")
+    private List<InvoiceEntity> invoices;
     @PrePersist
     public void beforeSaveCustomer (){
         this.createdAt = new Timestamp(System.currentTimeMillis());
