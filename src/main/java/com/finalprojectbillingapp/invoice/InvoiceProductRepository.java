@@ -8,6 +8,4 @@ import java.util.UUID;
 @Repository
 public interface InvoiceProductRepository extends CrudRepository<InvoiceProductEntity, UUID> {
     List<InvoiceProductEntity> findAll();
-    List<InvoiceProductEntity> findAllByInvoice_id(UUID invoiceId);
-
 }

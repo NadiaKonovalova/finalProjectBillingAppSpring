@@ -8,7 +8,7 @@
 <main class="container">
     <h3>Add a new Product or Service</h3>
     <section>
-        <form action="/createNewInvoice/productOrService" method="post">
+        <form th:action="${'/createNewInvoice/productOrService'}" method="post">
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
                 <input name="name" class="form-control" type="text"/>
@@ -52,15 +52,18 @@
                     <option value="OTHER">Other</option>
                 </select>
             </div>
-            <h4>Add more products or services?</h4>
+
             <input type="hidden" name="addMore" th:value="${'Yes'}" />
-            <button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}">YES</button>
-           <!-- <button id="noButton" th:action="confirmButton">NO</button>-->
+            <button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}" type="submit">Add more products or services</button>
             <div><b>To proceed without adding new items, press CONFIRM AND PROCEED</b></div>
 
+            <input type="hidden" name="addMore" th:value="${'No'}" />
+
             <div class="input-group mt-2">
-                <a th:href="${'createNewInvoice/signatureAndNotes'}" class="btn btn btn-dark text-white p-3">Confirm and Proceed</a>
+                <button id="confirmAndProceedButton" class="btn btn btn-dark text-white p-3" type="submit" >
+                    Confirm and Proceed</button>
             </div>
+
         </form>
     </section>
 </main>
