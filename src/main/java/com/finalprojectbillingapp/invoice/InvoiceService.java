@@ -18,15 +18,18 @@ import java.util.UUID;
 @Service
 public class InvoiceService {
     InvoiceRepository invoiceRepository;
-
+    private final InvoiceProductRepository invoiceProductRepository;
     @Autowired
-    public InvoiceService (InvoiceRepository invoiceRepository){
+    public InvoiceService (InvoiceRepository invoiceRepository,
+                           InvoiceProductRepository invoiceProductRepository){
         this.invoiceRepository=invoiceRepository;
+        this.invoiceProductRepository = invoiceProductRepository;
     }
 
-    public void createNewInvoice(InvoiceEntity invoiceEntity) throws Exception{
+    public InvoiceEntity createNewInvoice(InvoiceEntity invoiceEntity) throws Exception{
 
         this.invoiceRepository.save(invoiceEntity);
+        return invoiceEntity;
     }
 
     public List<InvoiceEntity>getAllInvoices(){
@@ -35,6 +38,10 @@ public class InvoiceService {
     }
     public InvoiceEntity getInvoiceById(UUID id) throws Exception{
         return this.invoiceRepository.findById(id).orElseThrow();
+    }
+
+    public List<InvoiceProductEntity> getAllInvoiceProducts(){
+        return invoiceProductRepository.findAll();
     }
 
 }
