@@ -4,18 +4,19 @@ import com.finalprojectbillingapp.customer.CustomerEntity;
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.user.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity (name="Invoices")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "invoiceProducts")
 public class InvoiceEntity {
     @Id @GeneratedValue (strategy = GenerationType.UUID)
     private UUID id;
@@ -31,6 +32,12 @@ public class InvoiceEntity {
     private UserEntity user;
     @ManyToOne
     private CustomerEntity customer;
-    @ManyToOne
-    private ProductOrServiceEntity productOrService;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InvoiceProductEntity> invoiceProducts = new ArrayList<>();
+
+    @PrePersist
+    public void beforeSaveInvoice(){
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 }

@@ -25,12 +25,12 @@ public class CustomerController {
     public String displayAllCustomers(Model model) {
         List<CustomerEntity> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "allCustomers";
+        return "allCustomers"; // need to add name of the html page - list of all customers
     }
 
     @GetMapping("/add-customer")
     public String displayAddCustomer(CustomerEntity customerEntity) {
-        return "addCustomer";
+        return "addCustomer"; // need to add name of the html page - display page where user can add customers
     }
 
     @PostMapping("/add-customer")
@@ -66,7 +66,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/deleteCustomer/{id}")
     public String deleteCustomer(@PathVariable UUID id) {
         try {
             customerService.deleteCustomer(id);
@@ -75,4 +75,6 @@ public class CustomerController {
             return "redirect:/delete?status=CUSTOMER_DELETION_FAILED&error=" + exception.getMessage();
         }
     }
+
+
 }

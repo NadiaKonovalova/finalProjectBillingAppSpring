@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
+<body>
+<main class="container">
+    <h3>Add a new Product or Service</h3>
+    <section>
+        <form th:action="${'/createNewInvoice/productOrService'}" method="post">
+            <div class="input-group m-2">
+                <label class="input-group-text">Name</label>
+                <input name="name" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Quantity</label>
+                <input name="quantity" class="form-control" type="number"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Unit</label>
+                <input name="unit" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Unit price</label>
+                <input name="unitPrice" class="form-control" type="number"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Currency</label>
+                <select name="currency" class="form-control">
+                    <option value="EUR">EUR</option>
+                    <option value="BGN">BGN</option>
+                    <option value="CZK">CZK</option>
+                    <option value="DKK">DKK</option>
+                    <option value="HUF">HUF</option>
+                    <option value="PLN">PLN</option>
+                    <option value="RON">RON</option>
+                    <option value="SEK">SEK</option>
+                    <option value="ISK">ISK</option>
+                    <option value="CHF">CHF</option>
+                    <option value="NOK">NOK</option>
+                </select>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">VAT Rate</label>
+                <select name="VATrate" class="form-control">
+                    <option value="STANDARD21">Standard 21%</option>
+                    <option value="REDUCED12">Reduced 12%</option>
+                    <option value="REDUCED10">Reduced 10%</option>
+                    <option value="REDUCED5">Reduced 5%</option>
+                    <option value="EXEMPTED0">Exempted 0%</option>
+                    <option value="OTHER">Other</option>
+                </select>
+            </div>
+
+            <input type="hidden" name="addMore" th:value="${'Yes'}" />
+            <button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}">Add more products or services</button>
+            <!-- <button id="noButton" th:action="confirmButton">NO</button>-->
+            <div><b>To proceed without adding new items, press CONFIRM AND PROCEED</b></div>
+
+            <input type="hidden" name="addMore" th:value="${'No'}" />
+<!--
+            <div class="input-group mt-2">
+                <button class="btn btn-dark text-white p-3">Confirm and Proceed</button>
+            </div>-->
+         <!--   <div class="input-group mt-2">
+                <a th:href="${'/createNewInvoice/signatureAndNotes'}"
+                   class="btn btn btn-dark text-white p-3">Confirm and Proceed</a>
+            </div>-->
+<!--SAVES BUT DOES NOT REDIRECT-->
+            <div class="input-group mt-2">
+                <button class="btn btn btn-dark text-white p-3" type="submit" id="confirmAndProceedButton">
+                    Confirm and Proceed</button>
+            </div>
+          <!--  <script>
+                document.getElementById("confirmAndProceedButton").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    // Redirect to the desired URL
+                    window.location.href = "/createNewInvoice/signatureAndNotes";
+                });
+            </script>-->
+
+           <!-- <a id="redirectButton" href="createNewInvoice/signatureAndNotes" style="display: none;"></a>
+            <script>
+                document.getElementById("confirmAndProceedButton").addEventListener("click", function() {
+                    // Redirect to the desired URL by triggering the anchor tag's click event
+                    document.getElementById("redirectButton").click();
+                });
+            </script>-->
+           <!-- <script>
+                document.getElementById("confirmAndProceedButton").addEventListener("click", function() {
+                    // Redirect to the desired URL
+                    window.location.href = "createNewInvoice/signatureAndNotes";
+                });
+            </script>-->
+
+<!--REDIRECTED BUT DID NOT SAVE-->
+           <!-- <button type="submit" id="submitBtn" style="display: none;"></button>
+        </form>
+
+        <a th:href="${'/createNewInvoice/signatureAndNotes'} class="btn btn btn-dark text-white p-3" id="submitButton">Confirm and Proceed</a>
+
+        <script>
+            document.getElementById('submitButton').addEventListener('click', function() {
+                // Trigger the hidden submit button's click event
+                document.getElementById('submitBtn').click();
+            });
+        </script>-->
+       <!--     <div class="input-group mt-2">
+                <a th:href="${'/createNewInvoice/signatureAndNotes'}" class="btn btn btn-dark text-white p-3">Confirm and Proceed</a>
+            </div>-->
+            <!--<button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}">
+                Add more products or services</button>
+            <button id="noButton" name="addMore" value="NO">NO</button>
+
+        &lt;!&ndash;    <div class="input-group mt-2">
+                <a th:href="${'/createNewInvoice/signatureAndNotes'}" class="btn btn btn-dark text-white p-3">Confirm and Proceed</a>
+                <button id="confirmButton" type="submit" name="addMore" value="CONFIRM"
+                        th:unless="${addMore == 'NO'}" style="display:none;">Confirm and Proceed</button>
+            </div>&ndash;&gt;
+
+            <div class="input-group mt-2">
+                <a th:href="${'/createNewInvoice/signatureAndNotes'}" class="btn btn btn-dark text-white p-3">Confirm and Proceed</a>
+            </div>
+            <div class="input-group mt-2">
+                <button id="confirmButton" type="submit" name="addMore" value="CONFIRM" th:if="${addMore == 'NO'}">CONFIRM AND PROCEED</button>
+            </div>
+            <input type="hidden" name="addMore" th:value="${'Add more products or services'}" />
+            <button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}">Add more products or services</button>
+           &lt;!&ndash; <button id="noButton" th:action="confirmButton">NO</button>&ndash;&gt;
+            <div><b>To proceed without adding any new items, press CONFIRM AND PROCEED</b></div>
+
+            <div class="input-group mt-2">
+                <a th:href="${'/createNewInvoice/signatureAndNotes'}"
+                   class="btn btn btn-dark text-white p-3">Confirm and Proceed</a>
+            </div>-->
+        </form>
+    </section>
+</main>
+</body>
+</html>

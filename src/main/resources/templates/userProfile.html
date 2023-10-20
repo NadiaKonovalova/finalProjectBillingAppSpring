@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
+
+<main>
+    <div>
+    <h3>User Profile</h3>
+    Lorem lorem lorem
+    <nav>
+        <a th:href="${'/singleUserProfile'}" class="btn btn-secondary">View</a>
+        <a th:href="${'/editUser'}" class="btn btn-secondary">Edit Profile</a>
+        <a th:href="${'/deleteUser'}" class="btn btn-secondary">Delete User</a>
+    </nav>
+    </div>
+
+</main>
+</body>
+</html>

@@ -1,7 +1,5 @@
 package com.finalprojectbillingapp.productOrService;
 
-import com.finalprojectbillingapp.customer.CustomerEntity;
-import com.finalprojectbillingapp.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +20,10 @@ public class ServiceForProducts {
                 this.productServiceRepository.findAll();
     }
     // To create a new product or service
-    public void createProductService (ProductOrServiceEntity productOrServiceEntity) {
+    public ProductOrServiceEntity createProductService (ProductOrServiceEntity productOrServiceEntity)
+            throws Exception {
         this.productServiceRepository.save(productOrServiceEntity);
+        return productOrServiceEntity;
     }
 
     // Edit product / service
@@ -43,12 +43,15 @@ public class ServiceForProducts {
 
     // delete product / service
     public void deleteProductService(UUID id) throws Exception {
-        ProductOrServiceEntity productOrServiceEntity = productServiceRepository.findById(id)
-                .orElseThrow(() -> new Exception("Product or service not found with ID: " + id));
+        ProductOrServiceEntity productOrServiceEntity = productServiceRepository
+                .findById(id).orElseThrow(() -> new Exception("Product or service not found with ID: " + id));
 
         productServiceRepository.delete(productOrServiceEntity);
     }
 
+    public ProductOrServiceEntity getProductById(UUID productID) throws Exception {
+        return this.productServiceRepository.findById(productID).orElseThrow();
+    }
     public ProductOrServiceEntity findProductOrServiceById(UUID id) throws Exception {
         for (ProductOrServiceEntity productOrServiceEntity: this.productServiceRepository.findAll()) {
             if (productOrServiceEntity.getId().equals(id))return productOrServiceEntity;

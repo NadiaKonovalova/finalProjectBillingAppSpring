@@ -1,0 +1,96 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<title>Create Invoice</title>
+<body>
+<main>
+    <h1>Create invoice</h1>
+    <section class="row">
+        <form>
+            <div class="input-group m-3 col-sm-3">
+                <label class="input-group-text">Invoice No.</label>
+                <!-- Or autoGenerate for loggedIn user-->
+                <input name="invoice" class="form-control" type="text"/>
+            </div>
+            <div class="input-group m-3">
+                <label for="date"> select date </label>
+                <input type="date" id="date" name="date"/>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>Name</label>
+                <p th:text="${name}"></p>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>legal Address</label>
+                <p th:text="${legalAddress}"></p>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>Country</label>
+                <p th:text="${country}"></p>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>Bank Name</label>
+                <p th:text="${BankName}"></p>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>taxpayer No</label>
+                <p th:text="${taxpayerNo}"></p>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>Account No</label>
+                <p th:text="${accountNo}"></p>
+            </div>
+            <div class="three-column-release-summary m-3 col-sm-3">
+                <label>Email</label>
+                <p th:text="${email}"></p>
+            </div>
+        </form>
+    </section>
+    <!--  <section class="container-fluid">
+
+
+
+              <dd class="col-sm-9" th:text="${user.getBankName()}">// makstja nosaukums</dd>
+              <dd class="col-sm-9"><p>Bank Name</p>
+              </dd>
+              <dt class="col-sm-3">Reg.no.</dt>
+              <dd class="col-sm-9">
+                  <input name="invoice" class="form-control" type="text"/>
+              </dd>
+          </dl>
+
+              <div class="input-group m-3">
+              <label class="input-group-text position-start-middle">  </label>
+
+          </div>
+          <div>
+              <label class="input-group-text position-start-middle"></label>
+              <input name="invoice" class="form-control" type="text"/>
+          </div>
+      </section>
+
+
+          <section>
+              <form>
+                  <div class="input-group m-3">
+                          <label class="input-group-text position-middle-end"> Customer information </label>
+                          <input name="Customer information" class="form-control" type="text"/>
+                  </div>
+          </form>
+             <div class="input-group m-2">
+                 <label class="input-group-text">Tax Payer number</label>
+                 <input name="taxpayerNo" class="form-control" type="text"/>
+               </div>
+               <div class="input-group m-2">
+                 <label class="input-group-text">Legal address</label>
+                 <input name="legalAddress" class="form-control" type="text"/>
+               </div>
+               <div class="input-group m-2">
+                 <label class="input-group-text">Bank name</label>
+                 <input name="bankName" class="form-control" type="text"/>
+               </div>
+          </section>-->
+</main>
+</body>
+</html>

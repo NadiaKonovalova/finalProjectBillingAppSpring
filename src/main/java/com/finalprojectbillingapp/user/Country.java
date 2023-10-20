@@ -1,36 +1,43 @@
 package com.finalprojectbillingapp.user;
 
 public enum Country {
-    AUSTRIA,
-    BELGIUM,
-    BULGARIA,
-    CROATIA,
-    CYPRUS,
-    CZECHIA,
-    DENMARK,
-    ESTONIA,
-    FINLAND,
-    FRANCE,
-    GERMANY,
-    GREECE,
-    HUNGARY,
-    ICELAND,
-    IRELAND,
-    ITALY,
-    LATVIA,
-    LIECHTENSTEIN,
-    LITHUANIA,
-    LUXEMBOURG,
-    MALTA,
-    NETHERLANDS,
-    NORWAY,
-    POLAND,
-    PORTUGAL,
-    ROMANIA,
-    SLOVAKIA,
-    SLOVENIA,
-    SPAIN,
-    SWEDEN
+    AUSTRIA ("Austria"),
+    BELGIUM ("Belgium"),
+    BULGARIA ("Bulgaria"),
+    CROATIA ("Croatia"),
+    CYPRUS ("Cyprus"),
+    CZECHIA ("Czech Republic"),
+    DENMARK ("Denmark"),
+    ESTONIA ("Estonia"),
+    FINLAND ("Finland"),
+    FRANCE ("France"),
+    GERMANY ("Germany"),
+    GREECE ("Greece"),
+    HUNGARY ("Hungary"),
+    ICELAND ("Iceland"),
+    IRELAND ("Ireland"),
+    ITALY ("Italy"),
+    LATVIA ("Latvia"),
+    LIECHTENSTEIN ("Liechtenstein"),
+    LITHUANIA ("Lithuania"),
+    LUXEMBOURG ("Luxembourg"),
+    MALTA ("Malta"),
+    NETHERLANDS ("Netherlands"),
+    NORWAY ("Norway"),
+    POLAND ("Poland"),
+    PORTUGAL ("Portugal"),
+    ROMANIA ("Romania"),
+    SLOVAKIA ("Slovakia"),
+    SLOVENIA ("Slovenia"),
+    SPAIN ("Spain"),
+    SWEDEN ("Sweden");
 
+    private final String displayCountryName;
+    Country(String displayCountryName){
+        this.displayCountryName = displayCountryName;
+    }
 
+    public String getDisplayCountryName () {
+        return displayCountryName;
+    }
 }
