@@ -3,6 +3,7 @@ package com.finalprojectbillingapp.invoice;
 import com.finalprojectbillingapp.customer.CustomerEntity;
 import com.finalprojectbillingapp.customer.CustomerRepository;
 import com.finalprojectbillingapp.customer.CustomerService;
+import com.finalprojectbillingapp.productOrService.Category;
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.productOrService.ProductServiceRepository;
 import com.finalprojectbillingapp.productOrService.ServiceForProducts;
@@ -13,10 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
@@ -51,9 +49,6 @@ public class InvoiceController {
         this.productServiceRepository = productServiceRepository;
         this.invoiceService = invoiceService;
     }
-// Varbūt šo sadalīt atsevišķās metodēs: add user --> continue or edit; add, choose or edit customer;
-    // add, choose or edit product
-
 
     // Works
     @GetMapping("/new-invoice/")
@@ -148,9 +143,9 @@ public class InvoiceController {
 
 
     @GetMapping("createNewInvoice/productOrService")
-    public String displayInvoiceProductServicePage(Model model) {
-        model.addAttribute("addMore",
-                "createNewInvoice/productOrService/add-more");
+    public String displayInvoiceProductServicePage() {
+/*        model.addAttribute("addMore",
+                "createNewInvoice/productOrService/add-more");*/
 
         return "testingAddProduct";
     }
@@ -165,7 +160,8 @@ public class InvoiceController {
     public String addProductsToInvoice(
             ProductOrServiceEntity productOrService,
             RedirectAttributes redirectAttributes,
-            @RequestParam("addMore") String addMore,
+//            @RequestParam("addMore") String addMore,
+            @RequestParam String action,
             HttpSession session) {
         // Saraksts, kur saglabā izvēlēto produktu ID
         List<UUID> productIDs = (List<UUID>) session.getAttribute("selectedProducts");
@@ -173,7 +169,7 @@ public class InvoiceController {
         if (productIDs == null) {
             productIDs = new ArrayList<>();
         }
-        try {
+      /*  try {
             ProductOrServiceEntity createdProduct =
                     this.serviceForProducts.createProductService(productOrService);
             UUID productID = createdProduct.getId();
@@ -187,6 +183,24 @@ public class InvoiceController {
                 return "redirect:/createNewInvoice/signatureAndNotes";
             }
 //            return "redirect:/createNewInvoice/signatureAndNotes";
+        } catch (Exception exception) {
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
+            return "redirect:/new-invoice/";
+        }*/
+        try {
+            ProductOrServiceEntity createdProduct =
+                    this.serviceForProducts.createProductService(productOrService);
+            UUID productID = createdProduct.getId();
+
+            productIDs.add(productID);
+            session.setAttribute("selectedProducts", productIDs);
+            System.out.println("Products: " + productIDs);
+            if ("addMore".equals(action)) {
+                return "redirect:/createNewInvoice/productOrService";
+            } else if ("redirect".equals(action)) {
+                return "redirect:/createNewInvoice/signatureAndNotes";
+            }
+            return "redirect:/createNewInvoice/signatureAndNotes";
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             return "redirect:/new-invoice/";
@@ -226,6 +240,7 @@ public class InvoiceController {
     public String displayConfirmPage() {
         return "invoiceConfirm";
     }
+
     @PostMapping("BEFOREinvoice-overview/")
     public String createInvoice(HttpSession session) throws Exception {
 
@@ -258,20 +273,111 @@ public class InvoiceController {
         }
         invoice.setInvoiceProducts(invoiceProducts);
         this.invoiceService.createNewInvoice(invoice);
+        session.setAttribute("newInvoiceId", invoice.getId());
 
         System.out.println(invoice);
-
+        System.out.println("Products in invoice: " + invoiceProducts);
 
 //        session.removeAttribute("selectedProductIds");
 
-        return "redirect:/invoice-overview"; // Redirect to the list of invoices
+        return "redirect:/invoice-overview/" + invoice.getId(); // Redirect to the list of invoices
     }
 
-    //
-//    @GetMapping("/archive-invoice")*/
+
+/*    public void testingList() {
+        List<InvoiceProductEntity> allInvoiceProducts = invoiceService.getAllInvoiceProducts();
+        for (InvoiceProductEntity invoicedProduct : allInvoiceProducts) {
+            System.out.println("InvoiceProduct ID: " + invoicedProduct);
+            ProductOrServiceEntity product = invoicedProduct.getProduct();
+            if (product != null) {
+                System.out.println("Product ID: " + product.getId());
+            }
+        }
+    }*/
+   /* @GetMapping("invoice-overview/{id}")
+    public String displayInvoiceOverview(@PathVariable UUID id, Model model, HttpSession session){
+        try {
+            UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
+            InvoiceEntity invoice = invoiceService.getInvoiceById(invoiceId);
+            CurrentInvoice currentInvoice = invoiceService.getCurrentInvoiceWithProducts(invoice);
+            UserEntity user = invoice.getUser();
+            CustomerEntity customer = invoice.getCustomer();
+            List<ProductOrServiceEntity> productDetails = new ArrayList<>();
+
+            for (InvoiceProductEntity invoicedProduct: invoiceService.getAllInvoiceProducts()) {
+                ProductOrServiceEntity product = invoicedProduct.getProduct();
+                if (product !=null){
+                    productDetails.add(product);
+                }
+            }
+
+            model.addAttribute("invoice", invoice);
+            model.addAttribute("user", user);
+            model.addAttribute("customer", customer);
+            model.addAttribute("products", productDetails);
+            return "invoiceOverview";
+        } catch (Exception exception) {
+            return "redirect:/?message=INVOICE_OVERVIEW_FAILED&error="
+                    + exception.getMessage();
+        }
+    }*/
+
+    @GetMapping("invoice-overview/{id}")
+    public String displayInvoiceOverview(@PathVariable UUID id, Model model, HttpSession session){
+        try {
+            UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
+            InvoiceEntity invoice = invoiceService.getInvoiceById(invoiceId);
+            CurrentInvoice currentInvoice = invoiceService.getCurrentInvoiceWithProducts(invoice);
+
+            model.addAttribute("currentInvoice", currentInvoice);
+
+            return "invoiceOverview";
+        } catch (Exception exception) {
+            return "redirect:/?message=INVOICE_OVERVIEW_FAILED&error="
+                    + exception.getMessage();
+        }
+    }
+    @PostMapping("/confirm-invoice")
+    public String confirmInvoice(@ModelAttribute InvoiceEntity invoice, Model model){
+        try {
+//            invoiceService.createNewInvoice(invoice);
+
+            return "redirect:/archive-invoice/"; /*+ invoice.getId();*/
+        } catch (Exception exception) {
+            return "redirect:/?message=CONFIRM_INVOICE_FAILED&error="
+                    + exception.getMessage();
+        }
+    }
+
+    @GetMapping("/archive-invoice")
     public String displayInvoicesFromArchive(Model model) {
         model.addAttribute("invoices", invoiceService.getAllInvoices());
         return "archiveInvoices";
+    }
+
+
+    public double invoiceTotalPrice(ProductOrServiceEntity productOrServiceEntity,
+                                    Model model){
+        double price = productOrServiceEntity.getUnitPrice();
+        Category taxCategory = productOrServiceEntity.getVATrate();
+        double taxRate = 0.0;
+        if(taxCategory==Category.REDUCED5){
+            taxRate = 0.05;
+        }else if(taxCategory==Category.REDUCED10){
+            taxRate = 0.1;
+        }else if (taxCategory==Category.REDUCED12){
+            taxRate = 0.12;
+        }else if(taxCategory==Category.STANDARD21){
+            taxRate = 0.21;
+        }
+        double quantity = productOrServiceEntity.getQuantity();
+        double totalPrice = price *quantity * (1 + taxRate);
+        model.addAttribute("unitPrice",price);
+        model.addAttribute("taxRate", taxRate);
+        model.addAttribute("quantity", quantity);
+        model.addAttribute("totalPrice", totalPrice);
+// get price & get Tax -> price+tax = total price;-> <list> -> invoice
+        return totalPrice;
     }
 }
 
@@ -297,5 +403,4 @@ public class InvoiceController {
     }*/
 
 
-    //  @PostMapping("/archive-invoice")
-
+//  @PostMapping("/archive-invoice")

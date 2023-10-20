@@ -40,4 +40,7 @@ public class InvoiceEntity {
         this.createdAt = new Timestamp(System.currentTimeMillis());
         this.lastUpdated = new Timestamp(System.currentTimeMillis());
     }
+
+    @JoinColumn(nullable = true)
+    private double totalPrice;
 }

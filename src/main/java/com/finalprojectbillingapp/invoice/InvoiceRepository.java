@@ -1,5 +1,6 @@
 package com.finalprojectbillingapp.invoice;
 
+import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,6 @@ public interface InvoiceRepository extends CrudRepository
         <InvoiceEntity, UUID> {
     InvoiceEntity findByInvoiceNumber
             (String invoiceNumber);
+
 
 }

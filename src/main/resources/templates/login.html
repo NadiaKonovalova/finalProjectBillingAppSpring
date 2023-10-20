@@ -32,7 +32,7 @@
 <header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}" style="background-color: #333; color: white; text-align: center; padding: 10px; font-family: Arial, sans-serif;"></header>
 <main>
     <section>
-        <h1 style="text-align: center; margin: 20px;">Log in</h1>
+        <h1 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Log in</h1>
         <form action="/login" method="post" style="width: 33%; margin: 0 auto;">
             <div class="input-group m-2">
                 <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">E-mail</label>
@@ -42,7 +42,7 @@
                 <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Password</label>
                 <input class="form-control" name="password" placeholder="Enter your password" type="password" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
-            <div class="m-2" style="text-align: center;">
+            <div class="m-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
                 <button class="btn btn-dark text-white p-3" style="font-weight: bold;">Log in</button>
             </div>
         </form>
