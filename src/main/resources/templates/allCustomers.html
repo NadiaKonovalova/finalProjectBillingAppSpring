@@ -32,8 +32,8 @@
                         <div th:text="${customer.getLegalAddress()}"></div>
                         <div th:text="${customer.getBankName()}"></div>
                         <div th:text="${customer.getAccountNo()}"></div>
-                        <div th:text="${customer.getTaxpayerType()}"></div>
-                        <div th:text="${customer.getCountry()}"></div>
+                        <div th:text="${customer.getTaxpayerType().getDisplayTypeName()}"></div>
+                        <div th:text="${customer.getCountry().getDisplayCountryName()}"></div>
                         <a th:href="${'/edit-customer/' + customer.getId()}" class="btn btn-primary">Edit</a>
                         <a th:href="${'/delete/' + customer.getId()}" class="btn btn-primary">Delete</a>
                     </div>

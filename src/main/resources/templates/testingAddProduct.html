@@ -8,7 +8,7 @@
 <main class="container">
     <h3>Add a new Product or Service</h3>
     <section>
-        <form th:action="${'/createNewInvoice/productOrService'}" method="post">
+        <form id="productForm" action="/createNewInvoice/productOrService" method="post">
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
                 <input name="name" class="form-control" type="text"/>
@@ -53,7 +53,7 @@
                 </select>
             </div>
 
-            <input type="hidden" name="addMore" th:value="${'Yes'}" />
+            <!--<input type="hidden" name="addMore" th:value="${'Yes'}" />
             <button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}" type="submit">Add more products or services</button>
             <div><b>To proceed without adding new items, press CONFIRM AND PROCEED</b></div>
 
@@ -62,10 +62,26 @@
             <div class="input-group mt-2">
                 <button id="confirmAndProceedButton" class="btn btn btn-dark text-white p-3" type="submit" >
                     Confirm and Proceed</button>
+            </div>-->
+
+            <button type="submit" name="action" value="addMore">Add more products or services</button>
+            <div><b>To proceed without adding new items, press CONFIRM AND PROCEED</b></div>
+            <div>
+                <button type="submit" name="action" class="btn btn btn-dark text-white p-3" value="redirect" >
+                    Confirm and Proceed</button>
             </div>
 
         </form>
     </section>
 </main>
+<script>
+    document.getElementById("yesButton").addEventListener("click", function() {
+        document.querySelector("input[name='addMore']").value = "Yes";
+    });
+
+    document.getElementById("confirmAndProceedButton").addEventListener("click", function() {
+        document.querySelector("input[name='addMore']").value = "No";
+    });
+</script>
 </body>
 </html>
