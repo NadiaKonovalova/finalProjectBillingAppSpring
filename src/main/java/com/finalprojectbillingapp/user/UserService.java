@@ -1,5 +1,8 @@
 package com.finalprojectbillingapp.user;
 
+import com.finalprojectbillingapp.invoice.InvoiceProductEntity;
+import com.finalprojectbillingapp.invoice.InvoiceProductRepository;
+import com.finalprojectbillingapp.invoice.InvoiceRepository;
 import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,24 @@ public class UserService {
 
     private UserRepository userRepository;
     private CookieHandling cookieHandling;
+    private InvoiceRepository invoiceRepository;
 
     @Autowired
     // Constructor
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository,
+                       InvoiceRepository invoiceRepository){
         this.userRepository = userRepository;
-        this.cookieHandling = cookieHandling;
+        this.invoiceRepository = invoiceRepository;
+    }
+
+    public boolean checkIfAccountExists (String loginEmail) {
+        UserEntity user = this.userRepository.findByLoginEmail
+                (loginEmail);
+        if (user == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @PersistenceContext
@@ -43,10 +58,10 @@ public class UserService {
 // might be improved to check if an e-mail is even registered
     // Password validity / security requirements to be added
     public UserEntity verifyLogin
-            (String email, String password)
+            (String loginEmail, String password)
         throws Exception {
-        UserEntity user = this.userRepository.findByEmailAndPassword
-                (email, password);
+        UserEntity user = this.userRepository.findByLoginEmailAndPassword
+                (loginEmail, password);
         return user;
     }
 // Single user
@@ -79,9 +94,8 @@ public class UserService {
                 currentUser.setBankName(user.getBankName());
                 currentUser.setAccountNo(user.getAccountNo());
                 currentUser.setCountry(user.getCountry());
-                entityManager.flush();
+                entityManager.merge(currentUser);
             }
-
             return currentUser;
         } catch (OptimisticLockException exception){
             throw new Exception("Please refresh to activate changes");
@@ -93,9 +107,29 @@ public class UserService {
             throw new Exception("Something went wrong");
         }
     }
-// Show current user
-    // Returns user data
 
+    public UserEntity editUserDetailsForInvoice(UserEntity user, UUID id) throws Exception {
+        UserEntity currentUser = this.findUserById(id);
+        try {
+            if (currentUser.getId().equals(user.getId())) {
+                currentUser.setName(user.getName());
+                currentUser.setEmail(user.getEmail());
+                currentUser.setTaxpayerNo(user.getTaxpayerNo());
+                currentUser.setLegalAddress(user.getLegalAddress());
+                currentUser.setTaxpayerType(user.getTaxpayerType());
+                currentUser.setBankName(user.getBankName());
+                currentUser.setAccountNo(user.getAccountNo());
+                currentUser.setCountry(user.getCountry());
+                currentUser = userRepository.save(currentUser);
+                return currentUser;
+            } else {
+                throw new Exception("User not found");
+            }
+        } catch (Exception exception) {
+
+            throw new Exception("Something went wrong");
+        }
+    }
 
     public UserEntity findUserById (UUID id)
         throws Exception{
@@ -118,9 +152,12 @@ public class UserService {
 
     public UserEntity getLoggedInUser(HttpServletRequest request) throws Exception {
         String cookieId = CookieHandling.getUserIdFromCookies(request);
-
-                UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
-                return loggedInUser;
+                try {
+                    UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
+                    return loggedInUser;
+                } catch (Exception exception){
+                    throw new Exception("User not found ");
+                }
     }
 
     @Transactional
@@ -139,5 +176,19 @@ public class UserService {
         catch (Exception exception) {
             throw new Exception("Something went wrong");
         }
+    }
+
+    public String getLoggedInUserEmail(HttpServletRequest request) throws Exception {
+        try {
+            UserEntity user = getLoggedInUser(request);
+            if (!(user == null)){
+                return user.getLoginEmail();
+            } else {
+                return null;
+            }
+        } catch (Exception exception){
+            throw new Exception("User not found");
+        }
+
     }
 }

@@ -34,6 +34,9 @@ public class InvoiceEntity {
     private CustomerEntity customer;
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InvoiceProductEntity> invoiceProducts = new ArrayList<>();
+    private double totalPrice;
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.NEW;
 
     @PrePersist
     public void beforeSaveInvoice(){

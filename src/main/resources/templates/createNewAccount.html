@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
+<body>
+<header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}"></header>
+<main>
+    <section>
+        <h1>Create a New Account</h1>
+        <form th:action="${'/create-new-account'}" method="post">
+            <!---some staff for log in: log in + password --->
+            <div class="input-group m-2">
+                <label class="input-group-text">E-mail</label>
+                <input class="form-control" name="email" placeholder="Enter your e-mail" type="text"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Password</label>
+                <input class="form-control" name="password" placeholder="Enter your password" type="password"/>
+            </div>
+            <div class="m-2">
+                <button class="btn btn-dark text-white p-3" type="submit">Create an account</button>
+            </div>
+            <div th:if="${error}">Error: <span th:text="${error}"></span></div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

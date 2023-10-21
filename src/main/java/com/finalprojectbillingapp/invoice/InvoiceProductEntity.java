@@ -1,6 +1,7 @@
 package com.finalprojectbillingapp.invoice;
 
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
+import com.finalprojectbillingapp.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class InvoiceProductEntity {
     private ProductOrServiceEntity product;
     @ManyToOne
     private InvoiceEntity invoice;
+
 
 
 }

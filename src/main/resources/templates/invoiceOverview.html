@@ -20,30 +20,30 @@
     <h3>Invoice Overview</h3>
     <section>
         <div class="invoice-info">
-            <p>Invoice No: <span th:text="${currentInvoice.invoice.invoiceNumber}"></span></p>
+            <p>Invoice No: <span th:text="${invoice.invoiceNumber}"></span></p>
             <!--<p>Invoice No: <span th:text="${invoice.invoiceNumber}"></span></p>-->
-            <p>Date: <span th:text="${currentInvoice.invoice.issuedAt}"></span></p>
+            <p>Date: <span th:text="${invoice.issuedAt}"></span></p>
         </div>
         <div class="user-info">
-            <p>Name: <span th:text="${currentInvoice.invoice.user.name}"></span></p>
-            <p>Email: <span th:text="${currentInvoice.invoice.user.email}"></span></p>
-            <p>Tax payer number: <span th:text="${currentInvoice.invoice.user.taxpayerNo}"></span></p>
-            <p>Address: <span th:text="${currentInvoice.invoice.user.legalAddress}"></span></p>
-            <p>Country: <span th:text="${currentInvoice.invoice.user.country.getDisplayCountryName()}"></span></p>
-            <p>Bank name: <span th:text="${currentInvoice.invoice.user.bankName}"></span></p>
-            <p>Account No: <span th:text="${currentInvoice.invoice.user.accountNo}"></span></p>
+            <p>Name: <span th:text="${invoice.user.name}"></span></p>
+            <p>Email: <span th:text="${invoice.user.email}"></span></p>
+            <p>Tax payer number: <span th:text="${invoice.user.taxpayerNo}"></span></p>
+            <p>Address: <span th:text="${invoice.user.legalAddress}"></span></p>
+            <p>Country: <span th:text="${invoice.user.country.getDisplayCountryName()}"></span></p>
+            <p>Bank name: <span th:text="${invoice.user.bankName}"></span></p>
+            <p>Account No: <span th:text="${invoice.user.accountNo}"></span></p>
         </div>
         <div class="customer-info">
-            <p>Customer name: <span th:text="${currentInvoice.invoice.customer.name}"></span></p>
-            <p>Tax payer number: <span th:text="${currentInvoice.invoice.customer.taxpayerNo}"></span></p>
-            <p>Address: <span th:text="${currentInvoice.invoice.customer.legalAddress}"></span></p>
-            <p>Country: <span th:text="${currentInvoice.invoice.customer.country.getDisplayCountryName()}"></span></p>
-            <p>Bank name: <span th:text="${currentInvoice.invoice.customer.bankName}"></span></p>
-            <p>Account No: <span th:text="${currentInvoice.invoice.customer.accountNo}"></span></p>
+            <p>Customer name: <span th:text="${invoice.customer.name}"></span></p>
+            <p>Tax payer number: <span th:text="${invoice.customer.taxpayerNo}"></span></p>
+            <p>Address: <span th:text="${invoice.customer.legalAddress}"></span></p>
+            <p>Country: <span th:text="${invoice.customer.country.getDisplayCountryName()}"></span></p>
+            <p>Bank name: <span th:text="${invoice.customer.bankName}"></span></p>
+            <p>Account No: <span th:text="${invoice.customer.accountNo}"></span></p>
         </div>
         <div class="product-service-info">
             <ul>
-                <li th:each="product : ${currentInvoice.products}">
+                <li th:each="product : ${products}">
                     <p>Product/Service name: <span th:text="${product.name}"></span></p>
                     <p>Quantity: <span th:text="${product.quantity}"></span></p>
                     <p>Unit: <span th:text="${product.unit}"></span></p>
@@ -52,10 +52,25 @@
                 </li>
             </ul>
         </div>
+        <div class="totalPrice">
+            <p>Total: <span th:text="${invoice.totalPrice}"></span></p>
+        </div>
+        <div class="invoice-data">
+            <p>Notes: <span th:text="${invoice.notes}"></span></p>
+            <p>Issued on: <span th:text="${invoice.issuedAt}"></span></p>
+            <p>Due by: <span th:text="${invoice.dueBy}"></span></p>
+            <p>Signature: <span th:text="${invoice.methodOfSigning.getDisplaySignatureName()}"></span></p>
+
+        </div>
     </section>
     <section>
         <form th:action="@{/confirm-invoice}" method="post">
             <button type="submit" class="btn btn-primary">Confirm Invoice</button>
+        </form>
+    </section>
+    <section>
+        <form th:action="@{/edit-invoice}" method="post">
+            <button type="submit" class="btn btn-primary">Edit Invoice</button>
         </form>
     </section>
 </main>

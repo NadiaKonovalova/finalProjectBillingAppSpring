@@ -6,11 +6,11 @@
 <main>
     <section>
         <h1>Log in</h1>
-        <form action="/login" method="post">
+        <form th:action="${'/login'}" method="post">
         <!---some staff for log in: log in + password --->
         <div class="input-group m-2">
             <label class="input-group-text">E-mail</label>
-            <input class="form-control" name="email" placeholder="Enter your e-mail" type="text"/>
+            <input class="form-control" name="loginEmail" placeholder="Enter your e-mail" type="text"/>
         </div>
         <div class="input-group m-2">
             <label class="input-group-text">Password</label>
@@ -19,6 +19,9 @@
         <div class="m-2">
             <button class="btn btn-dark text-white p-3">Log in</button>
         </div>
+            <div>
+                <a href="/register">Click here to create a new account</a>
+            </div>
         </form>
     </section>
 </main>

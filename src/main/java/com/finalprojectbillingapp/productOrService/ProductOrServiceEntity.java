@@ -27,9 +27,11 @@ public class ProductOrServiceEntity {
     private double unitPrice;
     @Enumerated(EnumType.STRING)
     private Currency currency;
+//    @Enumerated(EnumType.STRING)
     private Category VATrate;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
+    private double totalPerProduct;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<InvoiceProductEntity> invoices = new ArrayList<>();
 
