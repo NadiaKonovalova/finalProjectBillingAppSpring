@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
 <body>
+<header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}"></header>
 <main>
-    <h4>Register as a new user</h4>
-    <h5>To proceed, please create a new user account</h5>
-    <form action="/register" method="post">
+    <h4>Enter Your Details</h4>
+    <h5>To proceed, please fill in the required details</h5>
+    <form th:action="${'/register'}" method="post">
         <div class="input-group m-2">
             <label class="input-group-text">E-mail</label>
-            <input name="email" class="form-control" type="email"/>
+            <input name="loginEmail" class="form-control" type="email"/>
         </div>
         <div class="input-group m-2">
             <label class="input-group-text">Password</label>
@@ -22,27 +23,23 @@
                 <label class="input-group-text">Tax Payer number</label>
                 <input name="taxpayerNo" class="form-control" type="text"/>
             </div>
+        <div class="input-group mt-2">
+            <label class="input-group-text">Tax Payer Type</label>
+            <select class="form-control" name="taxpayerType">
+                <option value="INDIVIDUAL">Individual - natural person</option>
+                <option value="SELF_EMPLOYED">Self-employed</option>
+                <option value="MICRO_ENTERPRISE">Micro enterprise</option>
+                <option value="VAT_PAYER">VAT payer</option>
+                <option value="OTHER">Other</option>
+            </select>
+        </div>
+ <!--       <div class="input-group m-2">
+            <label class="input-group-text">Contact e-mail</label>
+            <input name="contactEmail" class="form-control" type="email"/>
+        </div>-->
             <div class="input-group m-2">
                 <label class="input-group-text">Legal address</label>
                 <input name="legalAddress" class="form-control" type="text"/>
-            </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">Bank name</label>
-                <input name="bankName" class="form-control" type="text"/>
-            </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">Bank account number</label>
-                <input name="accountNo" class="form-control" type="text"/>
-            </div>
-            <div class="input-group mt-2">
-                <label class="input-group-text">Tax Payer Type</label>
-                <select class="form-control" name="taxpayerType">
-                    <option value="INDIVIDUAL">Individual - natural person</option>
-                    <option value="SELF_EMPLOYED">Self-employed</option>
-                    <option value="MICRO_ENTERPRISE">Micro enterprise</option>
-                    <option value="VAT_PAYER">VAT payer</option>
-                    <option value="OTHER">Other</option>
-                </select>
             </div>
                 <div class="input-group mt-2">
                     <label class="input-group-text">Country</label>
@@ -79,9 +76,19 @@
                         <option value="SWEDEN">Sweden</option>
                     </select>
                 </div>
+        <div class="input-group m-2">
+            <label class="input-group-text">Bank name</label>
+            <input name="bankName" class="form-control" type="text"/>
+        </div>
+        <div class="input-group m-2">
+            <label class="input-group-text">Bank account number</label>
+            <input name="accountNo" class="form-control" type="text"/>
+        </div>
+
                     <div class="m-2">
-                        <button class="btn btn-dark text-white p-3">Sign Up</button>
+                        <button class="btn btn-dark text-white p-3">Save data</button>
                     </div>
+        <div>Log-in again to reload changes</div>
         </form>
     </section>
 </main>

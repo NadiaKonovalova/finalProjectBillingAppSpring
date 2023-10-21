@@ -33,6 +33,7 @@ public class ProductOrServiceController {
     @PostMapping("/add-product-service")
     public String createProductService(ProductOrServiceEntity productOrServiceEntity) {
         try {
+
             serviceForProducts.createProductService(productOrServiceEntity);
             return "redirect:/product-service";
         } catch (Exception exception) {

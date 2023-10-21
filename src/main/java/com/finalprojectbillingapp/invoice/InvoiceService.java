@@ -1,9 +1,16 @@
 package com.finalprojectbillingapp.invoice;
 
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
+import com.finalprojectbillingapp.user.UserEntity;
+import com.finalprojectbillingapp.user.UserRepository;
+import com.finalprojectbillingapp.user.UserService;
 import jakarta.persistence.metamodel.SingularAttribute;
+import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -12,14 +19,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService {
-    InvoiceRepository invoiceRepository;
+    private final InvoiceRepository invoiceRepository;
     private final InvoiceProductRepository invoiceProductRepository;
-
+    private final UserRepository userRepository;
+    private UserService userService;
+//    private final SessionFactory sessionFactory;
     @Autowired
     public InvoiceService(InvoiceRepository invoiceRepository,
-                          InvoiceProductRepository invoiceProductRepository) {
+                          InvoiceProductRepository invoiceProductRepository,
+                          UserRepository userRepository,
+                          UserService userService) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceProductRepository = invoiceProductRepository;
+        this.userRepository = userRepository;
+        this.userService = userService;
+//        this.sessionFactory = sessionFactory;
     }
 
     public InvoiceEntity createNewInvoice(InvoiceEntity invoiceEntity) throws Exception {
@@ -42,39 +56,34 @@ public class InvoiceService {
         return invoiceProductRepository.findAll();
     }
 
+    public List<InvoiceProductEntity> getProductsForInvoice(UUID invoiceId) {
+        return invoiceProductRepository.findAllByInvoice_id(invoiceId);
+    }
 
-    public Map<InvoiceEntity, List<ProductOrServiceEntity>> getInvoiceAndProductMap(List<InvoiceProductEntity> invoiceProducts) {
-        invoiceProducts = invoiceProductRepository.findAll();
-        // Each invoice from the InvoiceProductEntity is associated with specific ID
-        Map<InvoiceEntity, List<ProductOrServiceEntity>> invoiceProductMap = new HashMap<>();
+    public List<ProductOrServiceEntity> getProductObjectsForInvoice(UUID invoiceId) {
+        List<InvoiceProductEntity> invoiceProducts = this.invoiceProductRepository.findAllByInvoice_id(invoiceId);
+        List<ProductOrServiceEntity> products = new ArrayList<>();
 
         for (InvoiceProductEntity invoiceProduct : invoiceProducts) {
-            InvoiceEntity invoice = invoiceProduct.getInvoice();
-            ProductOrServiceEntity product = invoiceProduct.getProduct();
-
-            // Checks if invoice is already in the mao
-            if (invoiceProductMap.containsKey(invoice)) {
-                // If so, adds products to the list
-                invoiceProductMap.get(invoice).add(product);
-            } else {
-                // If not, creates a new product List
-                List<ProductOrServiceEntity> productList = new ArrayList<>();
-                productList.add(product);
-                invoiceProductMap.put(invoice, productList);
-            }
+            products.add(invoiceProduct.getProduct());
         }
-
-        return invoiceProductMap;
+        return products;
     }
 
-    // Jauna klase, kur uzreiz ir invoice objekts un produktu liste
-    public CurrentInvoice getCurrentInvoiceWithProducts(InvoiceEntity invoice) {
-        List<InvoiceProductEntity> getAll = this.invoiceProductRepository.findAll();
-        Map<InvoiceEntity, List<ProductOrServiceEntity>> productsInInvoice = getInvoiceAndProductMap(getAll);
-        List<ProductOrServiceEntity> invoicedProducts =
-                productsInInvoice.get(invoice);
-        System.out.println(invoicedProducts);
-        return new CurrentInvoice(invoice, invoicedProducts);
-    }
-
+//    public List<InvoiceEntity> getInvoicesForLoggedInUser(HttpServletRequest request) throws Exception {
+//        InvoiceEntity invoice = new InvoiceEntity();
+//        List<InvoiceEntity> archivedInvoices = new ArrayList<>();
+//        try {
+//            UserEntity user = this.userService.getLoggedInUser(request);
+//            String email = this.userService.getLoggedInUserEmail(request);
+//
+//            sessionFactory.openSession();
+//
+//            String queryEmail = "FROM users WHERE loginEmail LIKE %?%";
+//            Query<UserEntity> query = sessionFactory.createEntityManager()
+//
+//        } catch (Exception exception){
+//            throw new Exception(exception.getMessage());
+//        }
+//    }
 }
