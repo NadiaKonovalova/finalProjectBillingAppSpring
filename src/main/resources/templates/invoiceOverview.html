@@ -18,6 +18,7 @@
 <body>
 <main class="container">
   <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Invoice Overview</h3>
+  <span th:text="${to}"></span>
   <table style="width: 100%; border-collapse: collapse;">
     <tr>
       <td style="padding: 10px; border: 1px solid #ccc;">
@@ -86,11 +87,14 @@
     </tr>
   </table>
   <section style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-    <form th:action="@{/edit-invoice}" method="post" style="display: inline-block; margin-right: 10px;">
-      <button type="submit" class="btn btn-dark text-white p-3" style="font-weight: bold;">Edit Invoice</button>
+    <form th:action="@{/cancel-invoice}" method="post" style="display: inline-block; margin-right: 10px;">
+      <button type="submit" class="btn btn-dark text-white p-3" style="font-weight: bold;">Cancel Invoice</button>
     </form>
     <form th:action="@{/confirm-invoice}" method="post" style="display: inline-block;">
       <button type="submit" class="btn btn-dark text-white p-3" style="font-weight: bold;">Confirm Invoice</button>
+    </form>
+    <form th:action="@{/generate-pdf-invoice}" method="get" style="display: inline-block;">
+      <button type="submit" class="btn btn-dark text-white p-3" style="font-weight: bold;">Create PDF</button>
     </form>
   </section>
 </main>

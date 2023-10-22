@@ -8,8 +8,7 @@
   <h4 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Confirm or Edit Your Data</h4>
   <section class="container">
     <form th:action="@{'/createNewInvoice/userData'}" method="post" style="width: 33%; margin: 0 auto;">
-      <section th:replace="~{fragments/editUserFragment.html::edit-user-data-fragment}">
-      </section>
+      <section th:replace="~{fragments/editUserFragment.html::edit-user-data-fragment}"></section>
       <div class="input-group mt-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
         <button class="btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Confirm and Proceed</button>
       </div>

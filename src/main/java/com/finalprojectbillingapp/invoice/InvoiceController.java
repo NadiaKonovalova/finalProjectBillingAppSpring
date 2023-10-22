@@ -6,7 +6,9 @@ import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.productOrService.ProductServiceRepository;
 import com.finalprojectbillingapp.productOrService.ServiceForProducts;
 import com.finalprojectbillingapp.user.*;
+import com.itextpdf.text.DocumentException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.text.html.HTML;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 
@@ -49,7 +57,12 @@ public class InvoiceController {
 
     // Works
     @GetMapping("/new-invoice/")
-    public String displayStartInvoicePage() {
+    public String displayStartInvoicePage(HttpSession session) {
+        Enumeration<String> attributeNames = session.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String attributeName = attributeNames.nextElement();
+            session.removeAttribute(attributeName);
+        }
         return "invoices";
     }
 
@@ -85,9 +98,9 @@ public class InvoiceController {
     public String displayInvoiceUserPage(HttpServletRequest request,
                                          Model model) throws Exception {
         UserEntity user = this.userService.getLoggedInUser(request);
-        UUID userId = user.getId();
+        UUID idd = user.getId();
         try {
-            if (userId != null) {
+            if (id != null) {
                 model.addAttribute("user", user);
             }
             return "userPageForInvoice";
@@ -141,14 +154,20 @@ public class InvoiceController {
         }
     }
 
-
     @GetMapping("createNewInvoice/productOrService")
-    public String displayInvoiceProductServicePage() {
-        return "testingAddProduct";
+    public String displayInvoiceProductServicePage(HttpSession session) throws Exception {
+        UUID userID = (UUID) session.getAttribute("userId");
+        UserEntity user1 = this.userService.getUserById(userID);
+        if (user1.getTaxpayerType().equals(Type.VAT_PAYER)) {
+            return "testingAddProduct";
+        } else {
+            return "testingAddProductNoVAT";
+        }
     }
 
     @GetMapping("createNewInvoice/productOrService/add-more")
     public String addMoreProductServicePage() {
+
         return "testingAddProduct";
     }
 
@@ -168,10 +187,19 @@ public class InvoiceController {
         try {
             ProductOrServiceEntity createdProduct =
                     this.serviceForProducts.createProductService(productOrService);
-            double totalPrice = this.serviceForProducts.calculatePricePerProduct(createdProduct);
-            createdProduct.setTotalPerProduct(totalPrice);
+            UUID userID = (UUID) session.getAttribute("userId");
+            UserEntity user1 = this.userService.getUserById(userID);
+            if (user1.getTaxpayerType().equals(Type.VAT_PAYER)) {
+                double totalPrice = this.serviceForProducts.calculatePricePerProductWithVAT(createdProduct);
+                createdProduct.setTotalPerProduct(totalPrice);
+                System.out.println(totalPrice);
+            } else {
+                double totalPrice = this.serviceForProducts.calculatePricePerProductNoVAT(createdProduct);
+                createdProduct.setTotalPerProduct(totalPrice);
+                System.out.println(totalPrice);
+            }
             productServiceRepository.save(createdProduct);
-            System.out.println(totalPrice);
+
             UUID productID = createdProduct.getId();
 
             productIDs.add(productID);
@@ -285,12 +313,45 @@ public class InvoiceController {
     @PostMapping("/confirm-invoice")
     public String confirmInvoice(@ModelAttribute InvoiceEntity invoice, Model model){
         try {
-            return "redirect:/archive-invoice/";
+            return "redirect:/generate-pdf-invoice";
         } catch (Exception exception) {
             return "redirect:/?message=CONFIRM_INVOICE_FAILED&error="
                     + exception.getMessage();
         }
     }
+    @PostMapping("/cancel-invoice")
+    public String handleCancelInvoice(HttpSession session) throws Exception {
+        UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
+        InvoiceEntity invoice = invoiceService.getInvoiceById(invoiceId);
+        invoice.setStatus(Status.VOID);
+        this.invoiceRepository.save(invoice);
+        return "mainPageForUser";
+    }
+
+    @GetMapping("/generate-invoice/")
+    public String generateInvoice(Model model) {
+        model.addAttribute("to", "BillingApp");
+        System.out.println("pdf is created");
+        return "invoiceOverview";
+    }
+    @GetMapping("/generate-pdf-invoice")
+    public void generatePdfInvoice(HttpServletResponse response, CreatePdfFile createPdfFile, HTML html) {
+        // Здесь вы можете использовать вашу логику для генерации PDF из HTML и отправки его в HTTP-ответ
+        try {
+            String htmlContent = createPdfFile.parseThymeleafTemplate(); // Здесь используйте метод для генерации HTML из Thymeleaf
+            
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+            OutputStream outputStream = response.getOutputStream();
+            createPdfFile.generatePdfFromHtml(html);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (com.lowagie.text.DocumentException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     @GetMapping("/archive-invoice")
     public String displayInvoicesFromArchive(Model model) {
         model.addAttribute("invoices", invoiceService.getAllInvoices());
