@@ -16,7 +16,8 @@ public class UserEntity {
     @Id @GeneratedValue (strategy = GenerationType.UUID)
     private UUID id = UUID.randomUUID();
    private String name;
-    private String email;
+    private String loginEmail;
+    private String email = loginEmail;
     private String password;
     private String taxpayerNo;
     private String legalAddress;
@@ -35,5 +36,9 @@ public class UserEntity {
         this.lastUpdated = new Timestamp(System.currentTimeMillis());
     }
 
+    @PreUpdate
+    public void beforeUpdateUser(){
+        this.lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 }
 

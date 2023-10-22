@@ -1,33 +1,9 @@
-<!--<!doctype html>-->
-<!--<html lang="en">-->
-<!--<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>-->
-<!--<body>-->
-<!--<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>-->
-
-<!--<main class="container">-->
-<!--  <h4>Enter invoice number/title</h4>-->
-<!--  <section class="container">-->
-<!--    <form th:action="@{'/createNewInvoice/confirmInvoiceNumber'}" method="post">-->
-<!--      <div class="input-group m-2">-->
-<!--        <label class="input-group-text">Enter unique number/title for the invoice</label>-->
-<!--        <input name="invoiceNumber" class="form-control" type="text"/>-->
-<!--      </div>-->
-<!--      <div class="input-group mt-2">-->
-<!--        <button class="btn btn-dark text-white p-3">Confirm and Proceed</button>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </section>-->
-<!--</main>-->
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
 <body  style="color: white; font-family: Arial, sans-serif;">
 <header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}" style="background-color: #333; color: white; text-align: center; padding: 10px; font-family: Arial, sans-serif;"></header>
-<main>
+<main class="container">
   <section>
     <h4 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Enter invoice number/title</h4>
     <form th:action="@{'/createNewInvoice/confirmInvoiceNumber'}" method="post" style="width: 33%; margin: 0 auto;">

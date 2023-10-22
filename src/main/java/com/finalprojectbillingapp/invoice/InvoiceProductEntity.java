@@ -4,8 +4,8 @@ import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
 @Entity(name="productsInInvoice")
@@ -21,6 +21,7 @@ public class InvoiceProductEntity {
     private ProductOrServiceEntity product;
     @ManyToOne
     private InvoiceEntity invoice;
+
 
 
 }
