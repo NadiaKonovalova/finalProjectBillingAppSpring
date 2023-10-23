@@ -320,7 +320,7 @@ public class InvoiceController {
                                  Model model,
                                  HttpSession session) {
         try {
-            return "redirect:/archive-invoice/";
+            return "redirect:/archive-invoice";
         } catch (Exception exception) {
             return "redirect:/?message=CONFIRM_INVOICE_FAILED&error="
                     + exception.getMessage();
@@ -378,13 +378,19 @@ public class InvoiceController {
 //                    + exception.getMessage();
 //        }
 //    }
-    @GetMapping("/archive-invoice/")
+    @GetMapping("/archive-invoice")
     public String displayInvoicesFromArchive(Model model, HttpServletRequest request) throws Exception {
-        String loginEmail = this.userService.getLoggedInUserEmail(request);
-        if (loginEmail != null) {
-            List<InvoiceEntity> invoices = this.invoiceService.getInvoicesByUserEmail(loginEmail);
-            model.addAttribute("invoices", invoices);
-            System.out.println(invoices);
+        try {
+            String loginEmail = this.userService.getLoggedInUserEmail(request);
+            if (loginEmail != null) {
+                List<InvoiceEntity> invoices = this.invoiceService.getInvoicesByUserEmail(loginEmail);
+                model.addAttribute("invoices", invoices);
+                System.out.println(invoices);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            model.addAttribute("errorMessage",
+                    "An error occurred while fetching data");
         }
         return "archiveInvoices";
     }
@@ -410,21 +416,23 @@ public class InvoiceController {
 //            throw new RuntimeException(e);
 //        }
 //    }
-@GetMapping("/generate-pdf/{id}")
-        public String generateInvoicePdf(@PathVariable UUID invoiceId, HttpSession session){
-            String invoiceHtml = fetchInvoiceHtml(invoiceId);
-            invoiceId = (UUID) session.getAttribute("newInvoiceId");
-    CreatePdfFile converter = new CreatePdfFile();
-    String outputPdfPath = "src/main/resources/pdf/invoicePdf.html"; // Set the output path
-    converter.generatePdf(invoiceHtml, outputPdfPath);
-
-    return "redirect:/invoices";
-    }
-
-    private String fetchInvoiceHtml(UUID invoiceId) {
-
-        return "<html><body><h1>Invoice HTML Content</h1></body></html>";
-    }
+//@GetMapping("/generate-pdf-invoice")
+//public void generatePdfInvoice(HttpServletResponse response, CreatePdfFile createPdfFile, HTML html) {
+//    // Здесь вы можете использовать вашу логику для генерации PDF из HTML и отправки его в HTTP-ответ
+//    try {
+//        String htmlContent = createPdfFile.parseThymeleafTemplate(); // Здесь используйте метод для генерации HTML из Thymeleaf
+//
+//        response.setContentType("application/pdf");
+//        response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+//        OutputStream outputStream = response.getOutputStream();
+//        createPdfFile.generatePdfFromHtml(html);
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    } catch (com.lowagie.text.DocumentException e) {
+//        throw new RuntimeException(e);
+//    }
+//
+//}
 }
 
 
