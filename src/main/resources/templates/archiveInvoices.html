@@ -6,7 +6,10 @@
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <main class="container">
 <div>
+
     <h1>Archive invoices</h1>
+    <div th:if="${invoices.isEmpty()}">There are No products or services to display</div>
+    <div th:if="${!invoices.isEmpty()}">
     <table style="width: 100%; border-collapse: collapse;">
         <tr>
             <th>Invoice No.</th>
@@ -38,6 +41,7 @@
             <td th:text="${invoice.status.toString()}"></td>
         </tr>
     </table>
+    </div>
     <form action="/archive-invoice" method="post"></form>
 </div>
 </main>
