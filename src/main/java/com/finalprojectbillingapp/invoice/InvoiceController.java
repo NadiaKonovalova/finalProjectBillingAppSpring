@@ -175,16 +175,16 @@ public class InvoiceController {
         return "testingAddProduct";
     }
 
-    @PostMapping("createNewInvoice/productOrService")
+   @PostMapping("createNewInvoice/productOrService")
+   // @PostMapping("createNewInvoice/productOrService")
     public String addProductsToInvoice(
             ProductOrServiceEntity productOrService,
             RedirectAttributes redirectAttributes,
             @RequestParam String action,
             HttpSession session) {
 
-        // Saraksts, kur saglabā izvēlēto produktu ID
         List<UUID> productIDs = (List<UUID>) session.getAttribute("selectedProducts");
-        // Ja šāds saraksts vēl nav izveidots (pirms AddMore), izveido to
+
         if (productIDs == null) {
             productIDs = new ArrayList<>();
         }
@@ -220,7 +220,6 @@ public class InvoiceController {
             return "redirect:/new-invoice/";
         }
     }
-
     @GetMapping("createNewInvoice/signatureAndNotes")
     public String displaySignatureAndNotesPage() {
         return "signatureAndNotes";
@@ -249,7 +248,7 @@ public class InvoiceController {
         }
     }
 
-    // JĀATROD ŠIM LABA VIETA
+
     @GetMapping("BEFOREinvoice-overview/")
     public String displayConfirmPage() {
         return "invoiceConfirm";

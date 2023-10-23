@@ -27,7 +27,7 @@ public class ProductOrServiceEntity {
     private double unitPrice;
     @Enumerated(EnumType.STRING)
     private Currency currency;
-//    @Enumerated(EnumType.STRING)
+    //    @Enumerated(EnumType.STRING)
     private Category VATrate;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
