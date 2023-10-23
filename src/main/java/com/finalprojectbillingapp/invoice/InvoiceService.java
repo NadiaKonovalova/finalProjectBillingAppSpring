@@ -5,7 +5,9 @@ import com.finalprojectbillingapp.user.UserEntity;
 import com.finalprojectbillingapp.user.UserRepository;
 import com.finalprojectbillingapp.user.UserService;
 import jakarta.persistence.metamodel.SingularAttribute;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ public class InvoiceService {
     private final InvoiceProductRepository invoiceProductRepository;
     private final UserRepository userRepository;
     private UserService userService;
+    private HttpSession session;
 //    private final SessionFactory sessionFactory;
     @Autowired
     public InvoiceService(InvoiceRepository invoiceRepository,
@@ -68,6 +71,36 @@ public class InvoiceService {
             products.add(invoiceProduct.getProduct());
         }
         return products;
+    }
+
+//    public static String getUserIdFromCookies (HttpServletRequest request) {
+//        Cookie[] cookies = request.getCookies();
+//        String userId = null;
+//
+//        if (cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if (cookie.getName().equals("loggedInUserId")) {
+//                    userId = cookie.getValue();
+//                    break;
+//                }
+//            }
+//        }
+//        return userId;
+//    }
+
+
+
+    // Method to remove all session attributes
+    public void removeAllSessionAttributes() {
+        Enumeration<String> attributeNames = session.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String attributeName = attributeNames.nextElement();
+            session.removeAttribute(attributeName);
+        }
+    }
+
+    public List<InvoiceEntity> getInvoicesByUserEmail(String userEmail) {
+        return invoiceRepository.findInvoicesByUserLoginEmail(userEmail);
     }
 
 //    public List<InvoiceEntity> getInvoicesForLoggedInUser(HttpServletRequest request) throws Exception {

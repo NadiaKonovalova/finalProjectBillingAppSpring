@@ -1,33 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Products/Services')}"> </head>
-<body>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 
 <body>
 <main class="container">
-    <h3>Add a new Product or Service</h3>
+    <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Add a new Product or Service</h3>
     <section>
-        <form id="productForm" action="/createNewInvoice/productOrService" method="post">
+        <form id="productForm" action="/createNewInvoice/productOrService" method="post" style="width: 33%; margin: 0 auto;">
             <div class="input-group m-2">
-                <label class="input-group-text">Name</label>
-                <input name="name" class="form-control" type="text"/>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Name</label>
+                <input name="name" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Quantity</label>
-                <input name="quantity" class="form-control" type="number" step="0.01"/>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Quantity</label>
+                <input name="quantity" class="form-control" type="number" step="0.01" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Unit</label>
-                <input name="unit" class="form-control" type="text"/>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Unit</label>
+                <input name="unit" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Unit price</label>
-                <input name="unitPrice" class="form-control" type="number" step="0.01"/>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Unit price</label>
+                <input name="unitPrice" class="form-control" type="number" step="0.01" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Currency</label>
-                <select name="currency" class="form-control">
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Currency</label>
+                <select name="currency" class="form-control" style="box-shadow: 3px 3px 5px #888888;">
                     <option value="EUR">EUR</option>
                     <option value="BGN">BGN</option>
                     <option value="CZK">CZK</option>
@@ -41,17 +40,6 @@
                     <option value="NOK">NOK</option>
                 </select>
             </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">VAT Rate</label>
-                <select name="VATrate" class="form-control">
-                    <option value="STANDARD21">Standard 21%</option>
-                    <option value="REDUCED12">Reduced 12%</option>
-                    <option value="REDUCED10">Reduced 10%</option>
-                    <option value="REDUCED5">Reduced 5%</option>
-                    <option value="EXEMPTED0">Exempted 0%</option>
-                    <option value="OTHER">Other</option>
-                </select>
-            </div>
 
             <!--<input type="hidden" name="addMore" th:value="${'Yes'}" />
             <button id="yesButton" th:attr="data-url=${'createNewInvoice/productOrService/add-more'}" type="submit">Add more products or services</button>
@@ -63,11 +51,13 @@
                 <button id="confirmAndProceedButton" class="btn btn btn-dark text-white p-3" type="submit" >
                     Confirm and Proceed</button>
             </div>-->
+            <div style="display: flex; justify-content: center; align-items: center; height: auto;">
+                <button class="btn btn btn-light text-black p-1" type="submit" name="action" value="addMore" style="margin-top: 20px; margin-bottom: 20px; border-color: grey;">Add more products or services</button>
+            </div>
 
-            <button type="submit" name="action" value="addMore">Add more products or services</button>
             <div><b>To proceed without adding new items, press CONFIRM AND PROCEED</b></div>
-            <div>
-                <button type="submit" name="action" class="btn btn btn-dark text-white p-3" value="redirect" >
+            <div style="display: flex; justify-content: center; align-items: center; height: auto;">
+                <button type="submit" name="action" class="btn btn btn-dark text-white p-3" value="redirect" style="font-weight: bold; margin-top: 20px;">
                     Confirm and Proceed</button>
             </div>
 

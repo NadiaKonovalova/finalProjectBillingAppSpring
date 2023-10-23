@@ -17,7 +17,6 @@ public class UserEntity {
     private UUID id = UUID.randomUUID();
    private String name;
     private String loginEmail;
-    private String email = loginEmail;
     private String password;
     private String taxpayerNo;
     private String legalAddress;

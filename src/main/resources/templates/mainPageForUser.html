@@ -1,26 +1,28 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Main Page')}"> </head>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
-<body>
-<main class="container">
-    <!-- <h1>User Page</h1> -->
-    <form action ="/mainPageForUser" method="get"></form>
+<body style="font-family: Arial, sans-serif;">
+<main class="container" style="padding: 20px;">
     <section>
         <div class="text-center">
-            <p class="fs-1"> Welcome!</p>
-            <p class="fs-3">
-                You have successfully log in Billing application!
+            <p class="fs-1" style="color: #333; font-weight: bold;"> Welcome to the Billing Application!</p>
+            <p class="fs-3" style="color: #555;">
+                You have successfully logged into the Billing Application. Here, you can manage your invoices and perform various actions to streamline your billing process.
             </p>
-            <p>
-                Choose your next steps, what would you want to do?
+            <p style="color: #666; text-align: center; padding-top: 100px; font-size: 22px; font-weight: bold;">
+                Choose your next steps, explore the available features, and make the most of our platform.
             </p>
-            <p>
-                you can choose actions with invoices, like create or use invoices from archive...
+            <p style="color: #666; text-align: left; padding-top: 70px; font-size: 22px; font-weight: bold;">
+                Some of the key features include:
             </p>
-            <p>
-                some more staff...
-            </p>
+            <ul style="color: #666; text-align: left; font-size: 20px;">
+                <li>Create new invoices for your clients.</li>
+                <li>View and manage your existing invoices.</li>
+                <li>Access your invoice archive for historical records.</li>
+                <li>Customize and update your user profile.</li>
+                <li>And much more...</li>
+            </ul>
         </div>
     </section>
 </main>
