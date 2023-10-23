@@ -34,11 +34,7 @@ public class UserService {
     public boolean checkIfAccountExists (String loginEmail) {
         UserEntity user = this.userRepository.findByLoginEmail
                 (loginEmail);
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return (user != null);
     }
 
     @PersistenceContext
