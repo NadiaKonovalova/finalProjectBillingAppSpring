@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+
 import javax.swing.text.html.HTML;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -75,9 +77,7 @@ public class InvoiceController {
         session.setAttribute("invoiceId", invoiceId);
         return "enterInvoiceNumber";
     }
-
-    // Works
-    @PostMapping("/createNewInvoice/confirmInvoiceNumber")
+    @PostMapping("/createNewInvoice/invoiceNumber")
     public String confirmInvoiceNumber(@RequestParam("invoiceNumber") String invoiceNumber,
                                        HttpSession session,
                                        RedirectAttributes redirectAttributes) throws Exception {
@@ -85,16 +85,18 @@ public class InvoiceController {
             session.setAttribute("invoiceNumber", invoiceNumber);
             System.out.println("Invoice number: " + invoiceNumber);
 
-            return "redirect:/createNewInvoice/userData";
+            return "redirect:/createNewInvoice/userData/";
 
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             return "redirect:/?message=INVOICE_NUMBER_FAILED&error=/";
         }
     }
+  // @PostMapping("/createNewInvoice/confirmInvoiceNumber")
+
 
     //Works
-    @GetMapping("createNewInvoice/userData")
+    @GetMapping("createNewInvoice/userData/")
     public String displayInvoiceUserPage(HttpServletRequest request,
                                          Model model, HttpSession session) throws Exception {
         UserEntity user = this.userService.getLoggedInUser(request);
@@ -109,8 +111,9 @@ public class InvoiceController {
         }
     }
 
+    @PostMapping("createNewInvoice/userDate")
     //Works
-    @PostMapping("createNewInvoice/userData")
+//    @PostMapping("createNewInvoice/userData")
     public String confirmUserData(@ModelAttribute("user") UserEntity user,
                                   HttpServletRequest request,
                                   RedirectAttributes redirectAttributes,
@@ -347,9 +350,9 @@ public class InvoiceController {
        } */
     @GetMapping("/generate-pdf-invoice")
     public void generatePdfInvoice(HttpServletResponse response, CreatePdfFile createPdfFile, HTML html) {
-        // Здесь вы можете использовать вашу логику для генерации PDF из HTML и отправки его в HTTP-ответ
+
         try {
-            String htmlContent = createPdfFile.parseThymeleafTemplate(); // Здесь используйте метод для генерации HTML из Thymeleaf
+            String htmlContent = createPdfFile.parseThymeleafTemplate();
 
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
