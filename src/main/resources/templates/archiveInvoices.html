@@ -1,14 +1,49 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::after-login-head}">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Archive')}">
 </head>
-<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
-<title>Archive invoice</title>
 <body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<main class="container">
 <div>
-    <h1>Archive invoices</h1>
-    <form action="/archive-invoice" method="post"></form>
 
+    <h1>Archive invoices</h1>
+    <div th:if="${invoices.isEmpty()}">There are No products or services to display</div>
+    <div th:if="${!invoices.isEmpty()}">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <th>Invoice No.</th>
+            <th>Created at</th>
+            <th>Issued on</th>
+            <th>Due by</th>
+            <th>Seller</th>
+            <th>Buyer</th>
+            <th>Products</th>
+            <th>Total Sum</th>
+            <th>Status</th>
+
+        </tr>
+
+        <tr th:each="invoice : ${invoices}">
+            <td th:text="${invoice.invoiceNumber}"></td>
+            <td th:text="${invoice.createdAt}"></td>
+            <td th:text="${invoice.issuedAt}"></td>
+            <td th:text="${invoice.dueBy}"></td>
+            <td th:text="${invoice.user.name}"></td>
+            <td th:text="${invoice.customer.name}"></td>
+            <td>
+            <span th:each="product, iterStat : ${invoice.invoiceProducts}">
+            <span th:text="${product.product.name}"></span>
+            <span th:unless="${iterStat.last}">,</span>
+            </span>
+            </td>
+            <td th:text="${#numbers.formatDecimal(invoice.totalPrice,1,2,'COMMA')}"></td>
+            <td th:text="${invoice.status.toString()}"></td>
+        </tr>
+    </table>
+    </div>
+    <form action="/archive-invoice" method="post"></form>
 </div>
+</main>
 </body>
 </html>

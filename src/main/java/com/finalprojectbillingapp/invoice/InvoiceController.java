@@ -6,7 +6,6 @@ import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.productOrService.ProductServiceRepository;
 import com.finalprojectbillingapp.productOrService.ServiceForProducts;
 import com.finalprojectbillingapp.user.*;
-import com.itextpdf.text.DocumentException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
 import javax.swing.text.html.HTML;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 
@@ -77,7 +72,9 @@ public class InvoiceController {
         session.setAttribute("invoiceId", invoiceId);
         return "enterInvoiceNumber";
     }
-    @PostMapping("/createNewInvoice/invoiceNumber")
+
+    // Works
+    @PostMapping("/createNewInvoice/confirmInvoiceNumber")
     public String confirmInvoiceNumber(@RequestParam("invoiceNumber") String invoiceNumber,
                                        HttpSession session,
                                        RedirectAttributes redirectAttributes) throws Exception {
@@ -85,24 +82,22 @@ public class InvoiceController {
             session.setAttribute("invoiceNumber", invoiceNumber);
             System.out.println("Invoice number: " + invoiceNumber);
 
-            return "redirect:/createNewInvoice/userData/";
+            return "redirect:/createNewInvoice/userData";
 
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
             return "redirect:/?message=INVOICE_NUMBER_FAILED&error=/";
         }
     }
-  // @PostMapping("/createNewInvoice/confirmInvoiceNumber")
-
 
     //Works
-    @GetMapping("createNewInvoice/userData/")
+    @GetMapping("createNewInvoice/userData")
     public String displayInvoiceUserPage(HttpServletRequest request,
                                          Model model, HttpSession session) throws Exception {
         UserEntity user = this.userService.getLoggedInUser(request);
-        UUID idd = user.getId();
+        UUID userId = user.getId();
         try {
-            if (id != null) {
+            if (userId != null) {
                 model.addAttribute("user", user);
             }
             return "userPageForInvoice";
@@ -111,9 +106,8 @@ public class InvoiceController {
         }
     }
 
-    @PostMapping("createNewInvoice/userDate")
-    //Works
-//    @PostMapping("createNewInvoice/userData")
+    //    Works
+    @PostMapping("createNewInvoice/userData")
     public String confirmUserData(@ModelAttribute("user") UserEntity user,
                                   HttpServletRequest request,
                                   RedirectAttributes redirectAttributes,
@@ -123,8 +117,8 @@ public class InvoiceController {
 
         try {
             UserEntity user1 = this.userService.editUserDetailsForInvoice(loggedInUser, userId);
+            session.setAttribute("userId", user1.getId());
             this.userService.createUser(user1);
-            session.setAttribute("user", user1);
             System.out.println("User: " + user1);
 
             return "redirect:/createNewInvoice/customerData";
@@ -133,6 +127,7 @@ public class InvoiceController {
             return "redirect:/new-invoice/";
         }
     }
+
 
     //Works
     @GetMapping("createNewInvoice/customerData")
@@ -208,6 +203,7 @@ public class InvoiceController {
                 System.out.println(totalPrice);
             }
             productServiceRepository.save(createdProduct);
+
             UUID productID = createdProduct.getId();
 
             productIDs.add(productID);
@@ -261,16 +257,14 @@ public class InvoiceController {
 
     @PostMapping("BEFOREinvoice-overview/")
     public String createInvoice(HttpSession session) throws Exception {
-        String invoiceNumber = (String) session.getAttribute("invoiceNumber");
 
+        String invoiceNumber = (String) session.getAttribute("invoiceNumber");
         UUID userId = (UUID) session.getAttribute("userId");
         UUID customerId = (UUID) session.getAttribute("customerId");
-
         String notes = (String) session.getAttribute("notes");
         Signature methodOfSigning = (Signature) session.getAttribute("methodOfSigning");
         Date issuedAt = (Date) session.getAttribute("issuedAt");
         Date dueBy = (Date) session.getAttribute("dueBy");
-
         UUID invoiceId = (UUID) session.getAttribute("invoiceId");
         List<UUID> productIds = (List<UUID>) session.getAttribute("selectedProducts");
 
@@ -326,55 +320,11 @@ public class InvoiceController {
                                  Model model,
                                  HttpSession session) {
         try {
-            return "redirect:/generate-pdf-invoice";
+            return "redirect:/archive-invoice";
         } catch (Exception exception) {
             return "redirect:/?message=CONFIRM_INVOICE_FAILED&error="
                     + exception.getMessage();
         }
-    }
-
-    @PostMapping("/cancel-invoice")
-    public String handleCancelInvoice(HttpSession session) throws Exception {
-        UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
-        InvoiceEntity invoice = invoiceService.getInvoiceById(invoiceId);
-        invoice.setStatus(Status.VOID);
-        this.invoiceRepository.save(invoice);
-        return "mainPageForUser";
-    }
-
-    /*   @GetMapping("/generate-invoice/")
-       public String generateInvoice(Model model) {
-           model.addAttribute("to", "BillingApp");
-           System.out.println("pdf is created");
-           return "invoiceOverview";
-       } */
-    @GetMapping("/generate-pdf-invoice")
-    public void generatePdfInvoice(HttpServletResponse response, CreatePdfFile createPdfFile, HTML html) {
-
-        try {
-            String htmlContent = createPdfFile.parseThymeleafTemplate();
-
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
-            OutputStream outputStream = response.getOutputStream();
-            createPdfFile.generatePdfFromHtml(html);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (com.lowagie.text.DocumentException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @GetMapping("/archive-invoice")
-    public String displayInvoicesFromArchive(Model model, HttpServletRequest request) throws Exception {
-        String loginEmail = this.userService.getLoggedInUserEmail(request);
-        if (loginEmail != null) {
-            List<InvoiceEntity> invoices = this.invoiceService.getInvoicesByUserEmail(loginEmail);
-            model.addAttribute("invoices", invoices);
-            System.out.println(invoices);
-        }
-        return "archiveInvoices";
     }
 
     @GetMapping("/displaySessionAttributes")
@@ -395,8 +345,94 @@ public class InvoiceController {
         return "sessionAttributesView";
     }
 
+    @PostMapping("/cancel-invoice")
+    public String handleCancelInvoice(HttpSession session) throws Exception {
+        UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
+        InvoiceEntity invoice = invoiceService.getInvoiceById(invoiceId);
+        invoice.setStatus(Status.VOID);
+        this.invoiceRepository.save(invoice);
+        return "mainPageForUser";
+    }
 
-
+    //    @PostMapping("edit-invoice")
+//    public String redirectToEditInvoice(HttpSession session){
+//        try {
+//            if (!(session.getAttribute("notes") == null ||
+//                    session.getAttribute("selectedProducts") == null ||
+//                    session.getAttribute("invoiceNumber") == null ||
+//                    session.getAttribute("selectedProducts") == null ||
+//                    session.getAttribute("methodOfSigning") == null ||
+//                    session.getAttribute("issuedAt") == null ||
+//                    session.getAttribute("dueBy") == null ||
+//                    session.getAttribute("newInvoiceId") == null ||
+//                    session.getAttribute("userId") == null ||
+//                    session.getAttribute("customerId") == null ))
+//            {
+//                System.out.println();
+//                return "redirect:/createNewInvoice/invoiceNumber";
+//            } else {
+//    return "userPageForInvoice";
+//            }
+//        } catch (Exception exception) {
+//            return "redirect:/?message=CONFIRM_INVOICE_FAILED&error="
+//                    + exception.getMessage();
+//        }
+//    }
+    @GetMapping("/archive-invoice")
+    public String displayInvoicesFromArchive(Model model, HttpServletRequest request) throws Exception {
+        try {
+            String loginEmail = this.userService.getLoggedInUserEmail(request);
+            if (loginEmail != null) {
+                List<InvoiceEntity> invoices = this.invoiceService.getInvoicesByUserEmail(loginEmail);
+                model.addAttribute("invoices", invoices);
+                System.out.println(invoices);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            model.addAttribute("errorMessage",
+                    "An error occurred while fetching data");
+        }
+        return "archiveInvoices";
+    }
+//    @GetMapping("/generate-invoice/")
+//    public String generateInvoice(Model model) {
+//        model.addAttribute("to", "BillingApp");
+//        System.out.println("pdf is created");
+//        return "invoiceOverview";
+//    }
+//    @GetMapping("/generate-pdf-invoice")
+//    public void generatePdfInvoice(HttpServletResponse response, CreatePdfFile createPdfFile, HTML html) {
+//        try {
+//            String htmlContent = createPdfFile.parseThymeleafTemplate();
+//            response.setContentType("application/pdf");
+//            response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+//            OutputStream outputStream = response.getOutputStream();
+//            createPdfFile.generatePdfFromHtml(html);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (com.lowagie.text.DocumentException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//@GetMapping("/generate-pdf-invoice")
+//public void generatePdfInvoice(HttpServletResponse response, CreatePdfFile createPdfFile, HTML html) {
+//    // Здесь вы можете использовать вашу логику для генерации PDF из HTML и отправки его в HTTP-ответ
+//    try {
+//        String htmlContent = createPdfFile.parseThymeleafTemplate(); // Здесь используйте метод для генерации HTML из Thymeleaf
+//
+//        response.setContentType("application/pdf");
+//        response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+//        OutputStream outputStream = response.getOutputStream();
+//        createPdfFile.generatePdfFromHtml(html);
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    } catch (com.lowagie.text.DocumentException e) {
+//        throw new RuntimeException(e);
+//    }
+//
+//}
 }
 
 

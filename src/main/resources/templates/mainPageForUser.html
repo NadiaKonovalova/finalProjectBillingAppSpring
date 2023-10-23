@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Main Page')}"> </head>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body style="font-family: Arial, sans-serif;">
 <main class="container" style="padding: 20px;">
@@ -28,5 +28,3 @@
 </main>
 </body>
 </html>
-
-

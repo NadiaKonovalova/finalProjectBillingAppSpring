@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='My Profile')}"> </head>
 <body style="font-family: Arial, sans-serif;">
-
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
 
 <main>
     <div style="background-color: #fff; padding: 20px; border-radius: 5px;">
@@ -12,11 +12,11 @@
             Welcome to your user profile! Here, you can manage various aspects of your account and make the following actions:
         </p>
         <nav style="margin-top: 20px;">
-            <a th:href="${'/singleUserProfile'}" class="btn btn-secondary">View Profile</a>
-            <a th:href="${'/editUser'}" class="btn btn-secondary">Edit Profile</a>
-            <a th:href="${'/deleteUser'}" class="btn btn-secondary">Delete User</a>
-        </nav>
+        <a th:href="${'/singleUserProfile'}" class="btn btn-secondary">View</a>
+        <a th:href="${'/editUser'}" class="btn btn-secondary">Edit Profile</a>
+    </nav>
     </div>
+
 </main>
 </body>
 </html>

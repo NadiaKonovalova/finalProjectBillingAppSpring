@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
-<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Signature/Notes')}"> </head>
 <body>
 <main>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
     <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Choose the method of signing the invoice</h3>
     <form th:action="${'/createNewInvoice/signatureAndNotes'}" method="post" style="width: 33%; margin: 0 auto;">
         <div class="input-group m-2">
@@ -41,7 +41,7 @@
                    <a th:href="${'/createNewInvoice/review-invoice'}"
                    class="btn btn-dark text-white p-3">Proceed to invoice overview</a>
                </div>-->
-           </form>
+    </form>
 </main>
 </body>
 </html>

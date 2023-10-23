@@ -1,8 +1,9 @@
 package com.finalprojectbillingapp.customer;
 
+import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +64,4 @@ public class CustomerService {
     public CustomerEntity getCustomerById(UUID customerId) throws Exception {
         return this.customerRepository.findById(customerId).orElseThrow();
     }
-
 }

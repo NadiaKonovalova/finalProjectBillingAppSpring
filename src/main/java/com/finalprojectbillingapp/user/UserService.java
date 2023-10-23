@@ -1,15 +1,17 @@
 package com.finalprojectbillingapp.user;
 
+import com.finalprojectbillingapp.invoice.InvoiceProductEntity;
+import com.finalprojectbillingapp.invoice.InvoiceProductRepository;
 import com.finalprojectbillingapp.invoice.InvoiceRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.OptimisticLockException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceException;
+import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,11 +34,7 @@ public class UserService {
     public boolean checkIfAccountExists (String loginEmail) {
         UserEntity user = this.userRepository.findByLoginEmail
                 (loginEmail);
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return (user != null);
     }
 
     @PersistenceContext
@@ -85,7 +83,7 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-                currentUser.setEmail(user.getEmail());
+            /*    currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());
@@ -111,7 +109,7 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-                currentUser.setEmail(user.getEmail());
+               /* currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());
@@ -158,7 +156,7 @@ public class UserService {
                 }
     }
 
-    @Transactional
+/*    @Transactional
     // Edit user profile
     public Type editTaxPayerType(UserEntity user, UUID id) throws Exception {
         UserEntity currentUser = this.findUserById(id);
@@ -174,7 +172,7 @@ public class UserService {
         catch (Exception exception) {
             throw new Exception("Something went wrong");
         }
-    }
+    }*/
 
     public String getLoggedInUserEmail(HttpServletRequest request) throws Exception {
         try {

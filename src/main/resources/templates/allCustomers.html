@@ -17,9 +17,9 @@
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
-    <h3 style="text-align: center; margin: 20px; color: #333333;">All Customers</h3>
+    <h3>All Customers</h3>
     <section>
-        <button th:href="${'/add-customer/'}" class="btn btn-primary" style="font-weight: bold;">Add Customer</button>
+        <a th:href="${'/add-customer/'}" class="btn btn-primary">Add Customer</a>
     </section>
     <section>
         <div th:if="${customers.isEmpty()}">There are no customers to display</div>

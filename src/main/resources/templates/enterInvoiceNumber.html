@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Invoice Number')}"></head>
 <body  style="color: white; font-family: Arial, sans-serif;">
 <header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}" style="background-color: #333; color: white; text-align: center; padding: 10px; font-family: Arial, sans-serif;"></header>
 <main class="container">
-  <section>
-    <h4 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Enter invoice number/title</h4>
-    <form th:action="@{'/createNewInvoice/invoiceNumber'}" method="post" style="width: 33%; margin: 0 auto;">
-      <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Enter unique number/title for the invoice</label>
-        <input class="form-control" name="invoiceNumber" placeholder="Enter your invoice number/title" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
-      </div>
-      <div class="input-group mt-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
-        <button class="btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Confirm and Proceed</button>
-      </div>
-    </form>
-  </section>
+    <section>
+        <h4 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Enter invoice number/title</h4>
+        <form th:action="@{'/createNewInvoice/confirmInvoiceNumber'}" method="post" style="width: 33%; margin: 0 auto;">
+            <div class="input-group m-2">
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Enter unique number/title for the invoice</label>
+                <input class="form-control" name="invoiceNumber" placeholder="Enter your invoice number/title" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+            </div>
+            <div class="input-group mt-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
+                <button class="btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Confirm and Proceed</button>
+            </div>
+        </form>
+    </section>
 </main>
 </body>
 </html>
-

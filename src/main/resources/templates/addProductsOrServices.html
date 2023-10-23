@@ -17,28 +17,28 @@
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
-  <h3 style="text-align: center; margin: 20px; color: #333333;">Add a new Product or Service</h3>
+  <h3>Add a new Product or Service</h3>
   <section>
-    <form action="/add-product-service" method="post" style="width: 33%; margin: 0 auto;">
+    <form action="/add-product-service" method="post">
       <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Name</label>
-        <input name="name" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+        <label class="input-group-text">Name</label>
+        <input name="name" class="form-control" type="text"/>
       </div>
       <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Quantity</label>
-        <input name="quantity" class="form-control" type="number" style="box-shadow: 3px 3px 5px #888888;"/>
+        <label class="input-group-text">Quantity</label>
+        <input name="quantity" class="form-control" type="number"/>
       </div>
       <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Unit</label>
-        <input name="unit" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+        <label class="input-group-text">Unit</label>
+        <input name="unit" class="form-control" type="text"/>
       </div>
       <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Unit price</label>
-        <input name="unitPrice" class="form-control" type="number" style="box-shadow: 3px 3px 5px #888888;"/>
+        <label class="input-group-text">Unit price</label>
+        <input name="unitPrice" class="form-control" type="number"/>
       </div>
       <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Currency</label>
-        <select name="currency" class="form-control" style="box-shadow: 3px 3px 5px #888888;">
+        <label class="input-group-text">Currency</label>
+        <select name="currency" class="form-control">
           <option value="EUR">EUR</option>
           <option value="BGN">BGN</option>
           <option value="CZK">CZK</option>
@@ -53,8 +53,8 @@
         </select>
       </div>
       <div class="input-group m-2">
-        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">VAT Rate</label>
-        <select name="VATrate" class="form-control" style="box-shadow: 3px 3px 5px #888888;">
+        <label class="input-group-text">VAT Rate</label>
+        <select name="VATrate" class="form-control">
           <option value="STANDARD21">Standard 21%</option>
           <option value="REDUCED12">Reduced 12%</option>
           <option value="REDUCED10">Reduced 10%</option>

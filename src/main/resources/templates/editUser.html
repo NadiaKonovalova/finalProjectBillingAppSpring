@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<main class="container">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Edit Profile')}"> </head>
 <body>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 
@@ -9,10 +10,7 @@
     <h4>Edit User</h4>
     <section class="container">
         <form th:action="${'/editUser/' + user.getId()}" method="post">
-            <div class="input-group m-2">
-                <label class="input-group-text">E-mail</label>
-                <input name="email" class="form-control" type="email"
-                th:value="${user.getEmail()}"/>
+            <div> <p>Login e-mail: <span th:text="${user.getLoginEmail()}"></span></p>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
@@ -24,21 +22,7 @@
                 <input name="taxpayerNo" class="form-control" type="text"
                        th:value="${user.getTaxpayerNo()}"/>
             </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">Legal address</label>
-                <input name="legalAddress" class="form-control" type="text"
-                       th:value="${user.getLegalAddress()}"/>
-            </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">Bank name</label>
-                <input name="bankName" class="form-control" type="text"
-                       th:value="${user.getBankName()}"/>
-            </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">Bank account number</label>
-                <input name="accountNo" class="form-control" type="text"
-                       th:value="${user.getAccountNo()}"/>
-            </div>
+
             <div class="input-group mt-2">
                 <label class="input-group-text">Tax Payer Type</label>
                 <select class="form-control" name="taxpayerType"
@@ -49,6 +33,11 @@
                     <option value="VAT_PAYER">VAT payer</option>
                     <option value="OTHER">Other</option>
                 </select>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Legal address</label>
+                <input name="legalAddress" class="form-control" type="text"
+                       th:value="${user.getLegalAddress()}"/>
             </div>
             <div class="input-group mt-2">
                 <label class="input-group-text">Country</label>
@@ -85,6 +74,17 @@
                     <option value="SPAIN">Spain</option>
                     <option value="SWEDEN">Sweden</option>
                 </select>
+            </div>
+
+            <div class="input-group m-2">
+                <label class="input-group-text">Bank name</label>
+                <input name="bankName" class="form-control" type="text"
+                       th:value="${user.getBankName()}"/>
+            </div>
+            <div class="input-group m-2">
+                <label class="input-group-text">Bank account number</label>
+                <input name="accountNo" class="form-control" type="text"
+                       th:value="${user.getAccountNo()}"/>
             </div>
             <div class="input-group mt-2">
                 <button class="btn btn-dark text-white p-3">Save changes</button>

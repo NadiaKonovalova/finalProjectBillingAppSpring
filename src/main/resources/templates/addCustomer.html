@@ -17,32 +17,32 @@
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
-    <h3 style="text-align: center; margin: 20px; color: #333333;">Add a new customer</h3>
+    <h3>Add a new customer</h3>
     <section>
-        <form action="/add-customer" method="post" style="width: 33%; margin: 0 auto;">
+        <form action="/add-customer" method="post">
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Name</label>
-                <input name="name" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+                <label class="input-group-text">Name</label>
+                <input name="name" class="form-control" type="text"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Tax Payer Number</label>
-                <input name="taxpayerNo" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+                <label class="input-group-text">Tax Payer Number</label>
+                <input name="taxpayerNo" class="form-control" type="text"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Legal Address</label>
+                <label class="input-group-text">Legal Address</label>
                 <input name="legalAddress" class="form-control" type="text"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Bank Name</label>
-                <input name="bankName" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+                <label class="input-group-text">Bank Name</label>
+                <input name="bankName" class="form-control" type="text"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Account Number</label>
-                <input name="accountNo" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+                <label class="input-group-text">Account Number</label>
+                <input name="accountNo" class="form-control" type="text"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Tax Payer Type</label>
-                <select name="taxpayerType" class="form-control" style="box-shadow: 3px 3px 5px #888888;">
+                <label class="input-group-text">Tax Payer Type</label>
+                <select name="taxpayerType" class="form-control">
                     <option value="INDIVIDUAL">Individual</option>
                     <option value="SELF_EMPLOYED">Self employed</option>
                     <option value="MICRO_ENTERPRISE">Micro enterprise</option>
@@ -51,8 +51,8 @@
                 </select>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Country</label>
-                <select name="country" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;">
+                <label class="input-group-text">Country</label>
+                <select name="country" class="form-control" type="text">
                     <option value="AUSTRIA">Austria</option>
                     <option value="BELGIUM">Belgium</option>
                     <option value="BULGARIA">Bulgaria</option>
@@ -85,6 +85,8 @@
                     <option value="SWEDEN">Sweden</option>
                 </select>
             </div>
+
+
         </form>
     </section>
 </main>

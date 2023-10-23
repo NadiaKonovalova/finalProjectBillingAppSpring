@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head  th:replace="~{fragments/headerAfterLogin.html::head-general}"></head>
+<head  th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Invoices')}"></head>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 <body>
 <main class="container">
@@ -8,9 +8,9 @@
         <div class="input-group mt-2">
             <a th:href="${'/createNewInvoice/invoiceNumber'}" class="btn btn btn-dark text-white p-3">Create a New Invoice</a>
         </div>
-        <div class="input-group mt-2">
+     <!--   <div class="input-group mt-2">
             <a th:href="${'/archive-invoice'}" class="btn btn btn-dark text-white p-3">View Previous Invoices</a>
-        </div>
+        </div>-->
     </form>
 </main>
 </body>

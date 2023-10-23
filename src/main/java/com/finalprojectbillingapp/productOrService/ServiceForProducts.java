@@ -2,6 +2,7 @@ package com.finalprojectbillingapp.productOrService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class ServiceForProducts {
             taxRate = 0.21;
         }
         double quantity = productOrServiceEntity.getQuantity();
-        double totalPriceWithVAT = price * quantity * (1 + taxRate);
+        double totalPriceWithVAT = price * quantity * (1 + taxRate);;
 
         return totalPriceWithVAT;
     }

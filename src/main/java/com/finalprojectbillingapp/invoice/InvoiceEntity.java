@@ -1,12 +1,10 @@
 package com.finalprojectbillingapp.invoice;
 
 import com.finalprojectbillingapp.customer.CustomerEntity;
+import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.user.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
