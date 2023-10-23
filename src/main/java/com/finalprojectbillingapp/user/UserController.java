@@ -3,6 +3,7 @@ package com.finalprojectbillingapp.user;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,27 +95,71 @@ public class UserController {
         return "redirect:/login?status=LOGOUT_SUCCESSFUL";
     }
 
+    @GetMapping("/check-email")
+    public String displayEmailCheckPage(Model model){
+        return "checkEmailAvailability";
+    }
+
+    @PostMapping("/check-email")
+    public String checkIfEmailIsAvailable(UserEntity userEntity,
+                                          HttpServletRequest request,
+                                          LoginRequest loginRequest,
+                                          Model model,
+                                          HttpSession session) {
+        try {
+            String loginEmail = loginRequest.getLoginEmail();
+                if (this.userService.checkIfAccountExists(loginEmail)) {
+                    model.addAttribute("errorMessage", "This email is already registered. ");
+                    return "redirect:/login?status=ACCOUNT_EXISTS";
+                } else {
+                    session.setAttribute("loginEmail", loginEmail);
+                    return "redirect:/register";
+                }
+                } catch (Exception exception) {
+            return "redirect:/emailCheck?status=CHECKING-EMAIL-FAILED&?error="
+                    + exception.getMessage();
+        }
+    }
+
     @GetMapping("/register")
-    public String displayRegisterPage(){
-        return "register";
+    public String displayRegisterPage(HttpSession session, Model model){
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail != null) {
+            model.addAttribute("loginEmail", loginEmail);
+        }
+            model.addAttribute("errorMessage", "");
+            return "register";
     }
 
     @PostMapping("/register")
     public String handleUserRegistration(UserEntity userEntity,
                                          HttpServletRequest request,
                                          LoginRequest loginRequest,
-                                         Model model) {
+                                         Model model,
+                                         HttpSession session) {
         try {
-            System.out.println(userEntity);
-            this.userService.createUser(userEntity);
+            String loginEmail = (String) session.getAttribute("loginEmail");
+            if (loginEmail !=null){
+                userEntity.setLoginEmail(loginEmail);
+            if (this.userService.checkIfAccountExists(loginEmail)) {
+                model.addAttribute("errorMessage", "This email is already registered. ");
+                return "redirect:/login?status=ACCOUNT_EXISTS";
+            } else {
+                this.userService.createUser(userEntity);
+                System.out.println(userEntity);
 //            this.userRepository.save(userEntity);
                 return "redirect:/login?status=REGISTRATION_SUCCESS";
-        } catch(Exception exception){
+            }
+        } else {
+                session.setAttribute("errorMessage", "Login email is missing."); // Handle the case where loginEmail is missing
+                return "redirect:/register?status=REGISTRATION_FAILED";
+            }
+            }
+        catch(Exception exception){
             return "redirect:/register?status=REGISTRATION_FAILED&?error="
                     + exception.getMessage();
         }
     }
-
         @GetMapping("/userProfile")
     public String displayUserProfilePage(){
 

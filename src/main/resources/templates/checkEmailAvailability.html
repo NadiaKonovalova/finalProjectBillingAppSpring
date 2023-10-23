@@ -4,9 +4,7 @@
 <body style="color: white; font-family: Arial, sans-serif;">
 <header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}" style="background-color: #333; color: white; text-align: center; padding: 10px; font-family: Arial, sans-serif;"></header>
 <main>
-    <div th:if="${errorMessage}" style="color: red; font-size: 20px; font-weight: bolder; margin-top: 30px; text-align: center;">
-        <span th:text="${errorMessage}"></span>
-    </div>
+
     <h4 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Check E-mail Availability</h4>
     <form th:action="${'/check-email'}" method="post" style="width: 33%; margin: 0 auto;">
         <div class="input-group m-2">
@@ -14,14 +12,13 @@
                 Login e-mail</label>
             <input name="loginEmail" class="form-control" type="email" style="box-shadow: 3px 3px 5px #888888;"/>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center; height: auto;">
-            <button class="btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Check Email Availability</button>
-        </div>
 
-<!--        <div th:if="${errorMessage}" style="color: red;">-->
-<!--            <span th:text="${errorMessage}"></span>-->
-<!--&lt;!&ndash;            <a href="/login">Proceed to the Login page?</a>&ndash;&gt;-->
-<!--        </div>-->
+        <button class="btn btn-dark text-white p-3" style="font-weight: bold;">Check Email Availability</button>
+
+        <div th:if="${errorMessage}" style="color: red;">
+            <span th:text="${errorMessage}"></span>
+            <a href="/login">Proceed to the Login page?</a>
+        </div>
     </form>
 </main>
 </body>

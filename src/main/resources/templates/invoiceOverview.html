@@ -68,11 +68,12 @@
                     </tr>
                     <tr th:each="product : ${products}">
                         <td th:text="${product.name}" style="border: 1px solid #ccc;"></td>
-                        <td th:text="${product.quantity}" style="border: 1px solid #ccc;"></td>
+                        <td th:text="${#numbers.formatDecimal(product.quantity,1,2,'COMMA')}" style="border: 1px solid #ccc;"></td>
                         <td th:text="${product.unit}" style="border: 1px solid #ccc;"></td>
-                        <td th:text="${product.unitPrice}" style="border: 1px solid #ccc;"></td>
+                        <td th:text="${#numbers.formatDecimal(product.unitPrice,1, 2,'COMMA')}" style="border: 1px solid #ccc;"></td>
                         <td th:text="${product.currency}" style="border: 1px solid #ccc;"></td>
-                        <td th:text="${product.totalPerProduct}" style="border: 1px solid #ccc;"></td>
+                        <td th:text="${#numbers.formatDecimal(product.totalPerProduct,1, 2,'COMMA')}" style="border: 1px solid #ccc;">
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
@@ -80,7 +81,13 @@
                         <td></td>
                         <td></td>
                         <td style="font-weight: bold;">Total:</td>
-                        <td style="border: 1px solid #ccc; text-align: left;" th:text="${invoice.totalPrice}"></td>
+
+                        <td style="border: 1px solid #ccc; text-align: left;"
+                            th:text="${#numbers.formatDecimal(invoice.totalPrice,1,2,'COMMA')}"
+                        </td>
+<!--                        <td style="border: 1px solid #ccc; text-align: left;"-->
+<!--                            th:text="${#numbers.formatDecimal(invoice.totalPrice,1,2,'COMMA') + ' ' + product.currency}"-->
+<!--                    </td>-->
                     </tr>
                 </table>
             </div>

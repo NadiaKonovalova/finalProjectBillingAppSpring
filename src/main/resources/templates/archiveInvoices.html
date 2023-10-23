@@ -34,7 +34,7 @@
             <span th:unless="${iterStat.last}">,</span>
             </span>
             </td>
-            <td th:text="${invoice.totalPrice}"></td>
+            <td th:text="${#numbers.formatDecimal(invoice.totalPrice,1,2,'COMMA')}"></td>
             <td th:text="${invoice.status.toString()}"></td>
         </tr>
     </table>
