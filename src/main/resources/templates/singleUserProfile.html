@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='View Profile')}"> </head>
 <body>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
 
@@ -13,7 +13,7 @@
             <div th:text="'NAME:            '+ ${user.getName()}"> </div>
             <div th:text="'TAXPAYER NUMBER:     ' + ${user.getTaxpayerNo()}"></div>
             <div th:text="'TYPE:            ' + ${user.getTaxpayerType().getDisplayTypeName()}"></div>
-            <div th:text="'E-MAIL:          ' + ${user.getEmail()}"></div>
+            <div th:text="'E-MAIL:          ' + ${user.getLoginEmail()}"></div>
             <div th:text="'LEGAL ADDRESS:   ' + ${user.getLegalAddress()}"></div>
             <div th:text="'COUNTRY OF RESIDENCE:    ' + ${user.getCountry().getDisplayCountryName()}"></div>
             <div th:text="'BANK:            ' + ${user.getBankName()}"></div>

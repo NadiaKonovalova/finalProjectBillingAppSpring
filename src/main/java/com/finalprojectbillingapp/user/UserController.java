@@ -106,7 +106,6 @@ public class UserController {
                                          Model model) {
         try {
             System.out.println(userEntity);
-            userEntity.setEmail(userEntity.getLoginEmail());
             this.userService.createUser(userEntity);
 //            this.userRepository.save(userEntity);
                 return "redirect:/login?status=REGISTRATION_SUCCESS";

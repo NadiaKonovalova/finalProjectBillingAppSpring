@@ -87,7 +87,7 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-                currentUser.setEmail(user.getEmail());
+            /*    currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());
@@ -113,7 +113,7 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-                currentUser.setEmail(user.getEmail());
+               /* currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());
@@ -160,7 +160,7 @@ public class UserService {
                 }
     }
 
-    @Transactional
+/*    @Transactional
     // Edit user profile
     public Type editTaxPayerType(UserEntity user, UUID id) throws Exception {
         UserEntity currentUser = this.findUserById(id);
@@ -176,7 +176,7 @@ public class UserService {
         catch (Exception exception) {
             throw new Exception("Something went wrong");
         }
-    }
+    }*/
 
     public String getLoggedInUserEmail(HttpServletRequest request) throws Exception {
         try {

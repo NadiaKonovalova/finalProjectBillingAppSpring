@@ -64,7 +64,7 @@ public class ServiceForProducts {
         throw new Exception("Product or service not found");
     }
 
-    public double calculatePricePerProduct(ProductOrServiceEntity productOrServiceEntity) {
+    public double calculatePricePerProductWithVAT(ProductOrServiceEntity productOrServiceEntity) {
         double price = productOrServiceEntity.getUnitPrice();
         Category taxCategory = productOrServiceEntity.getVATrate();
         double taxRate = 0.0;
@@ -78,7 +78,16 @@ public class ServiceForProducts {
             taxRate = 0.21;
         }
         double quantity = productOrServiceEntity.getQuantity();
-        double totalPrice = price * quantity * (1 + taxRate);
+        double totalPriceWithVAT = price * quantity * (1 + taxRate);;
+
+        return totalPriceWithVAT;
+    }
+
+    public double calculatePricePerProductNoVAT(ProductOrServiceEntity productOrServiceEntity) {
+        double price = productOrServiceEntity.getUnitPrice();
+        Category taxCategory = productOrServiceEntity.getVATrate();
+        double quantity = productOrServiceEntity.getQuantity();
+        double totalPrice = price * quantity;
 
         return totalPrice;
     }

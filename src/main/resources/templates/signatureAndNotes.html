@@ -1,15 +1,14 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
-<body>
-<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Signature/Notes')}"> </head>
 <body>
 <main>
-    <h3>Choose the method of signing the invoice</h3>
-    <form th:action="${'/createNewInvoice/signatureAndNotes'}" method="post">
-        <div class="input-group mt-2">
-            <label class="input-group-text">Method of signing</label>
-            <select class="form-control" name="methodOfSigning">
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+    <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Choose the method of signing the invoice</h3>
+    <form th:action="${'/createNewInvoice/signatureAndNotes'}" method="post" style="width: 33%; margin: 0 auto;">
+        <div class="input-group m-2">
+            <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Method of signing</label>
+            <select class="form-control" name="methodOfSigning" style="box-shadow: 3px 3px 5px #888888;">
                 <option value="PRINT_OUT">Signed by hand</option>
                 <option value="ELECTRONIC_SIGNATURE">Electronic signature</option>
                 <option value="DRAFTED_ELECTRONICALLY_NO_SIGNATURE">Drafted electronically, valid w/o signature</option>
@@ -17,32 +16,32 @@
             </select>
         </div>
 
-        <div class="input-group m-3">
-            <label for="issuedAt">Issued on </label>
-            <input type="date" id="issuedAt" name="issuedAt"/>
-        </div>
-
-        <div class="input-group m-3">
-            <label for="dueBy">Payment due by</label>
-            <input type="date" id="dueBy" name="dueBy"/>
+        <div class="input-group m-2">
+            <label class="input-group-text" for="issuedAt" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Issued on </label>
+            <input type="date" id="issuedAt" name="issuedAt" class="form-control" style="box-shadow: 3px 3px 5px #888888;"/>
         </div>
 
         <div class="input-group m-2">
-            <label class="input-group-text">Notes:</label>
-            <input name="notes" class="form-control" type="text"/>
+            <label class="input-group-text" for="dueBy" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Payment due by</label>
+            <input type="date" id="dueBy" name="dueBy" class="form-control" style="box-shadow: 3px 3px 5px #888888;"/>
+        </div>
+
+        <div class="input-group m-2">
+            <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Notes:</label>
+            <input name="notes" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
         </div>
 
 
-        <div class="input-group mt-2">
-            <button class="btn btn btn-dark text-white p-3" type="submit" id="proceedToReview">
+        <div class="input-group mt-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
+            <button class="btn btn btn-dark text-white p-3" type="submit" id="proceedToReview" style="font-weight: bold; margin-top: 20px;">
                 Confirm and Proceed</button>
         </div>
 
         <!--       <div class="input-group mt-2">
                    <a th:href="${'/createNewInvoice/review-invoice'}"
                    class="btn btn-dark text-white p-3">Proceed to invoice overview</a>
-               </div>
-           </form>-->
+               </div>-->
+    </form>
 </main>
 </body>
 </html>
