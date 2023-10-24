@@ -1,15 +1,17 @@
 package com.finalprojectbillingapp.user;
 
+import com.finalprojectbillingapp.invoice.InvoiceProductEntity;
+import com.finalprojectbillingapp.invoice.InvoiceProductRepository;
 import com.finalprojectbillingapp.invoice.InvoiceRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.OptimisticLockException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceException;
+import jakarta.persistence.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,11 +34,7 @@ public class UserService {
     public boolean checkIfAccountExists (String loginEmail) {
         UserEntity user = this.userRepository.findByLoginEmail
                 (loginEmail);
-        if (user == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return (user != null);
     }
 
     @PersistenceContext
@@ -49,20 +47,20 @@ public class UserService {
     }
     // To create a new user account
     public void createUser (UserEntity userEntity)
-        throws Exception {
+            throws Exception {
         this.userRepository.save(userEntity);
     }
-// Log in after sign-up;
+    // Log in after sign-up;
 // might be improved to check if an e-mail is even registered
     // Password validity / security requirements to be added
     public UserEntity verifyLogin
-            (String loginEmail, String password)
-        throws Exception {
+    (String loginEmail, String password)
+            throws Exception {
         UserEntity user = this.userRepository.findByLoginEmailAndPassword
                 (loginEmail, password);
         return user;
     }
-// Single user
+    // Single user
     public UserEntity getUserById(UUID id) throws Exception {
 
         return this.userRepository.findById(id).orElseThrow();
@@ -85,7 +83,7 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-                currentUser.setEmail(user.getEmail());
+                /*    currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());
@@ -97,7 +95,7 @@ public class UserService {
             return currentUser;
         } catch (OptimisticLockException exception){
             throw new Exception("Please refresh to activate changes");
-    } catch (PersistenceException exception){
+        } catch (PersistenceException exception){
             throw new Exception("Database update failed.");
         }
         catch (Exception exception) {
@@ -111,7 +109,7 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-                currentUser.setEmail(user.getEmail());
+                /* currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());
@@ -130,14 +128,14 @@ public class UserService {
     }
 
     public UserEntity findUserById (UUID id)
-        throws Exception{
+            throws Exception{
         for (UserEntity currentUser: this.getAllUsers()) {
             if(currentUser.getId().equals(id))
                 return currentUser;
         } throw new Exception("User not found");
     }
 
-// Delete user
+    // Delete user
     public void deleteUser(UUID id) throws Exception {
         if (!this.getAllUsers().removeIf((user) ->
                 user.getId().equals(id)))
@@ -150,15 +148,15 @@ public class UserService {
 
     public UserEntity getLoggedInUser(HttpServletRequest request) throws Exception {
         String cookieId = CookieHandling.getUserIdFromCookies(request);
-                try {
-                    UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
-                    return loggedInUser;
-                } catch (Exception exception){
-                    throw new Exception("User not found ");
-                }
+        try {
+            UserEntity loggedInUser = this.getUserById(UUID.fromString(cookieId));
+            return loggedInUser;
+        } catch (Exception exception){
+            throw new Exception("User not found ");
+        }
     }
 
-    @Transactional
+/*    @Transactional
     // Edit user profile
     public Type editTaxPayerType(UserEntity user, UUID id) throws Exception {
         UserEntity currentUser = this.findUserById(id);
@@ -174,7 +172,7 @@ public class UserService {
         catch (Exception exception) {
             throw new Exception("Something went wrong");
         }
-    }
+    }*/
 
     public String getLoggedInUserEmail(HttpServletRequest request) throws Exception {
         try {

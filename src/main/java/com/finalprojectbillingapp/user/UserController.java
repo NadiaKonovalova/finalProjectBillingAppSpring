@@ -3,16 +3,17 @@ package com.finalprojectbillingapp.user;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.UUID;
+
+import static java.util.UUID.*;
 
 @Controller
 @SessionAttributes("userData")
@@ -32,18 +33,18 @@ public class UserController {
 
     @PostMapping("/login")
     public String userLoginForm(LoginRequest loginRequest,
-                                  HttpServletResponse response){
+                                HttpServletResponse response){
         try {
             UserEntity user = this.userService.verifyLogin
                     (loginRequest.getLoginEmail(), loginRequest.getPassword());
             if(user==null) throw new Exception("User not found or credentials are incorrect");
-                    Cookie cookie = new Cookie("loggedInUserId",
-                            user.getId().toString());
-                    cookie.setMaxAge(200000);
-                    cookie.setSecure(true);
-                    cookie.setHttpOnly(true);
-                    response.addCookie(cookie);
-                    return "redirect:/mainPage";
+            Cookie cookie = new Cookie("loggedInUserId",
+                    user.getId().toString());
+            cookie.setMaxAge(200000);
+            cookie.setSecure(true);
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+            return "redirect:/mainPage";
 
         } catch (Exception exception) {
             return "redirect:/login?status=LOGIN_FAILED&error="
@@ -82,11 +83,11 @@ public class UserController {
 //    }
 //}
 
-@GetMapping("/logout")
+    @GetMapping("/logout")
 
     public String logOutPage(@CookieValue (value=
             "loggedInUserId", defaultValue = "") String userId,
-                               HttpServletResponse response){
+                             HttpServletResponse response){
         Cookie userCookie = new Cookie("loggedInUserId", null);
         userCookie.setMaxAge(0); // expires now = is deleted
         response.addCookie(userCookie); // Adds new cookie
@@ -94,8 +95,40 @@ public class UserController {
         return "redirect:/login?status=LOGOUT_SUCCESSFUL";
     }
 
+    @GetMapping("/check-email")
+    public String displayEmailCheckPage(Model model){
+        return "checkEmailAvailability";
+    }
+
+    @PostMapping("/check-email")
+    public String checkIfEmailIsAvailable(UserEntity userEntity,
+                                          HttpServletRequest request,
+                                          LoginRequest loginRequest,
+                                          Model model,
+                                          HttpSession session) {
+        try {
+            String loginEmail = loginRequest.getLoginEmail();
+            if (this.userService.checkIfAccountExists(loginEmail)) {
+                model.addAttribute("errorMessage", "This email is already registered!");
+//                return "redirect:/login?status=ACCOUNT_EXISTS";
+                return "checkEmailAvailability";
+            } else {
+                session.setAttribute("loginEmail", loginEmail);
+                return "redirect:/register";
+            }
+        } catch (Exception exception) {
+            return "redirect:/emailCheck?status=CHECKING-EMAIL-FAILED&?error="
+                    + exception.getMessage();
+        }
+    }
+
     @GetMapping("/register")
-    public String displayRegisterPage(){
+    public String displayRegisterPage(HttpSession session, Model model){
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        if (loginEmail != null) {
+            model.addAttribute("loginEmail", loginEmail);
+        }
+        model.addAttribute("errorMessage", "");
         return "register";
     }
 
@@ -103,20 +136,32 @@ public class UserController {
     public String handleUserRegistration(UserEntity userEntity,
                                          HttpServletRequest request,
                                          LoginRequest loginRequest,
-                                         Model model) {
+                                         Model model,
+                                         HttpSession session) {
         try {
-            System.out.println(userEntity);
-            userEntity.setEmail(userEntity.getLoginEmail());
-            this.userService.createUser(userEntity);
+            String loginEmail = (String) session.getAttribute("loginEmail");
+            if (loginEmail !=null){
+                userEntity.setLoginEmail(loginEmail);
+                if (this.userService.checkIfAccountExists(loginEmail)) {
+                    model.addAttribute("errorMessage", "This email is already registered. ");
+                    return "redirect:/login?status=ACCOUNT_EXISTS";
+                } else {
+                    this.userService.createUser(userEntity);
+                    System.out.println(userEntity);
 //            this.userRepository.save(userEntity);
-                return "redirect:/login?status=REGISTRATION_SUCCESS";
-        } catch(Exception exception){
+                    return "redirect:/login?status=REGISTRATION_SUCCESS";
+                }
+            } else {
+                session.setAttribute("errorMessage", "Login email is missing."); // Handle the case where loginEmail is missing
+                return "redirect:/register?status=REGISTRATION_FAILED";
+            }
+        }
+        catch(Exception exception){
             return "redirect:/register?status=REGISTRATION_FAILED&?error="
                     + exception.getMessage();
         }
     }
-
-        @GetMapping("/userProfile")
+    @GetMapping("/userProfile")
     public String displayUserProfilePage(){
 
         return "userProfile";
@@ -136,7 +181,7 @@ public class UserController {
             return "redirect:/login"; // Redirect to the login page or another appropriate page
         }
     }
-//    @GetMapping("/singleUserProfile/{id}")
+    //    @GetMapping("/singleUserProfile/{id}")
 //    public String displaySingleUser(@CookieValue(value="loggedInUserId")
 //                                        @PathVariable("id") String userId, Model model) {
 //        try {
@@ -164,7 +209,7 @@ public class UserController {
 //            return "redirect:/?message=USER_PROFILE_NOT_FOUND&error=" + exception.getMessage();
 //        }
 //    }
-       @GetMapping("/mainPage")
+    @GetMapping("/mainPage")
     public String displayMainPage(){
         return "mainPageForUser";
     }
@@ -188,19 +233,19 @@ public class UserController {
     public String editUser(HttpServletRequest request, UserEntity user,
                            RedirectAttributes redirectAttributes){
         String userId = CookieHandling.getUserIdFromCookies(request);
-                try {
-                    if(userId != null) {
-                        this.userService.findUserById(UUID.fromString(userId));
-                        user.setId(UUID.fromString(userId));
-                        UserEntity updatedUser = this.userService.editUserDetails
-                                (user, UUID.fromString(userId));
-                    }
-                    redirectAttributes.addFlashAttribute("message",
-                            "User updated successfully");
-                        return "redirect:/singleUserProfile";
+        try {
+            if(userId != null) {
+                this.userService.findUserById(UUID.fromString(userId));
+                user.setId(UUID.fromString(userId));
+                UserEntity updatedUser = this.userService.editUserDetails
+                        (user, UUID.fromString(userId));
+            }
+            redirectAttributes.addFlashAttribute("message",
+                    "User updated successfully");
+            return "redirect:/singleUserProfile";
 
         } catch (Exception exception) {
-                    redirectAttributes.addFlashAttribute("error", exception.getMessage());
+            redirectAttributes.addFlashAttribute("error", exception.getMessage());
             return "redirect:/editUser";
         }
     }
