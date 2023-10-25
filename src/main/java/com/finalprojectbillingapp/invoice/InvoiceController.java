@@ -380,6 +380,23 @@ public class InvoiceController {
         }
     }
 
+    @GetMapping("/create-pdf")
+    public String printToPdf(Model model, HttpSession session) {
+        try {
+            UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
+            InvoiceEntity invoice = invoiceService.getInvoiceById(invoiceId);
+            List<ProductOrServiceEntity> products =
+                    this.invoiceService.getProductObjectsForInvoice(invoiceId);
+            model.addAttribute("invoice", invoice);
+            model.addAttribute("products", products);
+
+            return "invoiceOverviewPrint";
+        } catch (Exception exception) {
+            return "redirect:/?message=INVOICE_OVERVIEW_FAILED&error="
+                    + exception.getMessage();
+        }
+    }
+
     @GetMapping("/displaySessionAttributes/")
     public String displaySessionAttributes(
             HttpSession session,
@@ -392,7 +409,7 @@ public class InvoiceController {
                 this.customerService.getAllCustomerByUserLoginEmail(email));
         System.out.println(customerList);
 
-        return "sessionAttributesView";
+        return "invoiceOverviewPrint";
     }
 
     @PostMapping("/cancel-invoice")
