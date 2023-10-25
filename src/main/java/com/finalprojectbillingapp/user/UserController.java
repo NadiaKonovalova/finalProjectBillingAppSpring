@@ -51,37 +51,7 @@ public class UserController {
                     + exception.getMessage();
         }
     }
-//@GetMapping("/create-new-account")
-//public String displayCreateNewAccountPage(Model model) {
-///*    model.addAttribute("loginEmail");
-//    model.addAttribute("password");*/
-//    return "createNewAccount";
-//}
 
-//@PostMapping("/create-new-account")
-//public String createNewAccount(LoginRequest loginRequest,
-//                               Model model) throws Exception {
-//    try {
-//        String loginEmail = loginRequest.getLoginEmail();
-//
-//        if (this.userService.checkIfAccountExists(loginEmail)) {
-//            model.addAttribute("error", "Creating an account failed: " +
-//                    "account already exists.");
-//            return "redirect:/login?status=ACCOUNT_EXISTS";
-//        }
-//            UserEntity user = new UserEntity();
-//            this.userService.createUser(user);
-//            user.setLoginEmail(loginEmail);
-//            user.setPassword(loginRequest.getPassword());
-//            user.setContactEmail(loginEmail);
-//
-//            return "redirect:/register";
-//        }   catch (Exception exception) {
-//        model.addAttribute("error", "Creating an account failed: "
-//                + exception.getMessage());
-//        return "createNewAccount";
-//    }
-//}
 
 @GetMapping("/logout")
 
@@ -108,14 +78,14 @@ public class UserController {
                                           HttpSession session) {
         try {
             String loginEmail = loginRequest.getLoginEmail();
-                if (this.userService.checkIfAccountExists(loginEmail)) {
-                    model.addAttribute("errorMessage", "This email is already registered. ");
-                    return "redirect:/login?status=ACCOUNT_EXISTS";
-                } else {
-                    session.setAttribute("loginEmail", loginEmail);
-                    return "redirect:/register";
-                }
-                } catch (Exception exception) {
+            if (this.userService.checkIfAccountExists(loginEmail)) {
+                model.addAttribute("errorMessage", "This email is already registered!");
+                return "checkEmailAvailability";
+            } else {
+                session.setAttribute("loginEmail", loginEmail);
+                return "redirect:/register";
+            }
+        } catch (Exception exception) {
             return "redirect:/emailCheck?status=CHECKING-EMAIL-FAILED&?error="
                     + exception.getMessage();
         }

@@ -1,49 +1,35 @@
 <section th:fragment="edit-user-data-fragment">
-     <!--       <div class="input-group m-2">
-                <label class="input-group-text">E-mail</label>
-                <input name="email" class="form-control" type="email"
-                       th:value="${user.getEmail()}"/>
-            </div>-->
+
             <div class="input-group m-2">
-                <label class="input-group-text">Name</label>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Name</label>
                 <input name="name" class="form-control" type="text"
-                       th:value="${user.getName()}"/>
+                       th:value="${user.getName()}" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Tax Payer number</label>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Tax Payer number</label>
                 <input name="taxpayerNo" class="form-control" type="text"
-                       th:value="${user.getTaxpayerNo()}"/>
+                       th:value="${user.getTaxpayerNo()}" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
+    <div class="input-group m-2">
+        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Tax Payer Type</label>
+        <select class="form-control" name="taxpayerType"
+                th:value="${user.getTaxpayerType().getDisplayTypeName()}" style="box-shadow: 3px 3px 5px #888888;">
+            <option value="INDIVIDUAL">Individual or natural person</option>
+            <option value="SELF_EMPLOYED">Self-employed</option>
+            <option value="MICRO_ENTERPRISE">Micro-enterprise</option>
+            <option value="VAT_PAYER">VAT payer</option>
+            <option value="OTHER">Other</option>
+        </select>
+    </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Legal address</label>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Legal address</label>
                 <input name="legalAddress" class="form-control" type="text"
-                       th:value="${user.getLegalAddress()}"/>
+                       th:value="${user.getLegalAddress()}" style="box-shadow: 3px 3px 5px #888888;"/>
             </div>
             <div class="input-group m-2">
-                <label class="input-group-text">Bank name</label>
-                <input name="bankName" class="form-control" type="text"
-                       th:value="${user.getBankName()}"/>
-            </div>
-            <div class="input-group m-2">
-                <label class="input-group-text">Bank account number</label>
-                <input name="accountNo" class="form-control" type="text"
-                       th:value="${user.getAccountNo()}"/>
-            </div>
-            <div class="input-group mt-2">
-                <label class="input-group-text">Tax Payer Type</label>
-                <select class="form-control" name="taxpayerType"
-                        th:value="${user.getTaxpayerType().getDisplayTypeName()}">
-                    <option value="INDIVIDUAL">Individual or natural person</option>
-                    <option value="SELF_EMPLOYED">Self-employed</option>
-                    <option value="MICRO_ENTERPRISE">Micro-enterprise</option>
-                    <option value="VAT_PAYER">VAT payer</option>
-                    <option value="OTHER">Other</option>
-                </select>
-            </div>
-            <div class="input-group mt-2">
-                <label class="input-group-text">Country</label>
+                <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Country</label>
                 <select class="form-control" name="country"
-                        th:value="${user.getCountry().getDisplayCountryName()}">
+                        th:value="${user.getCountry().getDisplayCountryName()}" style="box-shadow: 3px 3px 5px #888888;">
                     <option value="AUSTRIA">Austria</option>
                     <option value="BELGIUM">Belgium</option>
                     <option value="BULGARIA">Bulgaria</option>
@@ -76,6 +62,16 @@
                     <option value="SWEDEN">Sweden</option>
                 </select>
             </div>
+    <div class="input-group m-2">
+        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Bank name</label>
+        <input name="bankName" class="form-control" type="text"
+               th:value="${user.getBankName()}" style="box-shadow: 3px 3px 5px #888888;"/>
+    </div>
+    <div class="input-group m-2">
+        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Bank account number</label>
+        <input name="accountNo" class="form-control" type="text"
+               th:value="${user.getAccountNo()}" style="box-shadow: 3px 3px 5px #888888;"/>
+    </div>
 </section>
 
 
