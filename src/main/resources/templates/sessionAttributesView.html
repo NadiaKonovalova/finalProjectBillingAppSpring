@@ -1,10 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Session Attributes</title>
+    <!-- Include necessary CSS and JavaScript files here -->
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+<main class="container">
+    <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Select or Add Customer</h3>
+    <section>
+        <!-- Form to select an existing customer -->
+        <form id="select-customer-form" style="width: 33%; margin: 0 auto;">
+            <!-- Display a list of customers and allow the user to select one -->
+            <select id="customer-list">
+                <option value="">Select a Customer</option>
+                <option value="1">Customer 1</option>
+                <option value="2">Customer 2</option>
+                <!-- Add more customer options here -->
+            </select>
+            <button type="button" id="edit-customer-button">Edit Customer</button>
+        </form>
 
+        <!-- Form to add a new customer (initially hidden) -->
+        <form id="add-customer-form" class="hidden" style="width: 33%; margin: 0 auto;">
+            <!-- Form fields for adding a new customer -->
+            <input id="name" type="text" placeholder="Name">
+            <input id="taxpayerNo" type="text" placeholder="Tax Payer Number">
+            <!-- Add more form fields for adding a new customer here -->
+            <button type="button" id="cancel-add-button">Cancel</button>
+            <button type="button" id="confirm-add-button">Confirm and Proceed</button>
+        </form>
+    </section>
+</main>
+
+<script>
+    // JavaScript to toggle the visibility of forms
+    document.getElementById("edit-customer-button").addEventListener("click", function() {
+        // Show the form for editing customer data
+        document.getElementById("select-customer-form").style.display = "none";
+        document.getElementById("add-customer-form").classList.remove("hidden");
+
+        // Get the selected customer's data (you can replace this with actual data retrieval)
+        const selectedCustomerId = document.getElementById("customer-list").value;
+        const selectedCustomerData = getCustomerData(selectedCustomerId);
+
+        // Populate the form fields with the selected customer's data
+        document.getElementById("name").value = selectedCustomerData.name;
+        document.getElementById("taxpayerNo").value = selectedCustomerData.taxpayerNo;
+        // Populate other form fields as needed
+    });
+
+    document.getElementById("cancel-add-button").addEventListener("click", function() {
+        // Hide the form for adding a new customer
+        document.getElementById("select-customer-form").style.display = "block";
+        document.getElementById("add-customer-form").classList.add("hidden");
+    });
+
+    document.getElementById("customer-list").addEventListener("change", function() {
+        // Show the "Edit Customer" button when a customer is selected
+        document.getElementById("edit-customer-button").disabled = (this.value === "");
+    });
+
+    // Simulated function to retrieve customer data (replace with actual data retrieval)
+    function getCustomerData(customerId) {
+        // Replace this with actual data retrieval from your backend
+        return {
+            name: "Selected Customer Name",
+            taxpayerNo: "12345",
+            // Include other customer data fields
+        };
+    }
+</script>
 </body>
 </html>

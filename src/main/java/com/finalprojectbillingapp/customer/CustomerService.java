@@ -1,6 +1,9 @@
 package com.finalprojectbillingapp.customer;
 
+import com.finalprojectbillingapp.invoice.InvoiceRepository;
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
+import com.finalprojectbillingapp.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +15,15 @@ import java.util.UUID;
 @Service
 public class CustomerService {
     private CustomerRepository customerRepository;
+    private InvoiceRepository invoiceRepository;
+    private UserService userService;
     @Autowired
-    public CustomerService(CustomerRepository customerRepository){
+    public CustomerService(CustomerRepository customerRepository,
+                           InvoiceRepository invoiceRepository,
+                           UserService userService){
         this.customerRepository = customerRepository;
+        this.invoiceRepository = invoiceRepository;
+        this.userService = userService;
     }
 
     // Returns all customers saved to the DB
@@ -63,5 +72,9 @@ public class CustomerService {
 
     public CustomerEntity getCustomerById(UUID customerId) throws Exception {
         return this.customerRepository.findById(customerId).orElseThrow();
+    }
+
+    public List<CustomerEntity> getAllCustomerByUserLoginEmail (String email) throws Exception {
+        return this.invoiceRepository.findCustomersByUserLoginEmail(email);
     }
 }

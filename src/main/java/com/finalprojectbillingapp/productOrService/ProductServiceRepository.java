@@ -10,4 +10,6 @@ public interface ProductServiceRepository extends
                 <ProductOrServiceEntity, UUID> {
     ProductOrServiceEntity findByIdOrName
             (UUID id, String name);
+
+
 }

@@ -3,10 +3,9 @@
 <head th:replace="~{fragments/headerAfterLogin.html::head-general}"> </head>
 <body>
 <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
-<body>
-<main>
+<main style="text-align: center;">
     <form action="/BEFOREinvoice-overview/" method="post">
-    <button>CONFIRM</button>
+        <button class="btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 50px;">GENERATE INVOICE</button>
     </form>
 </main>
 </body>

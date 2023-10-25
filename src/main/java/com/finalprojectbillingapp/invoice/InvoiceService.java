@@ -26,6 +26,7 @@ public class InvoiceService {
     private final UserRepository userRepository;
     private UserService userService;
     private HttpSession session;
+
 //    private final SessionFactory sessionFactory;
     @Autowired
     public InvoiceService(InvoiceRepository invoiceRepository,
@@ -38,6 +39,7 @@ public class InvoiceService {
         this.userService = userService;
 //        this.sessionFactory = sessionFactory;
     }
+
 
     public InvoiceEntity createNewInvoice(InvoiceEntity invoiceEntity) throws Exception {
 
@@ -91,13 +93,13 @@ public class InvoiceService {
 
 
     // Method to remove all session attributes
-    public void removeAllSessionAttributes() {
-        Enumeration<String> attributeNames = session.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            session.removeAttribute(attributeName);
-        }
-    }
+//    public void removeAllSessionAttributes() {
+//        Enumeration<String> attributeNames = session.getAttributeNames();
+//        while (attributeNames.hasMoreElements()) {
+//            String attributeName = attributeNames.nextElement();
+//            session.removeAttribute(attributeName);
+//        }
+//    }
 
     public List<InvoiceEntity> getInvoicesByUserEmail(String userEmail) {
         return invoiceRepository.findInvoicesByUserLoginEmail(userEmail);

@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString(exclude = "invoiceProducts")
 public class InvoiceEntity {
-    @Id @GeneratedValue (strategy = GenerationType.UUID)
+    @Id @GeneratedValue (strategy = GenerationType.AUTO)
     private UUID id;
     private String invoiceNumber;
     private String notes;
@@ -37,6 +37,7 @@ public class InvoiceEntity {
     private double totalPrice;
     @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
+    private Currency currency;
 
     @PrePersist
     public void beforeSaveInvoice(){
