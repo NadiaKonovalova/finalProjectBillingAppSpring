@@ -39,7 +39,7 @@
                 <input name="legalAddress" class="form-control" type="text"
                        th:value="${user.getLegalAddress()}"/>
             </div>
-            <div class="input-group mt-2">
+            <div class="input-group m-2">
                 <label class="input-group-text">Country</label>
                 <select class="form-control" name="country"
                         th:value="${user.getCountry().getDisplayCountryName()}">
@@ -86,7 +86,7 @@
                 <input name="accountNo" class="form-control" type="text"
                        th:value="${user.getAccountNo()}"/>
             </div>
-            <div class="input-group mt-2">
+            <div class="input-group m-2">
                 <button class="btn btn-dark text-white p-3">Save changes</button>
             </div>
         </form>
