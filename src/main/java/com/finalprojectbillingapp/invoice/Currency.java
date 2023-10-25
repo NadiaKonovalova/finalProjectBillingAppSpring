@@ -1,4 +1,4 @@
-package com.finalprojectbillingapp.productOrService;
+package com.finalprojectbillingapp.invoice;
 
 public enum Currency {
     EUR,

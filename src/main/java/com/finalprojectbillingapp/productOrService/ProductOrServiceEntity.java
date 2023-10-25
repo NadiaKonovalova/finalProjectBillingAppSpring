@@ -1,5 +1,6 @@
 package com.finalprojectbillingapp.productOrService;
 
+import com.finalprojectbillingapp.invoice.Currency;
 import com.finalprojectbillingapp.invoice.InvoiceProductEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,14 +27,13 @@ public class ProductOrServiceEntity {
     private String unit;
     private double unitPrice;
     @Enumerated(EnumType.STRING)
-    private Currency currency;
-//    @Enumerated(EnumType.STRING)
     private Category VATrate;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
     private double totalPerProduct;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<InvoiceProductEntity> invoices = new ArrayList<>();
+    private Currency currency;
 
     @PrePersist
     public void beforeSaveProductService(){

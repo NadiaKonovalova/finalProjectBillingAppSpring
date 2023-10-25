@@ -1,6 +1,7 @@
 package com.finalprojectbillingapp.productOrService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -39,7 +40,6 @@ public class ServiceForProducts {
         existingProductOrService.setQuantity(updatedProductOrService.getQuantity());
         existingProductOrService.setUnit(updatedProductOrService.getUnit());
         existingProductOrService.setUnitPrice(updatedProductOrService.getUnitPrice());
-        existingProductOrService.setCurrency(updatedProductOrService.getCurrency());
         existingProductOrService.setVATrate(updatedProductOrService.getVATrate());
 
         productServiceRepository.save(existingProductOrService);
@@ -91,4 +91,5 @@ public class ServiceForProducts {
 
         return totalPrice;
     }
+
 }
