@@ -50,9 +50,8 @@ public class UserService {
         throws Exception {
         this.userRepository.save(userEntity);
     }
-// Log in after sign-up;
-// might be improved to check if an e-mail is even registered
-    // Password validity / security requirements to be added
+
+
     public UserEntity verifyLogin
             (String loginEmail, String password)
         throws Exception {
@@ -60,7 +59,6 @@ public class UserService {
                 (loginEmail, password);
         return user;
     }
-// Single user
     public UserEntity getUserById(UUID id) throws Exception {
 
         return this.userRepository.findById(id).orElseThrow();

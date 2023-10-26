@@ -1,9 +1,4 @@
 <section th:fragment="edit-user-data-fragment">
-     <!--       <div class="input-group m-2">
-                <label class="input-group-text">E-mail</label>
-                <input name="email" class="form-control" type="email"
-                       th:value="${user.getEmail()}"/>
-            </div>-->
             <div class="input-group m-2">
                 <label class="input-group-text">Name</label>
                 <input name="name" class="form-control" type="text"
@@ -29,7 +24,7 @@
                 <input name="accountNo" class="form-control" type="text"
                        th:value="${user.getAccountNo()}"/>
             </div>
-            <div class="input-group mt-2">
+            <div class="input-group m-2">
                 <label class="input-group-text">Tax Payer Type</label>
                 <select class="form-control" name="taxpayerType"
                         th:value="${user.getTaxpayerType().getDisplayTypeName()}">
@@ -40,7 +35,7 @@
                     <option value="OTHER">Other</option>
                 </select>
             </div>
-            <div class="input-group mt-2">
+            <div class="input-group m-2">
                 <label class="input-group-text">Country</label>
                 <select class="form-control" name="country"
                         th:value="${user.getCountry().getDisplayCountryName()}">
@@ -145,5 +140,4 @@
             <option value="SWEDEN">Sweden</option>
         </select>
     </div>
-    <!--TESTING TESTING TESTING-->
 </section>

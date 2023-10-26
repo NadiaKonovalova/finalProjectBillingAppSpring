@@ -1,5 +1,6 @@
 package com.finalprojectbillingapp.customer;
 
+import com.finalprojectbillingapp.invoice.InvoiceRepository;
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,24 +13,22 @@ import java.util.UUID;
 @Service
 public class CustomerService {
     private CustomerRepository customerRepository;
+    private InvoiceRepository invoiceRepository;
     @Autowired
     public CustomerService(CustomerRepository customerRepository){
         this.customerRepository = customerRepository;
     }
 
-    // Returns all customers saved to the DB
     public List<CustomerEntity> getAllCustomers(){
         return (ArrayList<CustomerEntity>)
                 this.customerRepository.findAll();
     }
 
 
-    // To create a new customer instance
     public void createCustomer (CustomerEntity customerEntity) {
         this.customerRepository.save(customerEntity);
     }
 
-    // Edit customer details
     public void editCustomerDetails(UUID id, CustomerEntity updatedCustomerDetails) throws Exception {
         CustomerEntity existingCustomerDetails = customerRepository.findById(id)
                 .orElseThrow(() -> new Exception("Customer not found with ID: " + id));
@@ -45,8 +44,6 @@ public class CustomerService {
         customerRepository.save(existingCustomerDetails);
     }
 
-
-    // Delete a customer
     public void deleteCustomer(UUID id) throws Exception {
         CustomerEntity customerEntity = customerRepository.findById(id)
                 .orElseThrow(() -> new Exception ("Customer not found with ID: " + id));
@@ -63,5 +60,8 @@ public class CustomerService {
 
     public CustomerEntity getCustomerById(UUID customerId) throws Exception {
         return this.customerRepository.findById(customerId).orElseThrow();
+    }
+    public List<CustomerEntity> getAllCustomerByUserLoginEmail (String email) throws Exception {
+        return this.invoiceRepository.findCustomersByUserLoginEmail(email);
     }
 }

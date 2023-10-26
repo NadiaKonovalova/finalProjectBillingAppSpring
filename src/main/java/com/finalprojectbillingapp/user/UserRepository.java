@@ -16,7 +16,4 @@ public interface UserRepository extends
 
 
 
-/*    @Override
-    List<UserEntity> findAll();*/
-
 }

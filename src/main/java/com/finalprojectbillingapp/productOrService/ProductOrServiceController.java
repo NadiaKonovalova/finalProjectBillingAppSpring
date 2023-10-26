@@ -22,12 +22,12 @@ public class ProductOrServiceController {
     public String getAllProducts(Model model) {
         List<ProductOrServiceEntity> productsOrService = serviceForProducts.getAllProducts();
         model.addAttribute("productsOrService", productsOrService);
-        return "allProductsAndServices"; // need to add name of the html page - list of all products and services
+        return "allProductsAndServices";
     }
 
     @GetMapping("/add-product-service")
     public String displayAddProductService() {
-        return "addProductsOrServices"; // need to add name of the html page - display page where user can add product or service
+        return "addProductsOrServices";
     }
 
     @PostMapping("/add-product-service")

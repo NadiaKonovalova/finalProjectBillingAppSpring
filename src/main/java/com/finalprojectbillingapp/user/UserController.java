@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 import static java.util.UUID.*;
@@ -51,55 +54,10 @@ public class UserController {
                     + exception.getMessage();
         }
     }
-//@GetMapping("/create-new-account")
-//public String displayCreateNewAccountPage(Model model) {
-///*    model.addAttribute("loginEmail");
-//    model.addAttribute("password");*/
-//    return "createNewAccount";
-//}
-
-//@PostMapping("/create-new-account")
-//public String createNewAccount(LoginRequest loginRequest,
-//                               Model model) throws Exception {
-//    try {
-//        String loginEmail = loginRequest.getLoginEmail();
-//
-//        if (this.userService.checkIfAccountExists(loginEmail)) {
-//            model.addAttribute("error", "Creating an account failed: " +
-//                    "account already exists.");
-//            return "redirect:/login?status=ACCOUNT_EXISTS";
-//        }
-//            UserEntity user = new UserEntity();
-//            this.userService.createUser(user);
-//            user.setLoginEmail(loginEmail);
-//            user.setPassword(loginRequest.getPassword());
-//            user.setContactEmail(loginEmail);
-//
-//            return "redirect:/register";
-//        }   catch (Exception exception) {
-//        model.addAttribute("error", "Creating an account failed: "
-//                + exception.getMessage());
-//        return "createNewAccount";
-//    }
-//}
-
-@GetMapping("/logout")
-
-    public String logOutPage(@CookieValue (value=
-            "loggedInUserId", defaultValue = "") String userId,
-                               HttpServletResponse response){
-        Cookie userCookie = new Cookie("loggedInUserId", null);
-        userCookie.setMaxAge(0); // expires now = is deleted
-        response.addCookie(userCookie); // Adds new cookie
-
-        return "redirect:/login?status=LOGOUT_SUCCESSFUL";
-    }
-
     @GetMapping("/check-email")
     public String displayEmailCheckPage(Model model){
         return "checkEmailAvailability";
     }
-
     @PostMapping("/check-email")
     public String checkIfEmailIsAvailable(UserEntity userEntity,
                                           HttpServletRequest request,
@@ -108,16 +66,42 @@ public class UserController {
                                           HttpSession session) {
         try {
             String loginEmail = loginRequest.getLoginEmail();
-                if (this.userService.checkIfAccountExists(loginEmail)) {
-                    model.addAttribute("errorMessage", "This email is already registered. ");
-                    return "redirect:/login?status=ACCOUNT_EXISTS";
-                } else {
-                    session.setAttribute("loginEmail", loginEmail);
-                    return "redirect:/register";
-                }
-                } catch (Exception exception) {
+            if (this.userService.checkIfAccountExists(loginEmail)) {
+                model.addAttribute("errorMessage", "This email is already registered!");
+                return "checkEmailAvailability";
+            } else {
+                session.setAttribute("loginEmail", loginEmail);
+                return "redirect:/register";
+            }
+        } catch (Exception exception) {
             return "redirect:/emailCheck?status=CHECKING-EMAIL-FAILED&?error="
                     + exception.getMessage();
+        }
+    }
+
+@GetMapping("/logout")
+
+    public String logOutPage(@CookieValue (value=
+            "loggedInUserId", defaultValue = "") String userId,
+                               HttpServletResponse response){
+        Cookie userCookie = new Cookie("loggedInUserId", null);
+        userCookie.setMaxAge(0);
+        response.addCookie(userCookie);
+
+        return "redirect:/login?status=LOGOUT_SUCCESSFUL";
+    }
+    @PostMapping("/check-password-email")
+    public String checkIfEmailAndPasswordIsCorrect(UserEntity userEntity, HttpServletRequest request, LoginRequest loginRequest, Model model, HttpSession session) {
+        String password = loginRequest.getPassword();
+        String loginEmail = loginRequest.getLoginEmail();
+
+        if (userEntity != null && userEntity.getPassword() != null && userEntity.getPassword().equals(password)) {
+            session.setAttribute("loginEmail", loginEmail);
+            return "redirect:/login";
+        } else {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/login")
+                    .queryParam("error", "Invalid username or password");
+            return "redirect:" + builder.toUriString();
         }
     }
 
@@ -174,40 +158,12 @@ public class UserController {
             // Use 'userId' to fetch and display the user's data in the view
             UserEntity user = this.userService.getUserById(UUID.fromString(userId));
             model.addAttribute("user", user);
-            return "singleUserProfile"; // Return the view for displaying the user's profile
+            return "singleUserProfile";
         } else {
-            // Handle the case where the cookie is missing or invalid
-            return "redirect:/login"; // Redirect to the login page or another appropriate page
+
+            return "redirect:/login";
         }
     }
-//    @GetMapping("/singleUserProfile/{id}")
-//    public String displaySingleUser(@CookieValue(value="loggedInUserId")
-//                                        @PathVariable("id") String userId, Model model) {
-//        try {
-//            if(userId.isBlank()) throw new RuntimeException("User not found");
-//            model.addAttribute("user", this.userService.getUserById
-//                    (fromString(userId)));
-//            model.addAttribute("userProfile", this.userService.getAllUsers());
-//            return "singleUserProfile";
-//        } catch (Exception exception) {
-//            return "redirect:/?message=USER_PROFILE_NOT_FOUND&error=" + exception.getMessage();
-//        }
-//    }
-//    @GetMapping("/userProfile/{id}")
-//    public String displaySingleUser(@PathVariable("id") UUID userId,
-//                                    Model model){
-//        try {
-//            UserEntity user = this.userService.getUserById(userId);
-//            if(user==null){
-//                return "redirect:/?message=USER_PROFILE_NOT_FOUND";
-//            }
-//            model.addAttribute("user", user);
-//// also catch UserNotFound custom Exc
-//            return "userProfile" + user.getId();
-//        } catch (Exception exception) {
-//            return "redirect:/?message=USER_PROFILE_NOT_FOUND&error=" + exception.getMessage();
-//        }
-//    }
        @GetMapping("/mainPage")
     public String displayMainPage(){
         return "mainPageForUser";
@@ -263,16 +219,4 @@ public class UserController {
 
     }
 
-//    @GetMapping("/userProfile/{id}")
-//    public String displaySingleUser(@PathVariable UUID id,
-//                                    Model model){
-//        try {
-//            UserEntity singleUser = this.userService.findUserById(id);
-//            model.addAttribute("user",singleUser);
-//
-//            return "redirect:/?message=USER_PROFILE/" + singleUser.getName();
-//        } catch (Exception exception) {
-//            return "redirect:/?message=USER_PROFILE_NOT_FOUND&error=" + exception.getMessage();
-//        }
-//    }
 }

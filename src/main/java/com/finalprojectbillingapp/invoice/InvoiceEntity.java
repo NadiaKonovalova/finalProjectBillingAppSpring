@@ -1,6 +1,7 @@
 package com.finalprojectbillingapp.invoice;
 
 import com.finalprojectbillingapp.customer.CustomerEntity;
+import com.finalprojectbillingapp.productOrService.Currency;
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.user.UserEntity;
 import jakarta.persistence.*;
@@ -37,6 +38,7 @@ public class InvoiceEntity {
     private double totalPrice;
     @Enumerated(EnumType.STRING)
     private Status status = Status.NEW;
+    private Currency currency;
 
     @PrePersist
     public void beforeSaveInvoice(){

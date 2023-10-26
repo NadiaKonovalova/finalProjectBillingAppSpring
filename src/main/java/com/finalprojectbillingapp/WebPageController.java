@@ -19,11 +19,5 @@ public class WebPageController {
     public String displayContactPage(){
         return "contactUs";
     }
-//    @PostMapping("/contact")
-//    public String createMessageToUs(){
-//        return ""
-//
-//    }
-
 
 }

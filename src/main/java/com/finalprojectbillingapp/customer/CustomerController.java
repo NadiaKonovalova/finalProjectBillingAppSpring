@@ -1,13 +1,11 @@
 package com.finalprojectbillingapp.customer;
 
-import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
+import com.finalprojectbillingapp.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +13,7 @@ import java.util.UUID;
 @Controller
 public class CustomerController {
     private final CustomerService customerService;
+    private UserService userService;
 
     @Autowired
     public CustomerController(CustomerService customerService) {
@@ -25,14 +24,12 @@ public class CustomerController {
     public String displayAllCustomers(Model model) {
         List<CustomerEntity> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "allCustomers"; // need to add name of the html page - list of all customers
+        return "allCustomers";
     }
-
     @GetMapping("/add-customer")
     public String displayAddCustomer(CustomerEntity customerEntity) {
         return "addCustomer"; // need to add name of the html page - display page where user can add customers
     }
-
     @PostMapping("/add-customer")
     public String createCustomer(CustomerEntity customerEntity) {
         try {
@@ -42,7 +39,6 @@ public class CustomerController {
             return "redirect:/add-customer?status=CUSTOMER_CREATION_FAILED&error=" + exception.getMessage();
         }
     }
-
     @GetMapping("/edit-customer/{id}")
     public String displayEditCustomer(@PathVariable UUID id, Model model) {
         try {

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Set Currency')}"> </head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<main class="container">
+  <h3>Select Currency</h3>
+  <form id="currencyForm" action="/select-currency" method="post">
+    <div class="input-group m-2">
+      <label class="input-group-text">Currency</label>
+      <select name="currency" class="form-control">
+        <option value="EUR">EUR</option>
+        <option value="BGN">BGN</option>
+        <option value="CZK">CZK</option>
+        <option value="DKK">DKK</option>
+        <option value="HUF">HUF</option>
+        <option value="PLN">PLN</option>
+        <option value="RON">RON</option>
+        <option value="SEK">SEK</option>
+        <option value="ISK">ISK</option>
+        <option value="CHF">CHF</option>
+        <option value="NOK">NOK</option>
+      </select>
+    </div>
+    <div>
+      <button type="submit" class="btn btn btn-dark text-white p-3" value="redirect" >
+        Confirm and Proceed</button>
+    </div>
+
+  </form>
+</main>
+</body>
+</html>

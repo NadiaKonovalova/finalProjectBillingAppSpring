@@ -26,7 +26,7 @@ public class InvoiceService {
     private final UserRepository userRepository;
     private UserService userService;
     private HttpSession session;
-    //    private final SessionFactory sessionFactory;
+
     @Autowired
     public InvoiceService(InvoiceRepository invoiceRepository,
                           InvoiceProductRepository invoiceProductRepository,
@@ -73,24 +73,6 @@ public class InvoiceService {
         return products;
     }
 
-//    public static String getUserIdFromCookies (HttpServletRequest request) {
-//        Cookie[] cookies = request.getCookies();
-//        String userId = null;
-//
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("loggedInUserId")) {
-//                    userId = cookie.getValue();
-//                    break;
-//                }
-//            }
-//        }
-//        return userId;
-//    }
-
-
-
-    // Method to remove all session attributes
     public void removeAllSessionAttributes() {
         Enumeration<String> attributeNames = session.getAttributeNames();
         while (attributeNames.hasMoreElements()) {
@@ -103,20 +85,4 @@ public class InvoiceService {
         return invoiceRepository.findInvoicesByUserLoginEmail(userEmail);
     }
 
-//    public List<InvoiceEntity> getInvoicesForLoggedInUser(HttpServletRequest request) throws Exception {
-//        InvoiceEntity invoice = new InvoiceEntity();
-//        List<InvoiceEntity> archivedInvoices = new ArrayList<>();
-//        try {
-//            UserEntity user = this.userService.getLoggedInUser(request);
-//            String email = this.userService.getLoggedInUserEmail(request);
-//
-//            sessionFactory.openSession();
-//
-//            String queryEmail = "FROM users WHERE loginEmail LIKE %?%";
-//            Query<UserEntity> query = sessionFactory.createEntityManager()
-//
-//        } catch (Exception exception){
-//            throw new Exception(exception.getMessage());
-//        }
-//    }
 }

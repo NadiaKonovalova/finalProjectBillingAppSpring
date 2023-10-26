@@ -17,20 +17,20 @@ public class ServiceForProducts {
         this.productServiceRepository = productServiceRepository;
     }
 
-    // Returns all products saved to the DB
+
     public List<ProductOrServiceEntity> getAllProducts() {
         return (ArrayList<ProductOrServiceEntity>)
                 this.productServiceRepository.findAll();
     }
 
-    // To create a new product or service
+
     public ProductOrServiceEntity createProductService(ProductOrServiceEntity productOrServiceEntity)
             throws Exception {
         this.productServiceRepository.save(productOrServiceEntity);
         return productOrServiceEntity;
     }
 
-    // Edit product / service
+
     public void editProductService(UUID id, ProductOrServiceEntity updatedProductOrService) throws Exception {
         ProductOrServiceEntity existingProductOrService = productServiceRepository.findById(id)
                 .orElseThrow(() -> new Exception("Product or service not found with ID: " + id));
@@ -45,7 +45,7 @@ public class ServiceForProducts {
         productServiceRepository.save(existingProductOrService);
     }
 
-    // delete product / service
+
     public void deleteProductService(UUID id) throws Exception {
         ProductOrServiceEntity productOrServiceEntity = productServiceRepository
                 .findById(id).orElseThrow(() -> new Exception("Product or service not found with ID: " + id));

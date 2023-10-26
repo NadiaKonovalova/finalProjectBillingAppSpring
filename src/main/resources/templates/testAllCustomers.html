@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Select Customer')}">
+</head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
+<main class="container">
+    <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Select a Customer</h3>
+    <form id="select-customer-form"  th:action="${'/select-customer'}" method="post" style="width: 33%; margin: 0 auto;">
+        <div th:if="${customers.isEmpty()}">There are no customers to display</div>
+        <div th:if="${not customers.isEmpty()}">
+            <ul>
+                <li th:each="selectedCustomer, iterStat: ${customers}" class="row">
+                    <form th:action="${'/select-customer'}" method="post">
+                        <div class="col">
+                            <p>Name: <span th:text="${selectedCustomer.getName() + ',
+                                Taxpayer No.: ' + selectedCustomer.getTaxpayerNo()}"></span></p>
+                            <p>Address: <span th:text="${selectedCustomer.getLegalAddress() + ', '
+                                + selectedCustomer.getCountry().getDisplayCountryName()}"></span></p>
+                            <p>Bank: <span th:text="${selectedCustomer.getBankName() + ',
+                                Account No.: ' + selectedCustomer.getAccountNo()}"></span></p>
+                            <input type="hidden" name="selectedCustomerId" th:value="${selectedCustomer.getId()}"/>
+                            <button type="submit" class="btn btn-secondary">Select</button>
+
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </form>
+    <a th:href="${'/createNewInvoice/customerData'}" class="btn btn-primary">Or Add a New Customer</a>
+
+</main>
+</body>
+</html>
