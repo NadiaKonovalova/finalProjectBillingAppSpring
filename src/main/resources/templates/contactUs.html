@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Contact Us')}"> </head>
+<header th:replace="~{fragments/headerAfterLogIn.html::after-login-header}"></header>
+
+<body>
+<div>
+    <h1 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Contact us</h1>
+    <form action="/contactUs" method="post" style="width: 33%; margin: 0 auto;">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" style="box-shadow: 3px 3px 5px #888888;">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Text your message</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="box-shadow: 3px 3px 5px #888888;"></textarea>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; height: auto;">
+            <button class="btn btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

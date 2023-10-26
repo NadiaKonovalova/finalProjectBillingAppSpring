@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Set Currency')}"> </head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<main class="container">
+  <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Select Currency</h3>
+    <form id="currencyForm" action="/select-currency" method="post" style="width: 33%; margin: 0 auto;">
+      <div class="input-group m-2">
+        <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Currency</label>
+        <select name="currency" class="form-control" style="box-shadow: 3px 3px 5px #888888;">
+          <option value="EUR">EUR</option>
+          <option value="BGN">BGN</option>
+          <option value="CZK">CZK</option>
+          <option value="DKK">DKK</option>
+          <option value="HUF">HUF</option>
+          <option value="PLN">PLN</option>
+          <option value="RON">RON</option>
+          <option value="SEK">SEK</option>
+          <option value="ISK">ISK</option>
+          <option value="CHF">CHF</option>
+          <option value="NOK">NOK</option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; height: auto;">
+        <button type="submit" class="btn btn btn-dark text-white p-3" value="redirect" style="font-weight: bold; margin-top: 20px;">
+          Confirm and Proceed</button>
+      </div>
+
+    </form>
+</main>
+</body>
+</html>

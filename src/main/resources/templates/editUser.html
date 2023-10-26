@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+    <head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Edit Profile')}"> </head>
+    <body>
+    <header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
+    <main class="container">
+        <div th:replace="~{fragments/headerAfterLogin.html::userProfile}"></div>
+        <h3 style="text-align: center; margin: 50px 0px 50px 0px; color: #333333;">Edit User</h3>
+        <section class="container">
+            <form th:action="${'/editUser/' + user.getId()}" method="post" style="width: 33%; margin: 0 auto;">
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="width: 450px; padding: 5px; box-shadow: 3px 3px 5px #888888;">Login e-mail:
+                        <span th:text="${user.getLoginEmail()}" style="font-weight: bold"></span>
+                    </label>
+                </div>
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Name</label>
+                    <input name="name" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"
+                           th:value="${user.getName()}"/>
+                </div>
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Tax Payer number</label>
+                    <input name="taxpayerNo" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"
+                           th:value="${user.getTaxpayerNo()}"/>
+                </div>
+
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Tax Payer Type</label>
+                    <select class="form-control" name="taxpayerType" style="box-shadow: 3px 3px 5px #888888;"
+                            th:value="${user.getTaxpayerType().getDisplayTypeName()}">
+                        <option value="INDIVIDUAL">Individual or natural person</option>
+                        <option value="SELF_EMPLOYED">Self-employed</option>
+                        <option value="MICRO_ENTERPRISE">Micro-enterprise</option>
+                        <option value="VAT_PAYER">VAT payer</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Legal address</label>
+                    <input name="legalAddress" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"
+                           th:value="${user.getLegalAddress()}"/>
+                </div>
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Country</label>
+                    <select class="form-control" name="country" style="box-shadow: 3px 3px 5px #888888;"
+                            th:value="${user.getCountry().getDisplayCountryName()}">
+                        <option value="AUSTRIA">Austria</option>
+                        <option value="BELGIUM">Belgium</option>
+                        <option value="BULGARIA">Bulgaria</option>
+                        <option value="CROATIA">Croatia</option>
+                        <option value="CYPRUS">Cyprus</option>
+                        <option value="CZECHIA">Czech Republic</option>
+                        <option value="DENMARK">Denmark</option>
+                        <option value="ESTONIA">Estonia</option>
+                        <option value="FINLAND">Finland</option>
+                        <option value="FRANCE">France</option>
+                        <option value="GERMANY">Germany</option>
+                        <option value="GREECE">Greece</option>
+                        <option value="HUNGARY">Hungary</option>
+                        <option value="ICELAND">Iceland</option>
+                        <option value="IRELAND">Ireland</option>
+                        <option value="ITALY">Italy</option>
+                        <option value="LATVIA">Latvia</option>
+                        <option value="LIECHTENSTEIN">Liechtenstein</option>
+                        <option value="LITHUANIA">Lithuania</option>
+                        <option value="LUXEMBOURG">Luxembourg</option>
+                        <option value="MALTA">Malta</option>
+                        <option value="NETHERLANDS">Netherlands</option>
+                        <option value="NORWAY">Norway</option>
+                        <option value="POLAND">Poland</option>
+                        <option value="PORTUGAL">Portugal</option>
+                        <option value="ROMANIA">Romania</option>
+                        <option value="SLOVAKIA">Slovakia</option>
+                        <option value="SLOVENIA">Slovenia</option>
+                        <option value="SPAIN">Spain</option>
+                        <option value="SWEDEN">Sweden</option>
+                    </select>
+                </div>
+
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Bank name</label>
+                    <input name="bankName" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"
+                           th:value="${user.getBankName()}"/>
+                </div>
+                <div class="input-group m-2">
+                    <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Bank account number</label>
+                    <input name="accountNo" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"
+                           th:value="${user.getAccountNo()}"/>
+                </div>
+                <div class="input-group m-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
+                    <button class="btn btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Save changes</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    </body>
+</html>

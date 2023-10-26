@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Archive')}">
+</head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<main class="container">
+    <div>
+
+        <h1 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Archive invoices</h1>
+        <div th:if="${invoices.isEmpty()}">There are No products or services to display</div>
+        <div th:if="${!invoices.isEmpty()}">
+
+            <form th:action="@{/sort-invoices}" method="get">
+                <label for="sortParameter">Sort By:</label>
+                <select id="sortParameter" name="sortParameter">
+                    <option value="CREATED_AT" th:selected="${sortParameter == 'CREATED_AT'}">Created at</option>
+                    <option value="ISSUED_AT" th:selected="${sortParameter == 'ISSUED_AT'}">Issued on</option>
+                    <option value="DUE_BY" th:selected="${sortParameter == 'DUE_BY'}">Due by</option>
+                    <option value="SELLER" th:selected="${sortParameter == 'SELLER'}">Seller</option>
+                    <option value="BUYER" th:selected="${sortParameter == 'BUYER'}">Buyer</option>
+                    <option value="TOTAL" th:selected="${sortParameter == 'TOTAL'}">Total</option>
+                    <option value="CURRENCY" th:selected="${sortParameter == 'CURRENCY'}">Currency</option>
+                    <option value="STATUS" th:selected="${sortParameter == 'STATUS'}">Status</option>
+                </select>
+                <button type="submit" style="margin-top: 20px; margin-bottom: 20px; border-color: grey;">Sort</button>
+            </form>
+
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th>Invoice No.</th>
+                    <th>Created at</th>
+                    <th>Issued on</th>
+                    <th>Due by</th>
+                    <th>Seller</th>
+                    <th>Buyer</th>
+                    <th>Products</th>
+                    <th>Total Sum</th>
+                    <th>Currency</th>
+                    <th>Status</th>
+
+                </tr>
+
+                <tr th:each="invoice : ${invoices}">
+                    <td th:text="${invoice.invoiceNumber}"></td>
+                    <td th:text="${#dates.format(invoice.createdAt, 'dd.MM.yyyy.')}"></td>
+                    <td th:text="${#dates.format(invoice.issuedAt,'dd.MM.yyyy.')}"></td>
+                    <td th:text="${#dates.format(invoice.dueBy, 'dd.MM.yyyy.')}"></td>
+                    <td th:text="${invoice.user.name}"></td>
+                    <td th:text="${invoice.customer.name}"></td>
+                    <td>
+            <span th:each="product, iterStat : ${invoice.invoiceProducts}">
+            <span th:text="${product.product.name}"></span>
+            <span th:unless="${iterStat.last}">,</span>
+            </span>
+                    </td>
+                    <td th:text="${#numbers.formatDecimal(invoice.totalPrice,1,2,'COMMA')}"></td>
+                    <td th:text="${invoice.currency.toString()}"></td>
+                    <td th:text="${invoice.status.toString()}"></td>
+                </tr>
+            </table>
+        </div>
+        <form action="/archive-invoice" method="post"></form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head  th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Invoices')}"></head>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+<body>
+<main class="container">
+    <form method="get" action="/new-invoice/">
+        <div class="input-group m-2" style="display: flex;
+        justify-content: center; align-items: center; height: auto;">
+            <a th:href="${'/createNewInvoice/invoiceNumber'}"
+               class="btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 50px;">Create a New Invoice</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

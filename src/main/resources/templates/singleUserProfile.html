@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='View Profile')}"> </head>
+<body>
+<header th:replace="~{fragments/headerAfterLogin.html::after-login-header}"></header>
+
+<main class="container">
+    <div th:replace="~{fragments/headerAfterLogin.html::userProfile}"></div>
+
+    <section>
+
+        <div class="col" style="padding-left: 20px;">
+            <div th:text="'NAME:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;
+                        '+ ${user.getName()}"> </div>
+            <div th:text="'TAXPAYER NUMBER:&nbsp;&nbsp;&nbsp;' + ${user.getTaxpayerNo()}"></div>
+            <div th:text="'TYPE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + ${user.getTaxpayerType().getDisplayTypeName()}"></div>
+            <div th:text="'LOGIN E-MAIL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+            + ${user.getLoginEmail()}"></div>
+            <div th:text="'LEGAL ADDRESS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+            + ${user.getLegalAddress()}"></div>
+            <div th:text="'COUNTRY:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+            + ${user.getCountry().getDisplayCountryName()}"></div>
+            <div th:text="'BANK:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+                        + ${user.getBankName()}"></div>
+            <div th:text="'BANK ACCOUNT:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + ${user.getAccountNo()}"></div>
+        </div>
+
+    </section>
+</main>
+</body>
+</html>
