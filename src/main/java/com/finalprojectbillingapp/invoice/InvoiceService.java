@@ -8,6 +8,7 @@ import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,50 +76,40 @@ public class InvoiceService {
         return products;
     }
 
-//    public static String getUserIdFromCookies (HttpServletRequest request) {
-//        Cookie[] cookies = request.getCookies();
-//        String userId = null;
-//
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("loggedInUserId")) {
-//                    userId = cookie.getValue();
-//                    break;
-//                }
-//            }
-//        }
-//        return userId;
-//    }
-
-
-
-    // Method to remove all session attributes
-//    public void removeAllSessionAttributes() {
-//        Enumeration<String> attributeNames = session.getAttributeNames();
-//        while (attributeNames.hasMoreElements()) {
-//            String attributeName = attributeNames.nextElement();
-//            session.removeAttribute(attributeName);
-//        }
-//    }
 
     public List<InvoiceEntity> getInvoicesByUserEmail(String userEmail) {
         return invoiceRepository.findInvoicesByUserLoginEmail(userEmail);
     }
 
-//    public List<InvoiceEntity> getInvoicesForLoggedInUser(HttpServletRequest request) throws Exception {
-//        InvoiceEntity invoice = new InvoiceEntity();
-//        List<InvoiceEntity> archivedInvoices = new ArrayList<>();
-//        try {
-//            UserEntity user = this.userService.getLoggedInUser(request);
-//            String email = this.userService.getLoggedInUserEmail(request);
-//
-//            sessionFactory.openSession();
-//
-//            String queryEmail = "FROM users WHERE loginEmail LIKE %?%";
-//            Query<UserEntity> query = sessionFactory.createEntityManager()
-//
-//        } catch (Exception exception){
-//            throw new Exception(exception.getMessage());
-//        }
-//    }
+    public List<InvoiceEntity> getSortedInvoices(Sort sortParameter,
+                                                 HttpServletRequest request) throws Exception {
+       String loginEmail = this.userService.getLoggedInUserEmail(request);
+        List<InvoiceEntity> invoices = getInvoicesByUserEmail(loginEmail);
+        return switch (sortParameter) {
+            case CREATED_AT -> this.invoiceRepository.sortAllByCreatedAt();
+            case ISSUED_AT -> this.invoiceRepository.sortAllByIssuedAt();
+            case DUE_BY -> this.invoiceRepository.sortAllByDueBy();
+            case SELLER -> this.invoiceRepository.sortAllByUserName();
+            case BUYER -> this.invoiceRepository.sortAllByCustomerName();
+            case TOTAL -> this.invoiceRepository.sortAllByTotal();
+            case CURRENCY -> this.invoiceRepository.sortAllByCurrency();
+            case STATUS -> this.invoiceRepository.sortAllByStatus();
+            default -> (List<InvoiceEntity>) this.invoiceRepository.findAll();
+        };
+    }
+    @Transactional
+    public List<InvoiceEntity> findAllWithUsers() {
+        return invoiceRepository.findAllWithUsers();
+    }
+
+    public List<InvoiceEntity> sortAllByUser(List<InvoiceEntity> invoices) {
+        invoices.sort(Comparator.comparing(invoice -> invoice.getUser().getName()));
+        return invoices;
+    }
+
+    public List<InvoiceEntity> sortAllByCustomer(List<InvoiceEntity> invoices) {
+        invoices.sort(Comparator.comparing(invoice -> invoice.getCustomer().getName()));
+        return invoices;
+    }
+
 }

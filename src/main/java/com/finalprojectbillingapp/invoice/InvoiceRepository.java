@@ -21,4 +21,33 @@ public interface InvoiceRepository extends CrudRepository
     @Query("SELECT i.customer FROM Invoices i WHERE i.user.loginEmail = :loginEmail")
     List<CustomerEntity> findCustomersByUserLoginEmail(String loginEmail);
 
+    @Query("SELECT i FROM Invoices i ORDER BY i.createdAt")
+    List<InvoiceEntity> sortAllByCreatedAt();
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.issuedAt")
+    List<InvoiceEntity> sortAllByIssuedAt();
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.dueBy")
+    List<InvoiceEntity> sortAllByDueBy();
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.user.name")
+    List<InvoiceEntity> sortAllByUserName();
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.customer.name")
+    List<InvoiceEntity> sortAllByCustomerName();
+
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.totalPrice")
+    List<InvoiceEntity> sortAllByTotal();
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.currency")
+    List<InvoiceEntity> sortAllByCurrency();
+
+    @Query("SELECT i FROM Invoices i ORDER BY i.status")
+    List<InvoiceEntity> sortAllByStatus();
+
+    @Query("SELECT DISTINCT i FROM Invoices i JOIN FETCH i.user")
+    List<InvoiceEntity> findAllWithUsers();
+
+
 }

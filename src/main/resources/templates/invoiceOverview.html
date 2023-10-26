@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Invoice Overview</title>
@@ -17,6 +17,10 @@
 </head>
 <body>
 <main class="container">
+    <div style="text-align: left; margin-top: 60px;">
+        <a href="/mainPage" class="btn btn-white text-dark p-4" style="font-weight: bold;
+        width: 10%; border: 1px solid black; padding: 5px;">BACK</a>
+    </div>
     <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Invoice Overview</h3>
     <table id=mainTable style="width: 100%; border-collapse: collapse;">
         <tr>
@@ -45,7 +49,7 @@
                         <td style="width: 50%;">
                             <div class="customer-info">
                                 <p class="section-title" style="font-weight: bold;">Buyer:</p>
-                                <p>Customer name: <span th:text="${invoice.customer.name}"></span></p>
+                                <p>Name: <span th:text="${invoice.customer.name}"></span></p>
                                 <p>Taxpayer number: <span th:text="${invoice.customer.taxpayerNo}"></span></p>
                                 <p>Address: <span th:text="${invoice.customer.legalAddress}"></span></p>
                                 <p>Country: <span th:text="${invoice.customer.country.getDisplayCountryName()}"></span></p>
@@ -85,7 +89,6 @@
                         <td></td>
                         <td></td>
                         <td style="font-weight: bold;">Total:</td>
-
                         <td style="border: 1px solid #ccc; text-align: left;"
                             th:text="${#numbers.formatDecimal(invoice.totalPrice,1,2,'COMMA') + ' ' + invoice.currency.toString()}">
                         </td>
@@ -102,8 +105,23 @@
                     <p>Notes: <span th:text="${invoice.notes}"></span></p>
                     <p>Issued on: <span th:text="${#dates.format(invoice.issuedAt, 'dd.MM.yyyy.')}"></span></p>
                     <p>Due by: <span th:text="${#dates.format(invoice.dueBy, 'dd.MM.yyyy.')}"></span></p>
-                    <p>Signature: <span th:text="${invoice.methodOfSigning.getDisplaySignatureName()}"></span></p>
                 </div>
+
+            <div class="method-of-signing" style="padding: 0; border: none;">
+                <br>
+                <p th:if="${#strings.equals(invoice.methodOfSigning, 'ELECTRONIC_SIGNATURE')}"
+                   style="text-align: center; font-style: italic;">
+                    THIS DOCUMENT IS SIGNED ELECTRONICALLY WITH A SECURE ELECTRONIC SIGNATURE
+                        AND CONTAINS A TIMESTAMP
+                </p>
+                <p th:if="${#strings.equals(invoice.methodOfSigning, 'DRAFTED_ELECTRONICALLY_NO_SIGNATURE')}"
+                   style="text-align: center; font-style: italic;">
+                THIS DOCUMENT IS GENERATED ELECTRONICALLY AND IS VALID WITHOUT A SIGNATURE
+                </p>
+                <p th:if="${#strings.equals(invoice.methodOfSigning, 'PRINT_OUT')}">
+                    <span style="text-align: left; font-style: italic;">SIGNATURE: _______________________________________</span>
+                </p>
+            </div>
             </td>
         </tr>
     </table>
@@ -114,9 +132,7 @@
         <form th:action="@{/cancel-invoice}" method="post" style="display: inline-block; margin-right: 10px;">
             <button type="submit" class="btn btn-dark text-white p-3" style="font-weight: bold;">Cancel Invoice</button>
         </form>
-        <a href="/create-pdf" class="btn btn-dark text-white p-3" style="font-weight: bold;">Print Invoice to PDF</a>
-        </form>
-<!--            <button onclick="window.print()" class="btn btn-dark text-white p-3" style="font-weight: bold;">Create PDF</button>-->
+        <a href="/create-pdf" class="btn btn-dark text-white p-3" style="font-weight: bold;">Create PDF</a>
 
     </section>
 </main>

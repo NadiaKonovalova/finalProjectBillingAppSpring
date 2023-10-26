@@ -12,4 +12,5 @@ public interface InvoiceProductRepository extends CrudRepository<InvoiceProductE
     List<InvoiceProductEntity> findAll();
     List<InvoiceProductEntity> findAllByInvoice_id(UUID invoiceId);
 
+
 }
