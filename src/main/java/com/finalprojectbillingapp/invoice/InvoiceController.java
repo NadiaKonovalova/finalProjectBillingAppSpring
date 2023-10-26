@@ -27,6 +27,7 @@ import java.sql.Date;
 import java.util.*;
 
 import static com.finalprojectbillingapp.invoice.Status.*;
+import static java.lang.String.*;
 
 
 @Controller
@@ -485,10 +486,10 @@ public class InvoiceController {
                             invoices.sort(Comparator.comparing(InvoiceEntity::getTotalPrice));
                             break;
                         case CURRENCY:
-                            invoices.sort(Comparator.comparing(InvoiceEntity::getCurrency));
+                            invoices.sort(Comparator.comparing(invoice -> invoice.getCurrency().name()));
                             break;
                         case STATUS:
-                            invoices.sort(Comparator.comparing(InvoiceEntity::getStatus));
+                            invoices.sort(Comparator.comparing(invoice -> invoice.getStatus().name()));
                             break;
                         default:
                             this.invoiceRepository.findAll();
