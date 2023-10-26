@@ -6,28 +6,21 @@ import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.productOrService.ProductServiceRepository;
 import com.finalprojectbillingapp.productOrService.ServiceForProducts;
 import com.finalprojectbillingapp.user.*;
-;
-import jakarta.persistence.Cacheable;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.*;
-
 import java.sql.Date;
 import java.util.*;
 
 import static com.finalprojectbillingapp.invoice.Status.*;
-import static java.lang.String.*;
 
 
 @Controller
@@ -36,11 +29,11 @@ public class InvoiceController {
     private final InvoiceRepository invoiceRepository;
     private final ProductServiceRepository productServiceRepository;
     private final InvoiceProductRepository invoiceProductRepository;
+    private final UserRepository userRepository;
     private InvoiceService invoiceService;
     private UserService userService;
     private CustomerService customerService;
     private ServiceForProducts serviceForProducts;
-    private UserRepository userRepository;
 
     @Autowired
     public InvoiceController(InvoiceRepository invoiceRepository,
@@ -139,15 +132,13 @@ public class InvoiceController {
     public String displayAddCustomerPage(Model model) throws Exception {
         CustomerEntity selectedCustomer = (CustomerEntity)
                 model.getAttribute("selectedCustomer");
-        System.out.println(selectedCustomer);
         if (selectedCustomer != null) {
-//            selectedCustomer = this.customerService.getCustomerById(selectedCustomer.getId());
             model.addAttribute("selectedCustomer1", selectedCustomer);
         } else {
             CustomerEntity customerEntity = new CustomerEntity();
             model.addAttribute("newCustomer", customerEntity);
         }
-        return "testAddCustomers";
+        return "addCustomers";
     }
 
     //Works
@@ -194,9 +185,9 @@ public class InvoiceController {
         if (userID != null) {
             UserEntity user1 = this.userService.getUserById(userID);
             if (user1.getTaxpayerType().equals(Type.VAT_PAYER)) {
-                return "testingAddProduct";
+                return "addProduct";
             } else {
-                return "testingAddProductNoVAT";
+                return "addProductNoVAT";
             }
         } else {
             session.setAttribute("error", "User ID is missing.");
@@ -379,21 +370,6 @@ public class InvoiceController {
         }
     }
 
-    @GetMapping("/displaySessionAttributes/")
-    public String displaySessionAttributes(
-            HttpSession session,
-            HttpServletRequest request,
-            Model model) throws Exception {
-
-
-        String email = this.userService.getLoggedInUserEmail(request);
-        List<CustomerEntity> customerList = new ArrayList<>(
-                this.customerService.getAllCustomerByUserLoginEmail(email));
-        System.out.println(customerList);
-
-        return "invoiceOverviewPrint";
-    }
-
     @PostMapping("/cancel-invoice")
     public String handleCancelInvoice(HttpSession session) throws Exception {
         UUID invoiceId = (UUID) session.getAttribute("newInvoiceId");
@@ -418,43 +394,9 @@ public class InvoiceController {
             model.addAttribute("errorMessage",
                     "An error occurred while fetching data");
         }
-        return "sortInvoices";
+        return "archiveOfInvoices";
     }
 
-
-//    @GetMapping("/sort-invoices")
-//    public String sortInvoices(@RequestParam("sortParameter") Sort sortParameter, Model model,
-//                               HttpServletRequest request) {
-//        try {
-//            String loginEmail = this.userService.getLoggedInUserEmail(request);
-//            if (loginEmail != null) {
-//                List<InvoiceEntity> invoices =
-//                        this.invoiceService.getSortedInvoices(sortParameter, request, loginEmail);
-//                model.addAttribute("invoices", invoices);
-//            }
-//        } catch (Exception exception) {
-//
-//            exception.printStackTrace();
-//            model.addAttribute("errorMessage", "An error occurred while fetching data");
-//        }
-//        return "sortInvoices";
-//    }
-//@GetMapping("/sort-invoices")
-//public String sortInvoices(@RequestParam("sortParameter") Sort sortParameter,
-//                           Model model,
-//                           HttpServletRequest request) throws Exception {
-//  try {
-//        String email = this.userService.getLoggedInUserEmail(request);
-//        model.addAttribute("sortParameter", sortParameter);
-//        List<InvoiceEntity> sortedInvoices = invoiceService.getSortedInvoices(sortParameter, request);
-//
-//        model.addAttribute("invoices", sortedInvoices);
-//        } catch (Exception exception) {
-//                exception.printStackTrace();
-//                model.addAttribute("errorMessage", "An error occurred while fetching data");
-//                }
-//                return "sortInvoices";
-//                }
 
     @GetMapping("/sort-invoices")
     public String sortInvoices(@RequestParam("sortParameter") Sort sortParameter, Model model,
@@ -501,7 +443,7 @@ public class InvoiceController {
             exception.printStackTrace();
             model.addAttribute("errorMessage", "An error occurred while fetching data");
         }
-        return "sortInvoices";
+        return "archiveOfInvoices";
     }
 }
 

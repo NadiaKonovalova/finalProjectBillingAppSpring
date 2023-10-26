@@ -25,8 +25,6 @@ public class CustomerEntity {
     private String bankName;
     private String accountNo;
     @Enumerated (EnumType.STRING)
-    private Type taxpayerType;
-    @Enumerated (EnumType.STRING)
     private Country country;
     private Timestamp createdAt;
     private Timestamp lastUpdated;
