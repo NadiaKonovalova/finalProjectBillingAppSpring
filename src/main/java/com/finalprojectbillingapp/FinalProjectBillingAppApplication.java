@@ -4,6 +4,7 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.File;
 import java.io.IOException;

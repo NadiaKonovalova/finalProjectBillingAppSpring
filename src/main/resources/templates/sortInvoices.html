@@ -10,6 +10,23 @@
         <h1>Archive invoices</h1>
         <div th:if="${invoices.isEmpty()}">There are No products or services to display</div>
         <div th:if="${!invoices.isEmpty()}">
+
+            <form th:action="@{/sort-invoices}" method="get">
+                <label for="sortParameter">Sort By:</label>
+                <select id="sortParameter" name="sortParameter">
+                    <option value="CREATED_AT" th:selected="${sortParameter == 'CREATED_AT'}">Created at</option>
+                    <option value="ISSUED_AT" th:selected="${sortParameter == 'ISSUED_AT'}">Issued on</option>
+                    <option value="DUE_BY" th:selected="${sortParameter == 'DUE_BY'}">Due by</option>
+                    <option value="SELLER" th:selected="${sortParameter == 'SELLER'}">Seller</option>
+                    <option value="BUYER" th:selected="${sortParameter == 'BUYER'}">Buyer</option>
+                    <option value="TOTAL" th:selected="${sortParameter == 'TOTAL'}">Total</option>
+                    <option value="CURRENCY" th:selected="${sortParameter == 'CURRENCY'}">Currency</option>
+                    <option value="STATUS" th:selected="${sortParameter == 'STATUS'}">Status</option>
+                </select>
+                <button type="submit">Sort</button>
+            </form>
+
+
             <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                     <th>Invoice No.</th>
@@ -27,9 +44,9 @@
 
                 <tr th:each="invoice : ${invoices}">
                     <td th:text="${invoice.invoiceNumber}"></td>
-                    <td th:text="${#dates.format(invoice.createdAt, 'dd.MM.yyyy.')}"></td>
-                    <td th:text="${#dates.format(invoice.issuedAt,'dd.MM.yyyy.')}"></td>
-                    <td th:text="${#dates.format(invoice.dueBy, 'dd.MM.yyyy.')}"></td>
+                    <td th:text="${invoice.createdAt}"></td>
+                    <td th:text="${invoice.issuedAt}"></td>
+                    <td th:text="${invoice.dueBy}"></td>
                     <td th:text="${invoice.user.name}"></td>
                     <td th:text="${invoice.customer.name}"></td>
                     <td>
@@ -44,7 +61,6 @@
                 </tr>
             </table>
         </div>
-        <form action="/archive-invoice" method="post"></form>
     </div>
 </main>
 </body>

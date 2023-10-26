@@ -83,7 +83,6 @@ public class UserService {
         try {
             if (currentUser.getId().equals(user.getId())) {
                 currentUser.setName(user.getName());
-            /*    currentUser.setEmail(user.getEmail());*/
                 currentUser.setTaxpayerNo(user.getTaxpayerNo());
                 currentUser.setLegalAddress(user.getLegalAddress());
                 currentUser.setTaxpayerType(user.getTaxpayerType());

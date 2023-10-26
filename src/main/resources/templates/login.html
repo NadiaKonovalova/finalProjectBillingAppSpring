@@ -4,15 +4,21 @@
 <body style="color: white; font-family: Arial, sans-serif;">
 <header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}" style="background-color: #333; color: white; text-align: center; padding: 10px; font-family: Arial, sans-serif;"></header>
 <main>
-    <div th:if="${message}" style="color: red; font-size: 20px; font-weight: bolder; margin-top: 30px; text-align: center;">
-        <span th:text="${message}"></span>
-    </div>
     <section>
-        <h1 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Log in</h1>
-        <form th:action="${'/login'}" method="post" style="width: 33%; margin: 0 auto;">
+        <h1 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">E-mail</h1>
+        <form th:action="${'/login'}"  method="post" style="width: 33%; margin: 0 auto;">
+            <div th:if="${param.error}" class="alert alert-danger" style="text-align: center;">
+                <p>Invalid username or password</p>
+            </div>
+            <div th:if="${EmailError}" class="alert alert-danger" style="text-align: center;">
+                <p th:text="${EmailError}"></p>
+            </div>
             <div class="input-group m-2">
                 <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">E-mail</label>
                 <input class="form-control" name="loginEmail" placeholder="Enter your e-mail" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
+            </div>
+            <div th:if="${passwordError}" class="alert alert-danger" style="text-align: center;">
+                <p th:text="${passwordError}"></p>
             </div>
             <div class="input-group m-2">
                 <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Password</label>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -52,6 +53,19 @@ public class UserController {
         }
     }
 
+    @PostMapping("/check-password-email")
+    public String checkIfEmailAndPasswordIsCorrect(UserEntity userEntity, HttpServletRequest request, LoginRequest loginRequest, Model model, HttpSession session) {
+        String password = loginRequest.getPassword();
+        String loginEmail = loginRequest.getLoginEmail();
+        if (userEntity != null && userEntity.getPassword() != null && userEntity.getPassword().equals(password)) {
+            session.setAttribute("loginEmail", loginEmail);
+            return "redirect:/login";
+        } else {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/login")
+                    .queryParam("error", "Invalid username or password");
+            return "redirect:" + builder.toUriString();
+        }
+    }
 
 @GetMapping("/logout")
 
