@@ -15,10 +15,9 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary ">
         <div class="container-fluid fw-bolder">
             <a class="navbar-brand mx-auto" href="/">
-                <i class="fas fa-home"></i>BillingApp
+                <i class="fas fa-home"></i>Billing App
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <!--  <span class="navbar-toggler-icon"></span>-->
             </button>
         </div>
         <div class="dropdown">
@@ -27,16 +26,14 @@
             </button>
             <ul class="dropdown-menu"aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="/new-invoice/">New Invoice</a></li>
-                <li><a class="dropdown-item" href="/archive-invoice">Archive Invoices</a></li>
+                <li><a class="dropdown-item" href="/archive-invoice">Invoice Archive</a></li>
             </ul>
         </div>
 
         <div class="collapse navbar-collapse nav justify-content-center container-fluid navbar-nav mb-2 mb-lg-0" id="navbarSupportedContent">
-            <!-- <li class="nav-item">
-                 <a class="nav-link active" aria-current="page" href="/about">About</a>
-             </li> -->
+
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/contactUs">Contact</a>
+                <a class="nav-link active" aria-current="page" href="/contactUs">Contacts</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active fa-solid fa-user" href="/userProfile"></a>
@@ -48,15 +45,13 @@
     </nav>
 </header>
 
-
-<main>
-    <div th:fragment="userProfile" style="background-color: #fff; padding: 20px; border-radius: 5px;">
-        <h3>User Profile</h3>
-        <p style="color: #333; font-size: 16px;">
-            Welcome to your user profile! Here, you can manage various aspects of your account and make the following actions:
-        </p>
-        <nav style="margin-top: 20px;">
-            <a th:href="${'/singleUserProfile'}" class="btn btn-secondary">View</a>
-            <a th:href="${'/editUser'}" class="btn btn-secondary">Edit Profile</a>
-        </nav>
-    </div>
+        <div th:fragment="userProfile" style="background-color: #fff; padding: 20px; border-radius: 5px;">
+            <h3>User Profile</h3>
+            <p style="color: #333; font-size: 16px;">
+                Welcome to your user profile! Here, you can manage various aspects of your account and make the following actions:
+            </p>
+            <nav style="margin-top: 20px;">
+                <a th:href="${'/singleUserProfile'}" class="btn btn-secondary">View Profile</a>
+                <a th:href="${'/editUser'}" class="btn btn-secondary">Edit Profile</a>
+            </nav>
+        </div>

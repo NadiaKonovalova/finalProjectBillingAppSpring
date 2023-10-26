@@ -11,7 +11,7 @@
             <select class="form-control" name="methodOfSigning" style="box-shadow: 3px 3px 5px #888888;">
                 <option value="PRINT_OUT">Signed by hand</option>
                 <option value="ELECTRONIC_SIGNATURE">Electronic signature</option>
-                <option value="DRAFTED_ELECTRONICALLY_NO_SIGNATURE">Drafted electronically, valid w/o signature</option>
+                <option value="DRAFTED_ELECTRONICALLY_NO_SIGNATURE">Generated electronically, valid without signature</option>
                 <option value="NO_SIGNATURE">No signature</option>
             </select>
         </div>
@@ -31,16 +31,11 @@
             <input name="notes" class="form-control" type="text" style="box-shadow: 3px 3px 5px #888888;"/>
         </div>
 
-
         <div class="input-group mt-2" style="display: flex; justify-content: center; align-items: center; height: auto;">
             <button class="btn btn btn-dark text-white p-3" type="submit" id="proceedToReview" style="font-weight: bold; margin-top: 20px;">
                 Confirm and Proceed</button>
         </div>
 
-        <!--       <div class="input-group mt-2">
-                   <a th:href="${'/createNewInvoice/review-invoice'}"
-                   class="btn btn-dark text-white p-3">Proceed to invoice overview</a>
-               </div>-->
     </form>
 </main>
 </body>

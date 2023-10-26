@@ -33,7 +33,6 @@ public class ProductOrServiceEntity {
     private double totalPerProduct;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<InvoiceProductEntity> invoices = new ArrayList<>();
-    private Currency currency;
 
     @PrePersist
     public void beforeSaveProductService(){

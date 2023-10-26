@@ -5,6 +5,5 @@ public enum Category {
     REDUCED12,
     REDUCED10,
     REDUCED5,
-    EXEMPTED0,
-    OTHER
+    EXEMPTED0
 }
