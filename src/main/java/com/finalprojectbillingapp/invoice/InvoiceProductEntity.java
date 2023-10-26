@@ -1,11 +1,9 @@
 package com.finalprojectbillingapp.invoice;
 
 import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
-import com.finalprojectbillingapp.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.UUID;
 

@@ -1,7 +1,6 @@
 package com.finalprojectbillingapp.invoice;
 
 import com.finalprojectbillingapp.customer.CustomerEntity;
-import com.finalprojectbillingapp.productOrService.ProductOrServiceEntity;
 import com.finalprojectbillingapp.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{fragments/headerAfterLogin.html::head-general(pageTitle='Register')}"></head>
-<body style="color: white; font-family: Arial, sans-serif;">
-<header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}" style="background-color: #333; color: white; text-align: center; padding: 10px; font-family: Arial, sans-serif;"></header>
+<body>
+<header th:replace="~{fragments/headerBeforeLogIn.html::before-login-header}"></header>
 <main>
     <div th:if="${errorMessage}" style="color: red; font-size: 20px; font-weight: bolder; margin-top: 30px; text-align: center;">
         <span th:text="${errorMessage}"></span>
     </div>
 
     <h4 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Register as a new user</h4>
-    <h5 style="text-align: center;">To proceed, please create a new user account</h5>
-    <div th:if="${loginEmail != null}">
-        Login-email: <span th:text="${loginEmail}"></span>
-
-    </div>
+    <h5 style="text-align: center; margin: 10px 0px 30px 0px; color: #333333;">To proceed, please create a new user account</h5>
     <form th:action="${'/register'}" method="post" style="width: 33%; margin: 0 auto;">
-
-
+        <div class="input-group m-2">
+            <label th:if="${loginEmail != null}" class="input-group-text" style="width: 500px; padding: 5px; box-shadow: 3px 3px 5px #888888;">Login e-mail:
+                <span th:text="${loginEmail}" style="font-weight: bold"></span>
+            </label>
+        </div>
         <div class="input-group m-2">
             <label class="input-group-text" style="padding: 5px; box-shadow: 3px 3px 5px #888888;">Password</label>
             <input name="password" class="form-control" type="password" style="box-shadow: 3px 3px 5px #888888;"/>
@@ -48,7 +47,6 @@
                 <option value="SELF_EMPLOYED">Self-employed</option>
                 <option value="MICRO_ENTERPRISE">Micro enterprise</option>
                 <option value="VAT_PAYER">VAT payer</option>
-                <option value="OTHER">Other</option>
             </select>
         </div>
         <div class="input-group m-2">
@@ -93,4 +91,3 @@
 </main>
 </body>
 </html>
-
