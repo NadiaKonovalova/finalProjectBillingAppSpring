@@ -7,13 +7,14 @@
 
 <main>
     <div style="background-color: #fff; padding: 20px; border-radius: 5px;">
-        <h3>User Profile</h3>
-        <p style="color: #333; font-size: 16px;">
-            Welcome to your user profile! Here, you can manage various aspects of your account and make the following actions:
+        <h3 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">User Profile</h3>
+        <p style="text-align: center; color: #333; font-size: 16px;">
+            Welcome to your user profile!
         </p>
-        <nav style="margin-top: 20px;">
-            <a th:href="${'/singleUserProfile'}" class="btn btn-secondary">View Profile</a>
-            <a th:href="${'/editUser'}" class="btn btn-secondary">Edit Profile</a>
+        <p style="margin-top: 20px; text-align: center; color: #333; font-size: 16px;">Here you can manage various aspects of your account and make the following actions:</p>
+        <nav style="display: flex; justify-content: center; align-items: center; height: auto; margin-top: 20px">
+            <a th:href="${'/singleUserProfile'}" class="btn btn btn-dark text-white p-3" style="margin-right: 10px; font-weight: bold; margin-top: 20px;">View Profile</a>
+            <a th:href="${'/editUser'}" class="btn btn btn-dark text-white p-3" style="font-weight: bold; margin-top: 20px;">Edit Profile</a>
         </nav>
     </div>
 </main>

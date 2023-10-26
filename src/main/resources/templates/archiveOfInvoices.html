@@ -7,8 +7,8 @@
 <main class="container">
     <div>
 
-        <h1>Archive invoices</h1>
-        <div th:if="${invoices.isEmpty()}">There are No products or services to display</div>
+        <h1 style="text-align: center; margin: 80px 0px 50px 0px; color: #333333;">Archive invoices</h1>
+        <div th:if="${invoices.isEmpty()}">There are no products or services to display</div>
         <div th:if="${!invoices.isEmpty()}">
 
             <form th:action="@{/sort-invoices}" method="get">
@@ -23,7 +23,7 @@
                     <option value="CURRENCY" th:selected="${sortParameter == 'CURRENCY'}">Currency</option>
                     <option value="STATUS" th:selected="${sortParameter == 'STATUS'}">Status</option>
                 </select>
-                <button type="submit">Sort</button>
+                <button type="submit" style="margin-top: 20px; margin-bottom: 20px; border-color: grey;">Sort</button>
             </form>
 
             <table style="width: 100%; border-collapse: collapse;">

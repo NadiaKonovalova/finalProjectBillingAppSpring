@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import java.sql.Date;
 import java.util.*;
 
 import static com.finalprojectbillingapp.invoice.Status.*;
-
 
 @Controller
 
@@ -54,7 +52,6 @@ public class InvoiceController {
         this.userRepository = userRepository;
     }
 
-    // Works
     @GetMapping("/new-invoice/")
     public String displayStartInvoicePage(HttpSession session) {
         Enumeration<String> attributeNames = session.getAttributeNames();
@@ -65,25 +62,22 @@ public class InvoiceController {
         return "invoices";
     }
 
-    // Works
     @GetMapping("/createNewInvoice/invoiceNumber")
     public String displayInvoiceNumberPage(HttpSession session) {
         InvoiceEntity invoice = new InvoiceEntity();
         UUID invoiceId = invoice.getId();
         session.setAttribute("invoiceData", invoice);
         session.setAttribute("invoiceId", invoiceId);
-//        session.setAttribute("htmlContent", htmlContent);
+
         return "enterInvoiceNumber";
     }
 
-    // Works
     @PostMapping("/createNewInvoice/confirmInvoiceNumber")
     public String confirmInvoiceNumber(@RequestParam("invoiceNumber") String invoiceNumber,
                                        HttpSession session,
-                                       RedirectAttributes redirectAttributes) throws Exception {
+                                       RedirectAttributes redirectAttributes){
         try {
             session.setAttribute("invoiceNumber", invoiceNumber);
-            System.out.println("Invoice number: " + invoiceNumber);
 
             return "redirect:/createNewInvoice/userData";
 
@@ -92,7 +86,6 @@ public class InvoiceController {
             return "redirect:/?message=INVOICE_NUMBER_FAILED&error=/";
         }
     }
-
 
     @GetMapping("createNewInvoice/userData")
     public String displayInvoiceUserPage(HttpServletRequest request, Model model) throws Exception {
@@ -119,25 +112,20 @@ public class InvoiceController {
 
             this.userService.editUserDetails(loggedInUser, userId);
             session.setAttribute("userId", userId);
-            System.out.println(loggedInUser);
 
             return "redirect:/createNewInvoice/customerData";
         } catch (Exception exception) {
-            // Handle errors if needed
+     exception.printStackTrace();
             return "redirect:/createNewInvoice/userData";
         }
     }
 
     @GetMapping("/createNewInvoice/customerData")
-    public String displayAddCustomerPage(Model model) throws Exception {
-        CustomerEntity selectedCustomer = (CustomerEntity)
-                model.getAttribute("selectedCustomer");
-        if (selectedCustomer != null) {
-            model.addAttribute("selectedCustomer1", selectedCustomer);
-        } else {
+    public String displayAddCustomerPage(Model model)  {
+
             CustomerEntity customerEntity = new CustomerEntity();
             model.addAttribute("newCustomer", customerEntity);
-        }
+
         return "addCustomers";
     }
 
@@ -148,18 +136,9 @@ public class InvoiceController {
                                      HttpSession session,
                                      Model model) {
         try {
-            UUID selectedCustomerId = (UUID) model.getAttribute("selectedCustomerId");
-
-            if (selectedCustomerId != null) {
-                CustomerEntity selectedCustomer = this.customerService.getCustomerById(selectedCustomerId);
-                this.customerService.editCustomerDetails(selectedCustomerId, selectedCustomer);
-                session.setAttribute("customerId", selectedCustomer.getId());
-                System.out.println("edited customer: " + selectedCustomer);
-            } else {
                 this.customerService.createCustomer(newCustomer);
                 session.setAttribute("customerId", newCustomer.getId());
-                System.out.println("New customer: " + newCustomer);
-            }
+
             return "redirect:/select-currency";
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
@@ -217,7 +196,6 @@ public class InvoiceController {
             if (user1.getTaxpayerType().equals(Type.VAT_PAYER)) {
                 double totalPrice = this.serviceForProducts.calculatePricePerProductWithVAT(createdProduct);
                 createdProduct.setTotalPerProduct(totalPrice);
-                System.out.println(totalPrice);
             } else {
                 double totalPrice = this.serviceForProducts.calculatePricePerProductNoVAT(createdProduct);
                 createdProduct.setTotalPerProduct(totalPrice);
@@ -227,7 +205,6 @@ public class InvoiceController {
             UUID productID = createdProduct.getId();
             productIDs.add(productID);
             session.setAttribute("selectedProducts", productIDs);
-            System.out.println("Products: " + productIDs);
             if ("addMore".equals(action)) {
                 return "redirect:/createNewInvoice/productOrService";
             } else if ("redirect".equals(action)) {
@@ -257,10 +234,7 @@ public class InvoiceController {
             session.setAttribute("methodOfSigning", methodOfSigning);
             session.setAttribute("issuedAt", issuedAt);
             session.setAttribute("dueBy", dueBy);
-            System.out.println("Notes: " + notes +
-                    ", Signture: " + methodOfSigning +
-                    "Issued On: " + issuedAt +
-                    "Due by: " + dueBy);
+
             return "redirect:/BEFOREinvoice-overview/";
         } catch (Exception exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
@@ -320,8 +294,6 @@ public class InvoiceController {
         session.setAttribute("newInvoiceId", invoice.getId());
         session.setAttribute("invoice", this.invoiceService.getInvoiceById(
                 (UUID) session.getAttribute("newInvoiceId")));
-        System.out.println(invoice);
-        System.out.println("Products in invoice: " + invoiceProducts);
         return "redirect:/invoice-overview/" + invoice.getId();
     }
 
@@ -342,9 +314,7 @@ public class InvoiceController {
     }
 
     @PostMapping("/confirm-invoice")
-    public String confirmInvoice(@ModelAttribute InvoiceEntity invoice,
-                                 Model model,
-                                 HttpSession session) {
+    public String confirmInvoice() {
         try {
             return "redirect:/archive-invoice";
         } catch (Exception exception) {
@@ -380,7 +350,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/archive-invoice")
-    public String displayInvoicesFromArchive(Model model, HttpServletRequest request) throws Exception {
+    public String displayInvoicesFromArchive(Model model, HttpServletRequest request) {
         try {
             String loginEmail = this.userService.getLoggedInUserEmail(request);
             if (loginEmail != null) {
